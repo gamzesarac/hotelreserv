@@ -116,7 +116,35 @@ public class reservation{
             ex.printStackTrace();
         }
     }
+     //--------------------------------------------------------------------------   
     
+    
+    public String takeHotelName(int roomid) throws SQLException {
+        try {
+        
+        initializeJdbc();
+        pstmt = conn.prepareStatement("select hotelid from hotelrooms where roomid = ?");
+        pstmt.setInt(1, roomid);
+        rs = pstmt.executeQuery();
+        rs.first();
+
+        int hotelid = rs.getInt("hotelid");
+        
+        pstmt = conn.prepareStatement("select hotelname from hotel where hotelid = ?");
+        pstmt.setInt(1, hotelid);
+        rs = pstmt.executeQuery();
+        rs.first();
+        
+        return rs.getString("hotelname");
+    }
+        catch(Exception ex){
+          System.out.println("Exception: " + ex.getMessage());
+            return "";  
+        }
+        
+    } 
+    
+   
    //--------------------------------------------------------------------------
     
     

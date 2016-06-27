@@ -109,6 +109,49 @@ public class hotelroom{
         }
     }
     
+      //--------------------------------------------------------------------------   
+    
+    
+    public double takeRoomCost(int roomid) throws SQLException {
+        try {
+        
+        initializeJdbc();
+        pstmt = conn.prepareStatement("select roomcost from hotelrooms where roomid = ?");
+        pstmt.setInt(1, roomid);
+        rs = pstmt.executeQuery();
+        rs.first();
+
+        
+        return rs.getDouble("roomcost");
+    }
+        catch(Exception ex){
+          System.out.println("Exception: " + ex.getMessage());
+            return 0;  
+        }
+        
+    } 
+          //--------------------------------------------------------------------------   
+    
+    
+    public String takeRoomType(int roomid) throws SQLException {
+        try {
+        
+        initializeJdbc();
+        pstmt = conn.prepareStatement("select roomtype from hotelrooms where roomid = ?");
+        pstmt.setInt(1, roomid);
+        rs = pstmt.executeQuery();
+        rs.first();
+
+        
+        return rs.getString("roomtype");
+    }
+        catch(Exception ex){
+          System.out.println("Exception: " + ex.getMessage());
+            return "";  
+        }
+        
+    } 
+    
    //--------------------------------------------------------------------------
     
     

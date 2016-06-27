@@ -1,3 +1,5 @@
+<%@page import="db.hotelroom"%>
+<%@page import="db.reservation"%>
 <%@page import="db.user"%>
 <%@page import="java.sql.ResultSet"%>
 <!DOCTYPE html>
@@ -94,7 +96,7 @@
 
     </div>
     <div class="col-sm-8 text-left">
-        <h1 style="font-family: monospace; font-weight: bold;">Your Reservations</h1>
+        <h1 style="font-family: monospace; font-weight: bold;">See Your All Reservations</h1>
         <table border="4">
                     <tr>
                         <th style="font-size: 15px;">Your Reservations</th>
@@ -111,14 +113,26 @@
                             <br>
                             <h4 style="font-weight: bold; color:darkred;">ROOM ID : <%out.print(table2.getString("roomid"));%></h4>
                             <br>
+                            <%hotelroom h2=new hotelroom();
+                            String roomtype=h2.takeRoomType(table2.getInt("roomid")); %>
+                            <h4 style="font-weight: bold; color:darkred;">ROOM TYPE : <%= roomtype %></h4>
+                            <br>
+                            <%reservation r=new reservation();
+                            String hotelname=r.takeHotelName(table2.getInt("roomid")); %>
+                            <h4 style="font-weight: bold; color:darkred;">HOTEL NAME : <%= hotelname %></h4>
+                            <br>
                             <h4 style="font-weight: bold; color:darkred;">CHECK IN : <%out.print(table2.getString("checkin"));%></h4>
                             <br>
                             <h4 style="font-weight: bold; color:darkred;">CHECK OUT : <%out.print(table2.getString("checkin"));%></h4>
                             <br>
-                            <h4 style="font-weight: bold; color:darkred;">RESERVATION CREATION DATE: <%out.print(table2.getString("checkin"));%></h4>
+                            <h4 style="font-weight: bold; color:darkred;">RESERVATION CREATION DATE : <%out.print(table2.getString("checkin"));%></h4>
                             <br>
-                            <h4 style="font-weight: bold; color:darkred;">STATUS: <% if(table2.getInt("isCancelled")==0){ %> active <% } %> </h4>
+                            <h4 style="font-weight: bold; color:darkred;">STATUS : <% if(table2.getInt("isCancelled")==0){ %> active <% } %> </h4>
                             <br>
+                            <%hotelroom h=new hotelroom();
+                            double cost=h.takeRoomCost(table2.getInt("roomid")); %>
+                            <h4 style="font-weight: bold; color:darkred;">COST : <%= cost %> </h4>
+                            
                         </td>
                     </tr>
                             
