@@ -1,4 +1,5 @@
 <%@page import="db.user"%>
+<%@page import="java.sql.ResultSet"%>
 <!DOCTYPE html>
 <%@page import="java.sql.*"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -60,9 +61,10 @@
         }
 
         String firstname = u.takeFirstname(username);
-
-
-   
+        ResultSet table = u.takeUserInfo(username);
+        //user uu= new user(table.getString("username"),table.getString("firstname"),table.getString("lastname"),table.getString("password"),table.getString("birthdate"),table.getString("email"),table.getString("gender"),table.getString("telephone"),table.getInt("usertype_id"),table.getString("address"),table.getString("ssn"));
+        int userid=u.takeUserId(username);
+        ResultSet table2 = u.takeMyReservations(userid);
     %>
 <nav class="navbar navbar-inverse">
   <div class="container-fluid">
@@ -92,10 +94,42 @@
 
     </div>
     <div class="col-sm-8 text-left">
-        <h1 style="font-family: monospace; font-weight: bold;">User Homepage</h1>
-        <p> Welcome to your personal page.</p>
+        <h1 style="font-family: monospace; font-weight: bold;">Your Reservations</h1>
+        <table border="4">
+                    <tr>
+                        <th style="font-size: 15px;">Your Reservations</th>
+                      <!--  <th>Text</th> -->
+                      <!--  <th></th> -->
+
+                    </tr>
+                    <% while(table2.next()){%>   
+             
+                    <tr>       
+                        <td> 
+                            
+                            <h4 style="font-weight: bold; color:darkred;">RESERVATION ID : <%out.print(table2.getString("reservationid"));%></h4>
+                            <br>
+                            <h4 style="font-weight: bold; color:darkred;">ROOM ID : <%out.print(table2.getString("roomid"));%></h4>
+                            <br>
+                            <h4 style="font-weight: bold; color:darkred;">CHECK IN : <%out.print(table2.getString("checkin"));%></h4>
+                            <br>
+                            <h4 style="font-weight: bold; color:darkred;">CHECK OUT : <%out.print(table2.getString("checkin"));%></h4>
+                            <br>
+                            <h4 style="font-weight: bold; color:darkred;">RESERVATION CREATION DATE: <%out.print(table2.getString("checkin"));%></h4>
+                            <br>
+                            <h4 style="font-weight: bold; color:darkred;">STATUS: <% if(table2.getInt("isCancelled")==0){ %> active <% } %> </h4>
+                            <br>
+                        </td>
+                    </tr>
+                            
+                            <!-- <input type = "submit" name = "Submit" value = "Read"/> -->
+                       
+                   
+                
+                    <%}%>
+                </table>
       <hr>
-       <a href="MyReservations.jsp" style="color:brown">Your Reservations</a>
+       
     </div>
     <div class="col-sm-2 sidenav">
         <a href="user.jsp"><h4 style="color: black; font-style: italic;">Welcome : <%= firstname %> </h4></a>

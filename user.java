@@ -218,7 +218,7 @@ public class user {
         return true;
     }
     
-           //--------------------------------------------------------------------------   
+   //--------------------------------------------------------------------------   
     
     
     public String takeFirstname(String username) throws SQLException {
@@ -239,7 +239,26 @@ public class user {
         
     }   
     
+     //--------------------------------------------------------------------------   
     
+    
+    public int takeUserId(String username) throws SQLException {
+        try {
+        
+        initializeJdbc();
+        pstmt = conn.prepareStatement("select id from user where username = ?");
+        pstmt.setString(1, username);
+        rs = pstmt.executeQuery();
+        rs.first();
+
+        return rs.getInt("id");
+    }
+        catch(Exception ex){
+          System.out.println("Exception: " + ex.getMessage());
+            return 0;  
+        }
+        
+    }   
     
      //--------------------------------------------------------------------------
     
@@ -336,8 +355,44 @@ public class user {
         rs.beforeFirst();
         return rs;
     }
+//--------------------------------------------------------------------------    
+    
+    
+    public ResultSet takeUserInfo(String username) throws SQLException {
+        try{
+        initializeJdbc();
 
 
+        pstmt = conn.prepareStatement("select * from user where username = ?");
+        pstmt.setString(1, username);
+        rs = pstmt.executeQuery();
+        rs.beforeFirst();
+        return rs;
+    }
+         catch(Exception ex){
+          System.out.println("Exception: " + ex.getMessage());
+            return null;  
+        }
+    }
+ //--------------------------------------------------------------------------    
+    
+    
+    public ResultSet takeMyReservations(int id) throws SQLException {
+        try{
+        initializeJdbc();
+
+
+        pstmt = conn.prepareStatement("select * from reservation where userid = ?");
+        pstmt.setInt(1, id);
+        rs = pstmt.executeQuery();
+        rs.beforeFirst();
+        return rs;
+    }
+         catch(Exception ex){
+          System.out.println("Exception: " + ex.getMessage());
+            return null;  
+        }
+    }
 
     
     //--------------------------------------------------------------------------

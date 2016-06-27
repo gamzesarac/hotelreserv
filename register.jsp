@@ -2,10 +2,9 @@
 <%@page import="java.util.Date"%>
 <%@page import="db.user"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<jsp:useBean id = "dbbean" scope = "application" class = "db.DBBean" >
-</jsp:useBean>
 
-<jsp:setProperty name = "dbbean" property = "*" />
+
+
 
 <!DOCTYPE html>
 <html>

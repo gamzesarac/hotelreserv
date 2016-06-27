@@ -1,9 +1,8 @@
 <%@page import="db.user"%>
 <%@page import="java.sql.*"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<jsp:useBean id = "dbbean" scope = "session" class = "db.DBBean" >
-</jsp:useBean>
-<jsp:setProperty name = "dbbean" property = "*" />
+
+
 <!DOCTYPE html>
 <html>
     <head>
