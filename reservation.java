@@ -143,7 +143,25 @@ public class reservation{
         }
         
     } 
+    //--------------------------------------------------------------------------    
     
+    
+    public boolean cancelReservation(int rid) throws SQLException {
+        try{
+        initializeJdbc();
+
+
+        pstmt = conn.prepareStatement("update reservation set isCancelled=1 where reservationid= ?");
+        pstmt.setInt(1, rid);
+        pstmt.executeUpdate();
+
+    }
+         catch(Exception ex){
+          System.out.println("Exception: " + ex.getMessage());
+            return false;  
+        }
+        return true;
+    }
    
    //--------------------------------------------------------------------------
     
