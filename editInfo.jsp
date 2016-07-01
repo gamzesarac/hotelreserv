@@ -60,7 +60,7 @@
         }
 
         String firstname = u.takeFirstname(username);
-
+        ResultSet table=u.takeUserInfo(username);
 
    
     %>
@@ -92,12 +92,49 @@
 
     </div>
     <div class="col-sm-8 text-left">
-        <h1 style="font-family: monospace; font-weight: bold;">User Homepage</h1>
-        <p> Welcome to your personal page.</p>
+
       <hr>
-       <a href="MyReservations.jsp" style="color:brown">Your Reservations</a>
-       <br>
-       <a href="editInfo.jsp" style="color:brown">Edit Personal Info</a>
+       <h2>Edit Information Page</h2>
+            <p>
+            <form method="post" action="editInfoAction.jsp">
+                <table>
+                    
+                    <tr> 
+                     
+                        <tr><td>First name<sup></sup> (*):</td>
+                        <td><input type="text" name="firstname" value= <%out.print(table.getString("firstname"));%> /></td></tr>
+                        
+                        <tr><td>Last name (*):</td>
+                        <td><input type="text" name="lastname" value= <%out.print(table.getString("lastname"));%> /></td></tr>
+                        
+                        
+                        <tr><td>Password (*):</td>
+                        <td><input type="password" name="password" value= <%out.print(table.getString("password"));%> /></td></tr>
+                     
+                        
+                        <tr><td>Birthdate :</td>
+                        <td><input type="date" name="birthdate" value= <%out.print(table.getString("birthdate"));%> /></td></tr>                        
+        
+                        <tr><td>Telephone :</td>
+                        <td><input type="text" name="telephone" value= <%out.print(table.getString("telephone"));%> /></td></tr>
+                        
+                        <tr><td>Email (*):</td>
+                        <td><input type="text" name="email" value= <%out.print(table.getString("email"));%> /></td></tr>
+                        
+                        <tr><td>Addresss Information:</td> 
+                        <td><input type="text" name="address" value= <%out.print(table.getString("address"));%> /></td></tr>
+                        
+                        <tr><td>SSN :</td>
+                        <td><input type="text" name="ssn" value= <%out.print(table.getString("ssn"));%> /></td></tr>
+    
+                        
+                        
+                        <tr><td></td><td><input type="submit" name="Apply" value="Apply" style="width: 125px; background-color: white; border-color: white; color: brown"/></td>
+<!-- #2B374A -->
+                    </tr>
+                    <%%>
+                </table>
+            </form>
     </div>
     <div class="col-sm-2 sidenav">
         <a href="user.jsp"><h4 style="color: black; font-style: italic;">Welcome : <%= firstname %> </h4></a>

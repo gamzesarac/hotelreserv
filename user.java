@@ -186,7 +186,7 @@ public class user {
     
     public boolean addUser() throws SQLException {
         try {
-           if((username==""||password==""||firstname==""||lastname==""||gender==""||email==""||telephone==""||!checkPassword(password)||checkTel(telephone)==false||checkMail(email)==false)){
+           if((username==""||password==""||firstname==""||lastname==""||gender==""||email==""||telephone==""||!checkPassword(password)||checkTel(telephone)==false||checkMail(email)==false)||!checkSSN(ssn)){
             return false;
            }
            else{
@@ -215,6 +215,36 @@ public class user {
             return false;
         }    
 
+        return true;
+    }
+    
+    //--------------------------------------------------------------------------
+    
+    public boolean editUser(String username,String password, String firstname, String lastname, String email, String birthdate, String telephone, String ssn, String address) throws SQLException {
+        try {
+            if(username==""||firstname==""||lastname==""||birthdate==""||address==""||!checkPassword(password)||checkTel(telephone)==false||checkMail(email)==false||!checkSSN(ssn)){
+            return false;
+           }
+            else{
+            initializeJdbc();
+
+            pstmt = conn.prepareStatement("update user set password = ?, firstname = ?, lastname = ?, email = ?, birthdate = ?, telephone = ?, ssn = ?, address = ? where username = ? ");
+
+            pstmt.setString(1, password);
+            pstmt.setString(2, firstname);
+            pstmt.setString(3, lastname);
+            pstmt.setString(4, email);            
+            pstmt.setString(5, birthdate);
+            pstmt.setString(6, telephone); 
+            pstmt.setString(7, ssn);
+            pstmt.setString(8, address);
+            pstmt.setString(9, username);
+            pstmt.executeUpdate();
+            }
+        } catch (Exception ex) {
+            System.out.println("Exception: " + ex.getMessage());
+            return false;
+        }
         return true;
     }
     
@@ -366,7 +396,7 @@ public class user {
         pstmt = conn.prepareStatement("select * from user where username = ?");
         pstmt.setString(1, username);
         rs = pstmt.executeQuery();
-        rs.beforeFirst();
+        rs.first();
         return rs;
     }
          catch(Exception ex){
@@ -465,6 +495,23 @@ public class user {
     //--------------------------------------------------------------------------
   
     public boolean checkTel(String num){      
+ 
+        boolean intt=false;
+        if(num.length()==11){
+        for(int i=0; i<num.length(); i++){
+           char c=num.charAt(i);
+           if(c>=48&&c<=57)
+               intt=true;
+           else
+               return false;
+      }       
+        }
+        return intt;
+        
+    }
+        //--------------------------------------------------------------------------
+  
+    public boolean checkSSN(String num){      
  
         boolean intt=false;
         if(num.length()==11){
