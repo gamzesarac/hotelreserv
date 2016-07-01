@@ -8,10 +8,10 @@
 <body>
     <%
     if(session.getAttribute("username") == null){
-        response.sendRedirect("index.jsp");
+        response.sendRedirect("index.html");
     }
     session.invalidate();        
     %>
-    <jsp:forward page="index.jsp"/>
+    <jsp:forward page="index.html"/>
 </body>
 </html>
