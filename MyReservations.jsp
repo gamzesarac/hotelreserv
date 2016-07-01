@@ -16,6 +16,16 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
   <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
   <style>
+      #messageLink {background-color: white;
+                      border: 0;
+                      cursor: pointer;
+                      font-weight: bold;
+                      /* text-decoration: underline; */
+                      color: black;
+                      font-style: initial;
+                      }
+      
+      
     /* Remove the navbar's default margin-bottom and rounded borders */
     .navbar {
       margin-bottom: 0;
@@ -146,7 +156,7 @@
                             <%= cost %>
                          </td>
                          <td>
-                         <% if(table2.getInt("isCancelled")==0){ %> active <% } %> 
+                         <% if(table2.getInt("isCancelled")==0){ %> active <% } else{ %> inactive <% } %>
                          </td>                            
                             
                     </tr>

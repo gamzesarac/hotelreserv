@@ -1,7 +1,10 @@
+<%@page import="java.text.SimpleDateFormat"%>
+<%@page import="java.text.DateFormat"%>
 <%@page import="db.hotelroom"%>
 <%@page import="db.reservation"%>
 <%@page import="db.user"%>
 <%@page import="java.sql.ResultSet"%>
+<%@page import="java.util.Date"%>
 <!DOCTYPE html>
 <%@page import="java.sql.*"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -50,6 +53,12 @@
 </head>
 <body>
  <%
+     
+         DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
+         Date date = new Date();
+         //String current = dateFormat.format(date);
+         
+         
         String username = (String)session.getAttribute("username");
         user u=new user(username);
         String type = u.checkTypePages(username);
@@ -67,6 +76,7 @@
         String ridString= request.getParameter("rid");
         int rid=Integer.parseInt(ridString);
         ResultSet table = u.takeSelectedReservation(rid);
+        Date checkin = table.getDate("checkin");
     %>
 <nav class="navbar navbar-inverse">
   <div class="container-fluid">
@@ -108,10 +118,13 @@
                     
                       
                     <table>
+                    <form method="post" action="cancelReservation.jsp">
                     <tr>       
                         <td> 
                             
-                            <h4 style="font-weight: bold; color:darkred;">RESERVATION ID : <%out.print(table.getString("reservationid"));%></h4>
+                            <h4 style="font-weight: bold; color:darkred;">RESERVATION ID : <%out.print(table.getString("reservationid"));%>
+                            <input type="hidden" name="rid" value="<%out.print(table.getString("reservationid"));%>">
+                            </h4>
                             <br>
                             <h4 style="font-weight: bold; color:darkred;">ROOM ID : <%out.print(table.getString("roomid"));%></h4>
                             <br>
@@ -129,20 +142,21 @@
                             <br>
                             <h4 style="font-weight: bold; color:darkred;">RESERVATION CREATION DATE : <%out.print(table.getString("reservationdate"));%></h4>
                             <br>
-                            <h4 style="font-weight: bold; color:darkred;">STATUS : <% if(table.getInt("isCancelled")==0){ %> active <% } %> </h4>
+                            <h4 style="font-weight: bold; color:darkred;">STATUS : <% if(table.getInt("isCancelled")==0){ %> active <% }else{ %>  inactive <% } %>  </h4>
                             <br>
                             <%hotelroom h=new hotelroom();
                             double cost=h.takeRoomCost(table.getInt("roomid")); %>
                             <h4 style="font-weight: bold; color:darkred;">COST : <%= cost %> </h4>
-                            
+                    <%if(checkin.compareTo(date)>0&&table.getInt("isCancelled")==0){ %> <input type="submit" name="Cancel" value="Cancel" style="width: 125px; background-color: white; border-color: white; color: brown;"/> <%} %>
                         </td>
+                        
                     </tr>
                             
                             <!-- <input type = "submit" name = "Submit" value = "Read"/> -->
                        
                    
                 
-                    
+                    </form>
                 </table>
       <hr>
        
