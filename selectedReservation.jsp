@@ -6,7 +6,6 @@
 <%@page import="java.sql.*"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
-<jsp:setProperty name = "dbbean" property = "*" />
 <html lang="en">
 <head>
   <title>User Page</title>
@@ -63,10 +62,11 @@
         }
 
         String firstname = u.takeFirstname(username);
-        ResultSet table = u.takeUserInfo(username);
+        
         //user uu= new user(table.getString("username"),table.getString("firstname"),table.getString("lastname"),table.getString("password"),table.getString("birthdate"),table.getString("email"),table.getString("gender"),table.getString("telephone"),table.getInt("usertype_id"),table.getString("address"),table.getString("ssn"));
-        int userid=u.takeUserId(username);
-        ResultSet table2 = u.takeMyReservations(userid);
+        String ridString= request.getParameter("rid");
+        int rid=Integer.parseInt(ridString);
+        ResultSet table = u.takeSelectedReservation(rid);
     %>
 <nav class="navbar navbar-inverse">
   <div class="container-fluid">
@@ -96,103 +96,43 @@
 
     </div>
     <div class="col-sm-8 text-left">
-        <h1 style="font-family: monospace; font-weight: bold;">See Your All Reservations</h1>
+        <h1 style="font-family: monospace; font-weight: bold;">See Your Reservations</h1>
         <table border="4">
                     <tr>
-                        <th style="font-size: 15px;">Your Reservations</th>
+                        <th style="font-size: 15px;">Reservation Info</th>
                       <!--  <th>Text</th> -->
                       <!--  <th></th> -->
 
                     </tr>
                     
-                    <table border="4" >
-         
-                        <th>Reservation ID</th>
-                        <th>Hotel Name</th>
-                        <th>Room Type</th>
-                        <th>Check In</th>
-                        <th>Check Out</th>
-                        <th>Cost</th>
-                        <th>Status</th>
-
-
-       <% while(table2.next()){%>   
-                    <form method="post" action="selectedReservation.jsp">
-                    <tr>       
-                        <td>                             
-                        <input id="messageLink" type = "submit" name = "Submit" value = "<%out.print(table2.getInt("reservationid"));%>"/>
-                        <input type="hidden" name="rid" value="<%out.print(table2.getString("reservationid"));%>">
-                        </td>
-                        <td>
-                            <%reservation r=new reservation();
-                            String hotelname=r.takeHotelName(table2.getInt("roomid")); %>
-                            <%= hotelname %>
-                        </td>                        
-                        <td>                            
-                            <%hotelroom h2=new hotelroom();
-                            String roomtype=h2.takeRoomType(table2.getInt("roomid")); %>
-                          <%= roomtype %>
-                        </td>
-                         <td>
-                         <%out.print(table2.getString("checkin"));%>
-                         </td>
-                         <td>
-                          <%out.print(table2.getString("checkout"));%>
-                         </td>
-                         <td>
-                                                      
-                            <%hotelroom h=new hotelroom();
-                            double cost=h.takeRoomCost(table2.getInt("roomid")); %>
-                            <%= cost %>
-                         </td>
-                         <td>
-                         <% if(table2.getInt("isCancelled")==0){ %> active <% } %> 
-                         </td>                            
-                            
-                    </tr>
-                            
-                            <!-- <input type = "submit" name = "Submit" value = "Read"/> -->
-                       
-                    </form>
-                
-                    <%}%>
-                </table>
                     
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    <% while(table2.next()){%>   
-             
+                      
+                    <table>
                     <tr>       
                         <td> 
                             
-                            <h4 style="font-weight: bold; color:darkred;">RESERVATION ID : <%out.print(table2.getString("reservationid"));%></h4>
+                            <h4 style="font-weight: bold; color:darkred;">RESERVATION ID : <%out.print(table.getString("reservationid"));%></h4>
                             <br>
-                            <h4 style="font-weight: bold; color:darkred;">ROOM ID : <%out.print(table2.getString("roomid"));%></h4>
+                            <h4 style="font-weight: bold; color:darkred;">ROOM ID : <%out.print(table.getString("roomid"));%></h4>
                             <br>
                             <%hotelroom h2=new hotelroom();
-                            String roomtype=h2.takeRoomType(table2.getInt("roomid")); %>
+                            String roomtype=h2.takeRoomType(table.getInt("roomid")); %>
                             <h4 style="font-weight: bold; color:darkred;">ROOM TYPE : <%= roomtype %></h4>
                             <br>
                             <%reservation r=new reservation();
-                            String hotelname=r.takeHotelName(table2.getInt("roomid")); %>
+                            String hotelname=r.takeHotelName(table.getInt("roomid")); %>
                             <h4 style="font-weight: bold; color:darkred;">HOTEL NAME : <%= hotelname %></h4>
                             <br>
-                            <h4 style="font-weight: bold; color:darkred;">CHECK IN : <%out.print(table2.getString("checkin"));%></h4>
+                            <h4 style="font-weight: bold; color:darkred;">CHECK IN : <%out.print(table.getString("checkin"));%></h4>
                             <br>
-                            <h4 style="font-weight: bold; color:darkred;">CHECK OUT : <%out.print(table2.getString("checkout"));%></h4>
+                            <h4 style="font-weight: bold; color:darkred;">CHECK OUT : <%out.print(table.getString("checkout"));%></h4>
                             <br>
-                            <h4 style="font-weight: bold; color:darkred;">RESERVATION CREATION DATE : <%out.print(table2.getString("reservationdate"));%></h4>
+                            <h4 style="font-weight: bold; color:darkred;">RESERVATION CREATION DATE : <%out.print(table.getString("reservationdate"));%></h4>
                             <br>
-                            <h4 style="font-weight: bold; color:darkred;">STATUS : <% if(table2.getInt("isCancelled")==0){ %> active <% } %> </h4>
+                            <h4 style="font-weight: bold; color:darkred;">STATUS : <% if(table.getInt("isCancelled")==0){ %> active <% } %> </h4>
                             <br>
                             <%hotelroom h=new hotelroom();
-                            double cost=h.takeRoomCost(table2.getInt("roomid")); %>
+                            double cost=h.takeRoomCost(table.getInt("roomid")); %>
                             <h4 style="font-weight: bold; color:darkred;">COST : <%= cost %> </h4>
                             
                         </td>
@@ -202,7 +142,7 @@
                        
                    
                 
-                    <%}%>
+                    
                 </table>
       <hr>
        

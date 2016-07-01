@@ -394,7 +394,25 @@ public class user {
         }
     }
 
+    //--------------------------------------------------------------------------    
     
+    
+    public ResultSet takeSelectedReservation(int rid) throws SQLException {
+        try{
+        initializeJdbc();
+
+
+        pstmt = conn.prepareStatement("select * from reservation where reservationid = ?");
+        pstmt.setInt(1, rid);
+        rs = pstmt.executeQuery();
+        rs.first();
+        return rs;
+    }
+         catch(Exception ex){
+          System.out.println("Exception: " + ex.getMessage());
+            return null;  
+        }
+    }
     //--------------------------------------------------------------------------
   
       
