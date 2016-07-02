@@ -105,7 +105,7 @@
                             
                             <h4 style="font-weight: bold; color:#014ccc;">RESERVATION CREATION DATE : <%out.print(table.getString("reservationdate"));%></h4>
                             
-                            <h4 style="font-weight: bold; color:#014ccc;">STATUS : <% if(table.getInt("isCancelled")==0){ %> active <% }else{ %>  inactive <% } %>  </h4>
+                            <h4 style="font-weight: bold; color:#014ccc;">STATUS : <% if(checkin.compareTo(date)>0&&table.getInt("isCancelled")==0){ %> active <% }else{ %>  inactive <% } %>  </h4>
                             
                             <%hotelroom h=new hotelroom();
                             double cost=h.takeRoomCost(table.getInt("roomid")); %>
