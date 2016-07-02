@@ -1,7 +1,10 @@
+<%@page import="java.text.SimpleDateFormat"%>
+<%@page import="java.text.DateFormat"%>
 <%@page import="db.hotelroom"%>
 <%@page import="db.reservation"%>
 <%@page import="db.user"%>
 <%@page import="java.sql.ResultSet"%>
+<%@page import="java.util.Date"%>
 <!DOCTYPE html>
 <%@page import="java.sql.*"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -28,6 +31,8 @@
 </head>
 <body>
  <%
+         DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
+         Date date = new Date(); 
         String username = (String)session.getAttribute("username");
         user u=new user(username);
         String type = u.checkTypePages(username);
@@ -44,6 +49,9 @@
         //user uu= new user(table.getString("username"),table.getString("firstname"),table.getString("lastname"),table.getString("password"),table.getString("birthdate"),table.getString("email"),table.getString("gender"),table.getString("telephone"),table.getInt("usertype_id"),table.getString("address"),table.getString("ssn"));
         int userid=u.takeUserId(username);
         ResultSet table2 = u.takeMyReservations(userid);
+        String ridString;
+        ResultSet table3;
+        Date checkin;
     %>
 <div id="container">
   <ul id="nav">
@@ -85,6 +93,10 @@
                         <td>                             
                         <input id="messageLink" type = "submit" name = "Submit" value = "<%out.print(table2.getInt("reservationid"));%>"/>
                         <input type="hidden" name="rid" value="<%out.print(table2.getString("reservationid"));%>">
+                            <% ridString = table2.getString("reservationid");
+                                int rid=Integer.parseInt(ridString);
+                         table3 = u.takeSelectedReservation(rid);
+                         checkin = table3.getDate("checkin"); %>
                         </td>
                         <td>
                             <%reservation r=new reservation();
@@ -109,7 +121,7 @@
                             <%= cost %>
                          </td>
                          <td>
-                         <% if(table2.getInt("isCancelled")==0){ %> active <% } else{ %> inactive <% } %>
+                         <% if(checkin.compareTo(date)>0&&table2.getInt("isCancelled")==0){ %> active <% } else{ %> inactive <% } %>
                          </td>                            
                             
                     </tr>
