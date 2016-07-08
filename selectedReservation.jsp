@@ -11,7 +11,7 @@
 
 <html lang="en">
 <head>
-<title>User Page</title>
+<title>Reservation</title>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 <link rel="stylesheet" href="style.css" type="text/css" />
   <style>
@@ -57,7 +57,7 @@
     %>
 <div id="container">
   <ul id="nav">
-    <li><a href="#" title="let">contact</a></li>
+    <li><a href="contact.jsp" title="contact">contact</a></li>
     <li><a href="logout.jsp" title="logout">logout</a></li>
   </ul>
       <div class="divider"></div>
@@ -111,6 +111,7 @@
                             double cost=h.takeRoomCost(table.getInt("roomid")); %>
                             <h4 style="font-weight: bold; color:#014ccc;">COST : <%= cost %> </h4>
                     <%if(checkin.compareTo(date)>0&&table.getInt("isCancelled")==0){ %> <input type="submit" name="Cancel" value="Cancel" style="width: 125px; background-color: white; border-color: white; color: #014ccc;"/> <%} %>
+                       
                         </td>
                         
                     </tr>
@@ -121,6 +122,11 @@
                 
                     </form>
                 </table>
+                                         <form method="post" action="userRate.jsp">
+                    <input type="submit" name="Rate" value="Rate" style="width: 125px; background-color: white; border-color: white; color: #014ccc;"/>
+                           <input type="hidden" name="rid2" value="<%out.print(table.getString("reservationid"));%>">
+                               <input type="hidden" name="roomid" value="<%out.print(table.getString("roomid"));%>">
+                                         </form>
       </div>
 
 <div id="footer">
