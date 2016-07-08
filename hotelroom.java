@@ -151,7 +151,25 @@ public class hotelroom{
         }
         
     } 
+     //--------------------------------------------------------------------------    
     
+    
+    public int takeHotelId(int roomid) throws SQLException {
+        try{
+        initializeJdbc();
+
+
+        pstmt = conn.prepareStatement("select hotelid from hotelrooms where roomid = ?");
+        pstmt.setInt(1, roomid);
+        rs = pstmt.executeQuery();
+        rs.first();
+        return rs.getInt("hotelid");
+    }
+         catch(Exception ex){
+          System.out.println("Exception: " + ex.getMessage());
+            return 0;  
+        }
+    }
    //--------------------------------------------------------------------------
     
     

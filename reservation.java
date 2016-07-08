@@ -162,7 +162,55 @@ public class reservation{
         }
         return true;
     }
-   
+   //--------------------------------------------------------------------------    
+    
+    
+    public ResultSet takeMyReservations(int id) throws SQLException {
+        try{
+        initializeJdbc();
+
+
+        pstmt = conn.prepareStatement("select * from reservation where userid = ?");
+        pstmt.setInt(1, id);
+        rs = pstmt.executeQuery();
+        rs.beforeFirst();
+        return rs;
+    }
+         catch(Exception ex){
+          System.out.println("Exception: " + ex.getMessage());
+            return null;  
+        }
+    }
+     //--------------------------------------------------------------------------    
+    
+     
+     
+    public boolean addComment(int hotelid, int userid, String comment, int rating) throws SQLException {
+        try {
+          if(comment==""){
+            return false;
+           }
+          else{
+            
+            initializeJdbc();
+
+            pstmt = conn.prepareStatement("insert into usercomments "
+                    + "(hotel_hotelid, user_id, comment, rating) values (?, ?, ?, ?)");
+            
+            pstmt.setInt(1, hotelid);
+            pstmt.setInt(2, userid);
+            pstmt.setString(3, comment);
+            pstmt.setInt(4, rating);
+            pstmt.executeUpdate();
+          }
+        } catch (Exception ex) {
+            System.out.println("Exception: " + ex.getMessage());
+            return false;
+        }
+        return true;
+    }
+    
+    
    //--------------------------------------------------------------------------
     
     

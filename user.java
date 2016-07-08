@@ -406,7 +406,7 @@ public class user {
     }
  //--------------------------------------------------------------------------    
     
-    
+  /*  
     public ResultSet takeMyReservations(int id) throws SQLException {
         try{
         initializeJdbc();
@@ -422,7 +422,7 @@ public class user {
           System.out.println("Exception: " + ex.getMessage());
             return null;  
         }
-    }
+    }*/
 
     //--------------------------------------------------------------------------    
     
