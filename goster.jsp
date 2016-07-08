@@ -18,7 +18,7 @@
 <%
 try{
          Class.forName("com.mysql.jdbc.Driver");
-           Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/hotelreservationdb", "root", "melis");
+           Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/hotelreservationdb", "root", "");
            Statement st=con.createStatement();
            
                 String q="SELECT * FROM reservation ORDER BY reservationid DESC LIMIT 1";
