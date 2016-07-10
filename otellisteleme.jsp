@@ -33,7 +33,7 @@ th, td {
    String value=request.getParameter("search");;
    Connection connection = null;
    Class.forName("sun.jdbc.odbc.JdbcOdbcDriver");
-   connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/hotelreservationdb", "root", "melis");
+   connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/hotelreservationdb", "root", "");
    Statement st=conn.createStatement();
    ResultSet rs = st.executeQuery("SELECT hotelid,hotelname,STATE_NAME,CITY_NAME  FROM hotel AS h  JOIN state AS s ON h.STATE_ID = s.STATE_ID JOIN city AS c  ON s.CITY_ID = c.CITY_ID WHERE hotelname='"+value+"' OR STATE_NAME='"+value+"' OR CITY_NAME='"+value+"'");
   %>
