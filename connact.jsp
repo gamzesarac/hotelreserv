@@ -11,7 +11,7 @@ java.sql.Connection conn = null;
 String url = "jdbc:mysql://localhost:3306/hotelreservationdb";
 String Driver="com.mysql.jdbc.Driver";
 String username="root";
-String password="melis";
+String password="";
 try { 
             Class.forName(Driver); 
             conn=DriverManager.getConnection(url,username,password);
