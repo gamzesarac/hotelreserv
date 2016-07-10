@@ -19,7 +19,7 @@
    String user = request.getParameter("username"); 
    Connection connection = null;
    Class.forName("sun.jdbc.odbc.JdbcOdbcDriver");
-   connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/hotelreservationdb", "root", "melis");
+   connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/hotelreservationdb", "root", "");
    Statement st=conn.createStatement();
    ResultSet rs = st.executeQuery("SELECT * FROM hotel WHERE hotelid='"+user+"'" );
     while(rs.next()){
