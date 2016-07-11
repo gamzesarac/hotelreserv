@@ -1,7 +1,4 @@
-<%@page import="java.util.Date"%>
-
-
-
+   <%@page import="java.util.Date"%>
 <html>
     <head>
 
@@ -39,13 +36,13 @@ table#t01 th {
 </head>
 <body>
     <form action="rezervasyonyapildi.jsp" action="post"> 
-     <font color="black"><strong>First name: </strong> <input type="text" name="firstName" />
+     <font color="black"><strong>First name: </strong> <input type="text" name="firstName" required />
     <br/><br/>
     
-     <strong>Last name:  </strong><input type="text" name="lastName" />
+     <strong>Last name:  </strong><input type="text" name="lastName" required/>
     <br/><br/>
     
-     <strong>User name:  </strong><input type="text" name="userName" />
+     <strong>User name:  </strong><input type="text" name="userName" required />
     <br/><br/>  
     
   <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
@@ -57,7 +54,7 @@ table#t01 th {
     $( "#datepicker" ).datepicker();
   });
   </script>
-      <p> <strong>Check-in Date:  </strong><input type="text" id="datepicker" name="datepicker"></p>
+      <p> <strong>Check-in Date:  </strong><input type="text" id="datepicker" name="datepicker" required></p>
 <br/><br/> 
 
       <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
@@ -69,7 +66,7 @@ table#t01 th {
     $( "#datepicker1" ).datepicker();
   });
   </script>
-      <p> <strong>Check-out Date: </strong> <input type="text" id="datepicker1" name="datepicker1"></p>
+      <p> <strong>Check-out Date: </strong> <input type="text" id="datepicker1" name="datepicker1" required></p>
       <br/><br/>
       
       <strong>Reservation Date:</strong>
@@ -80,30 +77,30 @@ table#t01 th {
       <br/><br/>
       <br/><br/> 
       
-<strong>Oda Tipini Seçin</strong>
+<strong>Oda Tipini SeÃ§in</strong>
       <br/><br/> 
  <table id="t01">
   <tr>
     <th>Azami</th>
     <th>Oda Tipi</th>
     <th>Fiyatlar</th>
-    <th>Seç</th>
+    <th>SeÃ§</th>
   </tr>
   <tr>
     <td>*</td>
     <td>Tek Kisilik Oda</td>
     <td>50</td>
-    <td> <input type="radio" name="oda" value="tekkisi" checked>Sec<br></td>
+    <td> <input type="radio" name="oda" value="tekkisi" checked >Sec<br></td>
   </tr>
   <tr>
     <td>**</td>
-    <td>Çift Kisilik Oda</td>
+    <td>Ã‡ift Kisilik Oda</td>
     <td>100</td>
     <td>  <input type="radio" name="oda" value="ciftkisi"> Sec<br></td>
   </tr>
   <tr>
     <td>**</td>
-    <td>Çift Kisilik Oda</td>
+    <td>Ã‡ift Kisilik Oda</td>
     <td>100</td>
     <td>  <input type="radio" name="oda" value="cciftkisi"> Sec</td>
   </tr>
