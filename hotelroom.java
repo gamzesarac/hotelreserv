@@ -108,7 +108,31 @@ public class hotelroom{
             ex.printStackTrace();
         }
     }
+    //--------------------------------------------------------------------------
     
+    public boolean addHotelRoom(String roomtype, String roomcost, int hotelid) throws SQLException {
+         try {
+
+            initializeJdbc();
+
+            pstmt = conn.prepareStatement("insert into hotelreservationdb.hotelrooms "
+                    + "(roomtype, roomcost, hotelid) values (?, ?, ?)");
+            
+            pstmt.setString(1, roomtype);
+            pstmt.setString(2, roomcost);
+            pstmt.setInt(3, hotelid);
+
+
+
+            pstmt.executeUpdate();
+          
+        } catch (Exception ex) {
+            System.out.println("Exception: " + ex.getMessage());
+            return false;
+        }    
+
+        return true;
+    }
       //--------------------------------------------------------------------------   
     
     

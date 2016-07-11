@@ -12,7 +12,7 @@
 <jsp:setProperty name = "dbbean" property = "*" />
 <html lang="en">
 <head>
-<title>User Page</title>
+<title>My Reservations</title>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 <link rel="stylesheet" href="style.css" type="text/css" />
   <style>
@@ -48,14 +48,15 @@
         ResultSet table = u.takeUserInfo(username);
         //user uu= new user(table.getString("username"),table.getString("firstname"),table.getString("lastname"),table.getString("password"),table.getString("birthdate"),table.getString("email"),table.getString("gender"),table.getString("telephone"),table.getInt("usertype_id"),table.getString("address"),table.getString("ssn"));
         int userid=u.takeUserId(username);
-        ResultSet table2 = u.takeMyReservations(userid);
+        reservation r = new reservation();
+        ResultSet table2 = r.takeMyReservations(userid);
         String ridString;
         ResultSet table3;
         Date checkin;
     %>
 <div id="container">
   <ul id="nav">
-    <li><a href="#" title="let">contact</a></li>
+    <li><a href="contact.jsp" title="contact">contact</a></li>
     <li><a href="logout.jsp" title="logout">logout</a></li>
   </ul>
       <div class="divider"></div>
@@ -99,7 +100,7 @@
                          checkin = table3.getDate("checkin"); %>
                         </td>
                         <td>
-                            <%reservation r=new reservation();
+                            <%
                             String hotelname=r.takeHotelName(table2.getInt("roomid")); %>
                             <%= hotelname %>
                         </td>                        

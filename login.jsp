@@ -17,25 +17,38 @@
         user u=new user(username,password);
         String usertype = u.checkType(username, password);
         int check = Integer.parseInt(usertype);
+        System.out.println(check);
         
     %>        
-    <%  if( check == 1 ) {
+    <%  if( check == 1 || check == 2 || check == 3 || check == -1){
+        if( check == 1 ) {
             if( u.checkAdmin(username,password) ){
                 session.setAttribute("username", username);
                 response.sendRedirect("admin.jsp");
             } else {
                 response.sendRedirect("loginError.html");
             }
-        } else if ( check == 2 ) {
+        }
+        if ( check == 2 ) {
             if( u.checkRegistered(username,password) ){
                 session.setAttribute("username", username);
                 response.sendRedirect("user.jsp");
             } else {
                 response.sendRedirect("loginError.html");
             }
-        } else if ( check == -1)            
+        }
+        if ( check == 3 ) {
+            if( u.checkRegisteredHotel(username,password) ){
+                session.setAttribute("username", username);
+                response.sendRedirect("hotel.jsp");
+            } else {
+                response.sendRedirect("loginError.html");
+            }
+        }
+        if ( check == -1)            
              response.sendRedirect("loginError.html");           
-         else {
+      }
+    else {
             response.sendRedirect("loginError.html");
         }%>        
 </body>

@@ -14,7 +14,7 @@
         user u=new user(username);
         String type = u.checkTypePages(username);
         int check = Integer.parseInt(type); %>
-       <% if(check != 2 || check ==-1){ %>
+       <% if(check != 3 || check ==-1){ %>
         <jsp:forward page="loginError_1.html"/>
         <% } 
         if(session.getAttribute("username") == null){
@@ -43,8 +43,8 @@
         <h2 style="font-family: monospace; font-weight: bold; font-size: 250%; ">Personal Homepage</h2>
         <p><a style="font-size: 140%; color: black"> Welcome to your personal page.</a></p>
 
-        <h3><a href="MyReservations.jsp" style="color:#014ccc">Your Reservations</a></h3>
-        <h3> <a href="editInfo.jsp" style="color:#014ccc">Edit Personal Info</a></h3>
+        <h3><a href="registerhotel.jsp" style="color:#014ccc">Add Hotel</a></h3>
+       
     </div>
     
    
