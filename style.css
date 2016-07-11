@@ -10,6 +10,27 @@ a:hover { color: #014ccc; text-decoration: none; }
 #nav li a { font-size: 120%; text-decoration: none; padding: 10px; }
 #nav li a:hover, #nav #current { background-color: #014ccc; color: #fff;  text-decoration: none;  }
 
+div.styled-select {
+   width: 240px;
+   height: 34px;
+   overflow: hidden;
+  /* background: url(new_arrow.jpg) no-repeat right #ddd; */
+   border: 1px solid #014ccc;
+   }
+   
+div.styled-select select {
+   background: white;
+   width: 268px;
+   padding: 5px;
+   font-size: 16px;
+   color:#014ccc;
+   line-height: 1;
+   border: 0;
+   border-radius: 0;
+   height: 34px;
+   -webkit-appearance: none;
+   }
+
 /*-------------------- HEADER --------------------*/
 
 #header { clear: both; background: transparent url('images/logo.gif') no-repeat 45px 17px; height: 170px; padding: 0; margin: 0; }

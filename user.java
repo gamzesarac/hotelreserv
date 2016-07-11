@@ -11,6 +11,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Date;
+ 
+import java.util.Properties;
+ 
 
 /**
  *
@@ -343,6 +346,26 @@ public class user {
         pstmt.setString(1, username);
         pstmt.setString(2, password);
         pstmt.setString(3, "2");
+
+        rs = pstmt.executeQuery();
+        rs.first();
+
+        if (rs.first()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    
+      //--------------------------------------------------------------------------
+    
+    public boolean checkRegisteredHotel(String username, String password) throws SQLException {
+        initializeJdbc();
+
+        pstmt = conn.prepareStatement("select * from user where username = ? and password = ? and usertype_id = ? ");
+        pstmt.setString(1, username);
+        pstmt.setString(2, password);
+        pstmt.setString(3, "3");
 
         rs = pstmt.executeQuery();
         rs.first();
