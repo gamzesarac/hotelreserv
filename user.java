@@ -345,7 +345,7 @@ public class user {
         pstmt = conn.prepareStatement("select * from user where username = ? and password = ? and usertype_id = ? ");
         pstmt.setString(1, username);
         pstmt.setString(2, password);
-        pstmt.setString(3, "2");
+        pstmt.setString(3, "3");
 
         rs = pstmt.executeQuery();
         rs.first();
@@ -365,7 +365,7 @@ public class user {
         pstmt = conn.prepareStatement("select * from user where username = ? and password = ? and usertype_id = ? ");
         pstmt.setString(1, username);
         pstmt.setString(2, password);
-        pstmt.setString(3, "3");
+        pstmt.setString(3, "2");
 
         rs = pstmt.executeQuery();
         rs.first();
@@ -398,7 +398,76 @@ public class user {
             return false;
         }
     }
+    
+    //--------------------------------------------------------------------------
+    
+    
+    
+    public ResultSet userDetails(String username, String password) throws SQLException {
+        initializeJdbc();
 
+        pstmt = conn.prepareStatement("select * from user where username = ? and password = ?");
+        pstmt.setString(1, username);
+        pstmt.setString(2, password);
+        
+        rs = pstmt.executeQuery();
+        
+        if(rs.next())
+        {
+            return rs;
+        }
+        else return null;
+    }
+        //--------------------------------------------------------------------------
+     public boolean sendMessage(int hotelid,int adminid, String message) throws SQLException {
+        try {
+          if(hotelid==-1||message==""||adminid==-1){
+            return false;
+           }
+          else{
+            
+            initializeJdbc();
+            
+            pstmt = conn.prepareStatement("insert into hotelreservationdb.hotelmessage "
+                    + "(hotelid, adminid, message) values (?, ?, ?)");
+            
+            pstmt.setInt(1, hotelid);
+            pstmt.setInt(2, adminid);
+            pstmt.setString(3, message);;
+            pstmt.executeUpdate();
+          }
+        } catch (Exception ex) {
+            System.out.println("Exception: " + ex.getMessage());
+            return false;
+        }
+        return true;
+    }
+//--------------------------------------------------------------------------
+    
+    public ResultSet takeMessageSelected(int userid) throws SQLException {
+        initializeJdbc();
+
+        pstmt = conn.prepareStatement("select * from hotelmessage where hotelid IN ( select hotelid from hotel where user_id = ? )");
+        pstmt.setInt(1, userid);
+        rs = pstmt.executeQuery();
+        rs.beforeFirst();
+
+        return rs;
+    }
+    
+    //--------------------------------------------------------------------------
+    
+    public ResultSet readMessage(int messageid) throws SQLException {
+        initializeJdbc();
+
+        pstmt = conn.prepareStatement("select * from hotelmessage where messageid = ?");
+        pstmt.setInt(1, messageid);
+        rs = pstmt.executeQuery();
+        rs.first();
+
+        return rs;
+    }
+    
     //--------------------------------------------------------------------------
     public ResultSet returnTable(String sql) throws SQLException {
         initializeJdbc();

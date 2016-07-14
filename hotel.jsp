@@ -5,25 +5,16 @@
 <head>
 <title>User Page</title>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
-<link rel="stylesheet" href="style.css" type="text/css" />
+<link rel="stylesheet" href="../style.css" type="text/css" />
 </head>
 <body>
 
  <%
         String username = (String)session.getAttribute("username");
-        user u=new user(username);
-        String type = u.checkTypePages(username);
-        int check = Integer.parseInt(type); %>
-       <% if(check != 3 || check ==-1){ %>
-        <jsp:forward page="loginError_1.html"/>
-        <% } 
-        if(session.getAttribute("username") == null){
-            response.sendRedirect("index.jsp");
-        }
-
-        String firstname = u.takeFirstname(username);
-
-
+        String firstname = session.getAttribute("firstname").toString();
+        String lastname = session.getAttribute("lastname").toString();
+        
+        
    
     %>
 <div id="container">
@@ -33,17 +24,24 @@
   </ul>
       <div class="divider"></div>
   <div id="header">
-      <h1><a href="user.jsp">Hotel Reservation</a><span>Isik University</span></h1>
+      <h1><a href="hotel.jsp">Hotel Reservation</a><span>Isik University</span></h1>
   </div>
        <div class="divider"></div>
   <div id="sidebar">
-    <a href="user.jsp"><h4 style="color: #014ccc; font-style: italic;">Welcome : <%= firstname %> </h4></a>
+    <h4 style="color: #014ccc; font-style: italic;">Welcome : <%= firstname + " " + lastname %> </h4>
+    <fieldset>
+     <a href="inbox.jsp">Messages()</a>
+     
+    </fieldset>
   </div>
        <div id="main">
         <h2 style="font-family: monospace; font-weight: bold; font-size: 250%; ">Personal Homepage</h2>
         <p><a style="font-size: 140%; color: black"> Welcome to your personal page.</a></p>
+        
+       
 
         <h3><a href="registerhotel.jsp" style="color:#014ccc">Add Hotel</a></h3>
+        <h3><a href="myHotels.jsp" style="color:#014ccc">My Hotels</a></h3>
        
     </div>
     

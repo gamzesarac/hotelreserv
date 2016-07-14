@@ -67,11 +67,15 @@ public class hotel {
             System.out.println("Exception: " + ex.getMessage());
             return false;
         }    
+         
 
         return true;
     }
     
      //--------------------------------------------------------------------------
+    
+    
+    //---------------------------------------------------------------------------
     
      public String takeHotelname(String hotelname) throws SQLException {
         try {
@@ -220,6 +224,21 @@ public class hotel {
     }
 
     //--------------------------------------------------------------------------
+     
+     public ResultSet takeHotelList(String username) throws SQLException {
+        initializeJdbc();
+        
+
+        pstmt = conn.prepareStatement("select * from hotel,user where hotel.user_id = user.id AND user.username ='"+username+"'");       
+
+        rs = pstmt.executeQuery();
+
+        return rs;
+    }
+
+    //--------------------------------------------------------------------------
+     
+     
      
      
      public String takeCitynameFromID(String id) throws SQLException {
