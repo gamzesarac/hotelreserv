@@ -475,7 +475,24 @@ public class user {
     }
 
         
+    //--------------------------------------------------------------------------
     
+    public boolean deleteMessagePermanent() throws SQLException {
+        try {
+        
+        initializeJdbc();
+
+        pstmt = conn.prepareStatement("delete from hotelmessage where isDeleted = ? "); 
+
+        pstmt.setInt(1, 1);
+        pstmt.executeUpdate();
+         
+        } catch (Exception ex) {
+            System.out.println("Exception: " + ex.getMessage());
+            return false;
+        }
+        return true;
+    } 
     
     //--------------------------------------------------------------------------
     
