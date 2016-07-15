@@ -454,7 +454,35 @@ public class user {
 
         return rs;
     }
+    //--------------------------------------------------------------------------
     
+    public ResultSet messageNotify(int userid) throws SQLException {
+        initializeJdbc();
+
+        pstmt = conn.prepareStatement("select * from hotelmessage where isRead = 0 and hotelid IN ( select hotelid from hotel where user_id = ? )");
+        pstmt.setInt(1, userid);
+        rs = pstmt.executeQuery();
+        rs.beforeFirst();
+
+        return rs;
+    }
+    //--------------------------------------------------------------------------
+    
+    public boolean readFlag(int messageid) throws SQLException {
+        try {
+        initializeJdbc();
+
+        pstmt = conn.prepareStatement("update hotelmessage set isRead=1 where messageid = ? ");
+        pstmt.setInt(1, messageid);
+        pstmt.executeUpdate();
+
+        } catch (Exception ex) {
+            System.out.println("Exception: " + ex.getMessage());
+            return false;
+        }
+        return true;
+    
+    }
     //--------------------------------------------------------------------------
     
     public ResultSet readMessage(int messageid) throws SQLException {

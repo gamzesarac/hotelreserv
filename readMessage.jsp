@@ -42,6 +42,7 @@
         String msgid = request.getParameter("messageid");
         int messageid = Integer.parseInt(msgid);
         ResultSet rs = u.readMessage(messageid);
+        u.readFlag(messageid);
 
    
     %>

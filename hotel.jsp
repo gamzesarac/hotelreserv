@@ -13,9 +13,19 @@
         String username = (String)session.getAttribute("username");
         String firstname = session.getAttribute("firstname").toString();
         String lastname = session.getAttribute("lastname").toString();
+        user u=new user(username);
+        String type = u.checkTypePages(username);
+        int check = Integer.parseInt(type); %>
+       <% if(check != 2 || check ==-1){ %>
+        <jsp:forward page="loginError_1.html"/>
+        <% } 
+        if(session.getAttribute("username") == null){
+            response.sendRedirect("index.html");
+        }        
         
-        
-   
+        int userid = u.takeUserId(username);
+        ResultSet rs = u.messageNotify(userid);
+        boolean b=rs.first();
     %>
 <div id="container">
   <ul id="nav">
@@ -30,7 +40,7 @@
   <div id="sidebar">
     <h4 style="color: #014ccc; font-style: italic;">Welcome : <%= firstname + " " + lastname %> </h4>
     <fieldset>
-     <a href="inbox.jsp">Messages()</a>
+        <h3><a href="inbox.jsp">Messages(<% if(b){ %>!!<% } %><%else{%>0<%}%>)</a></h3>
      
     </fieldset>
   </div>
