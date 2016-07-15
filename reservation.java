@@ -3,215 +3,227 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package db;
+
+package Reservation;
+
+/**
+ *
+ * @author asus1
+ */
+
+
+
+
+
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.util.Date;
 
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
 /**
  *
- * @author YGZ
+ * @author asus1
  */
-public class reservation{
-    
-   private Connection conn = null;
-
+public class reservation {
+    private Connection conn = null;
     private final String db_user = "root";
-    private final String db_pass = "";
+    private final String db_pass = "melis";
     private final String db_driver = "com.mysql.jdbc.Driver";
     private final String db_url = "jdbc:mysql://localhost:3306/hotelreservationdb"; 
     
     
    private int reservationid;
    private int userid;
-   private Date checkin;
-   private Date checkout;
+   private int roomid;
+   private String checkin;
+   private String checkout;
    private String usermessage;
-   private Date reservationdate;
+   private String reservationdate;
+  private int roomcost;
+  
+    public String getReservationdate() {
+        return reservationdate;
+    }
+
+    public void setReservationdate(String reservationdate) {
+        this.reservationdate = reservationdate;
+    }
    private int isCancelled;
+
+    public String getCheckout() {
+        return checkout;
+    }
+
+    public void setCheckout(String checkout) {
+        this.checkout = checkout;
+    }
+  
+    public String getCheckin() {
+        return checkin;
+    }
+
+    public void setCheckin(String checkin) {
+        this.checkin = checkin;
+    }
+ 
    
    private PreparedStatement pstmt;
    ResultSet rs;
-   
-   public reservation(){
-       
-   }
-   
-    public reservation(int userid){
-     this.userid=userid;
 
-   }
-   
-   
-   public reservation(int userid, Date checkin, Date checkout, String usermessage, Date reservationdate){
-       
+    public void setReservationid(int reservationid) {
+        this.reservationid = reservationid;
+    }
 
-       this.userid=userid;
-       this.checkin=checkin;
-       this.checkout=checkout;
-       this.usermessage=usermessage;
-       this.reservationdate=reservationdate;
-       
-   }
+    public void setUserid(int userid) {
+        this.userid = userid;
+    }
+
+    public void setRoomid(int roomid) {
+        this.roomid = roomid;
+    }
+
+ 
+    public void setUserMessage(String usermessage) {
+        this.usermessage = usermessage;
+    }
+
    
+
+    public void setIsCancelled(int isCancelled) {
+        this.isCancelled = isCancelled;
+    }
+  
+
+    public int getReservationid() {
+        return reservationid;
+    }
+
+    public int getUserid() {
+        return userid;
+    }
+
+    public int getRoomid() {
+        return roomid;
+    }
+
+
+
+    public String getUserMessage() {
+        return usermessage;
+    }
+
+
+    public int getIsCancelled() {
+        return isCancelled;
+    }
    
-   public int getReservationId(){
-       return this.reservationid;
-   }
+
+    
+    
+    
+    
+  
    
-   public void setReservationId(int reservationid){
-       this.reservationid=reservationid;
-   }
-   
-   public int getUserId(){
-       return this.userid;
-   }
-   
-   public void setUserId(int userid){
-       this.userid=userid;
-   }
-      
-   public Date getCheckIn(){
-       return this.checkin;
-   }
-   
-   public void setCheckIn(Date checkin){
-       this.checkin=checkin;
-   }
-   
-   public Date getCheckOut(){
-       return this.checkout;
-   }
-   
-   public void setCheckOut(Date checkout){
-       this.checkout=checkout;
-   }
-   
-   public String getUserMessage(){
-       return this.usermessage;
-   }
-   
-   public void setUserMessage(String usermessage){
-       this.usermessage=usermessage;
-   }
-   
-   public Date getReservationDate(){
-       return this.reservationdate;
-   }
-   
-   public void setReservationDate(Date reservationdate){
-       this.reservationdate=reservationdate;
-   }
-    //--------------------------------------------------------------------------
-   
+    public reservation(){
+        
+    }
     public void initializeJdbc() throws SQLException {
         try {
             Class.forName(db_driver);
-            conn = DriverManager.getConnection(db_url, db_user, db_pass);
+            conn = (Connection) DriverManager.getConnection(db_url, db_user, db_pass);
         } catch (Exception ex) {
             ex.printStackTrace();
         }
     }
-     //--------------------------------------------------------------------------   
     
+    public boolean addreservation(int reservationid, int userid,int roomid,String checkin,String checkout,String usermessage,String reservationdate,int isCancelled){
+     try {
+
+            initializeJdbc();
+            pstmt = conn.prepareStatement("insert into hotelreservationdb.reservation "
+                    + "(userid, roomid, checkin, checkout, usermessage, reservationdate,isCancelled) values (?, ?, ?, ?, ?, ?,?)");
+            
+            pstmt.setInt(1, userid);
+            pstmt.setInt(2, roomid);
+            pstmt.setString(3, checkin);
+            pstmt.setString(4,  checkout);
+            pstmt.setString(5, usermessage);
+            pstmt.setString(6, reservationdate);
+             pstmt.setInt(7, isCancelled);
+
+            pstmt.executeUpdate();
+          
+        } catch (Exception ex) {
+            System.out.println("Exception: " + ex.getMessage());
+            return false;
+        }    
+         
+
+        return true;
+    }
     
-    public String takeHotelName(int roomid) throws SQLException {
-        try {
+      //--------------------------------------------------------------------------   
+    
+    public ResultSet takeReservation() throws SQLException {
+        initializeJdbc();
+        
+
+        pstmt = conn.prepareStatement("SELECT * FROM reservation ORDER BY reservationid DESC LIMIT 1");       
+
+        rs = pstmt.executeQuery();
+                 while(rs.next()){
+
+rs.getString("reservationid");
+rs.getString("checkin");
+rs.getString("checkout");
+rs.getString("usermessage");
+
+                }
+        return rs;
+    }
+     public ResultSet defineReservation() throws SQLException {
+        initializeJdbc();
+        
+
+        pstmt = conn.prepareStatement("SELECT * FROM reservation ORDER BY reservationid DESC LIMIT 1");       
+
+        rs = pstmt.executeQuery();
+
+        return rs;
+    }
+     
+     public int takeroomid(String roomtype)throws SQLException {
+   try {
         
         initializeJdbc();
-        pstmt = conn.prepareStatement("select hotelid from hotelrooms where roomid = ?");
+        pstmt = conn.prepareStatement("select roomid from hotelrooms where roomtype = ?");
         pstmt.setInt(1, roomid);
         rs = pstmt.executeQuery();
         rs.first();
 
-        int hotelid = rs.getInt("hotelid");
-        
-        pstmt = conn.prepareStatement("select hotelname from hotel where hotelid = ?");
-        pstmt.setInt(1, hotelid);
-        rs = pstmt.executeQuery();
-        rs.first();
-        
-        return rs.getString("hotelname");
+        return rs.getInt("roomid");
     }
         catch(Exception ex){
           System.out.println("Exception: " + ex.getMessage());
-            return "";  
+            return 0;  
         }
         
-    } 
-    //--------------------------------------------------------------------------    
-    
-    
-    public boolean cancelReservation(int rid) throws SQLException {
-        try{
-        initializeJdbc();
-
-
-        pstmt = conn.prepareStatement("update reservation set isCancelled=1 where reservationid= ?");
-        pstmt.setInt(1, rid);
-        pstmt.executeUpdate();
-
-    }
-         catch(Exception ex){
-          System.out.println("Exception: " + ex.getMessage());
-            return false;  
-        }
-        return true;
-    }
-   //--------------------------------------------------------------------------    
-    
-    
-    public ResultSet takeMyReservations(int id) throws SQLException {
-        try{
-        initializeJdbc();
-
-
-        pstmt = conn.prepareStatement("select * from reservation where userid = ?");
-        pstmt.setInt(1, id);
-        rs = pstmt.executeQuery();
-        rs.beforeFirst();
-        return rs;
-    }
-         catch(Exception ex){
-          System.out.println("Exception: " + ex.getMessage());
-            return null;  
-        }
-    }
-     //--------------------------------------------------------------------------    
-    
+    }   
      
-     
-    public boolean addComment(int hotelid, int userid, String comment, int rating) throws SQLException {
-        try {
-          if(comment==""){
-            return false;
-           }
-          else{
-            
-            initializeJdbc();
-
-            pstmt = conn.prepareStatement("insert into usercomments "
-                    + "(hotel_hotelid, user_id, comment, rating) values (?, ?, ?, ?)");
-            
-            pstmt.setInt(1, hotelid);
-            pstmt.setInt(2, userid);
-            pstmt.setString(3, comment);
-            pstmt.setInt(4, rating);
-            pstmt.executeUpdate();
-          }
-        } catch (Exception ex) {
-            System.out.println("Exception: " + ex.getMessage());
-            return false;
-        }
-        return true;
-    }
-    
-    
-   //--------------------------------------------------------------------------
-    
+ 
     
 }
+
+
+
+
