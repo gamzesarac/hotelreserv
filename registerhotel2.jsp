@@ -10,7 +10,7 @@
         <title>Hotel Registration Form</title>
         <meta charset="utf-8">
         <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
-        <link rel="stylesheet" href="style.css" type="text/css" />
+        <link rel="stylesheet" href="../style.css" type="text/css" />
     </head>
      <%
          
@@ -29,13 +29,13 @@
         <div id ="container">
             <ul id="nav">
                 <li><a href="#" title="let">contact</a></li>
-                <li><a href="login.jsp" title="login">login</a></li>
+                <li><a href="logout.jsp" title="logout">logout</a></li>
             </ul>
 
             <div class="divider"></div>
 
             <div id="header">
-                <h1><a href="user.jsp">Hotel Reservation</a><span>Isik University</span></h1>
+                <h1><a href="hotel.jsp">Hotel Reservation</a><span>Isik University</span></h1>
             </div>
 
             <div class="divider"></div>
@@ -49,7 +49,7 @@
                 <table border="4">
                     <th style="font-size: 15px;">Select State</th>
                         <tr><td>
-                    <form method="post" action="hotelindex.jsp">
+                    <form method="get" action="hotelindex.jsp">
      <div class="styled-select">
                 <select name="city"> 
     <option value="<%=city%>"><%=city%></option>

@@ -20,7 +20,7 @@
         user u=new user(username);
         String type = u.checkTypePages(username);
         int check = Integer.parseInt(type); %>
-       <% if(check != 2 || check ==-1){ %>
+       <% if(check != 3 || check ==-1){ %>
         <jsp:forward page="loginError_1.html"/>
         <% } 
         if(session.getAttribute("username") == null){

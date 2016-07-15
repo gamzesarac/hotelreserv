@@ -14,23 +14,24 @@
           String username = (String)session.getAttribute("username"); 
           user u = new user();
           int user_id=u.takeUserId(username);
-          String hotelname = session.getAttribute("hotelname").toString();
-          String hotelinfo = session.getAttribute("hotelinfo").toString();
-          String hoteladdress = session.getAttribute("hoteladdress").toString();
-          String hotelcity = session.getAttribute("hotelcity").toString();
-          String hotelstate = session.getAttribute("hotelstate").toString();
-          String hoteltelephone = session.getAttribute("hoteltelephone").toString();
-          String city_id = session.getAttribute("city_id").toString();
-          String state_idd = session.getAttribute("state_id").toString();
-          String standartroomsize = session.getAttribute("standardroomsize").toString();
-          int standart = Integer.parseInt(standartroomsize);
-          String luxuryroomsize = session.getAttribute("luxuryroomsize").toString();
-          int luxury = Integer.parseInt(luxuryroomsize); 
-          String premiumroomsize = session.getAttribute("premiumroomsize").toString();
-          int premium = Integer.parseInt(premiumroomsize);  
-          String standartcost = session.getAttribute("standartcost").toString();
-          String luxurycost = session.getAttribute("luxurycost").toString();
-          String premiumcost = session.getAttribute("premiumcost").toString();
+            String hotelname = request.getParameter("hotelname");
+          String hotelinfo = request.getParameter("hotelInfo");
+          String hoteladdress = request.getParameter("hoteladdress");
+          String hotelcity = request.getParameter("hotelcity");
+          String hotelstate = request.getParameter("hotelstate");
+          String hoteltelephone = request.getParameter("hoteltelephone");
+          String city_id = request.getParameter("city_id");
+          String state_idd = request.getParameter("state_id");
+            
+          //String standartroomsize = session.getAttribute("standardroomsize").toString();
+         // int standart = Integer.parseInt(standartroomsize);
+         // String luxuryroomsize = session.getAttribute("luxuryroomsize").toString();
+         // int luxury = Integer.parseInt(luxuryroomsize); 
+         // String premiumroomsize = session.getAttribute("premiumroomsize").toString();
+         // int premium = Integer.parseInt(premiumroomsize);  
+         // String standartcost = session.getAttribute("standartcost").toString();
+         // String luxurycost = session.getAttribute("luxurycost").toString();
+          //String premiumcost = session.getAttribute("premiumcost").toString();
           
           int state_id = Integer.parseInt(state_idd);
           
@@ -38,20 +39,26 @@
           boolean isSuccess = h.addHotel(hotelname, hotelinfo, hoteladdress, hoteltelephone, user_id, state_id);          
 
                 if (isSuccess) { 
-                int hotelid = h.takeHotelId(hotelname);
-                hotelroom r = new hotelroom();
-                for(int i=0; i<standart; i++)
-                    r.addHotelRoom("standart", standartcost, hotelid);
-                for(int i=0; i<luxury; i++)
-                    r.addHotelRoom("luxury", luxurycost, hotelid);
-                for(int i=0; i<premium; i++)
-                    r.addHotelRoom("premium", premiumcost, hotelid);   %>           
-              <jsp:forward page="hotelregistered.html"/>
+                //int hotelid = h.takeHotelId(hotelname);
+                //hotelroom r = new hotelroom();
+                //for(int i=0; i<standart; i++)
+                //    r.addHotelRoom("standart", standartcost, hotelid);
+               // for(int i=0; i<luxury; i++)
+               //     r.addHotelRoom("luxury", luxurycost, hotelid);
+               // for(int i=0; i<premium; i++)
+               //     r.addHotelRoom("premium", premiumcost, hotelid);   
                     
-            <% } else {%>
-                
-                <jsp:forward page="hotelnotregistered.html"/>
-            <% }
+            String redirectURL = "hotel.jsp";
+            response.sendRedirect(redirectURL);
+            
+                }
+        
+                else {
+           String redirectURL = "hotelnotregistered.jsp";
+           response.sendRedirect(redirectURL);
+        }
+            
+           
         
     %>
 

@@ -463,7 +463,7 @@ public class user {
         initializeJdbc();
 
         /* pstmt = conn.prepareStatement("delete from hotelmessage where messageid = ? )"); */
-        pstmt = conn.prepareStatement("update hotelmessage set isDeleted = 1 where messageid = ? )");
+        pstmt = conn.prepareStatement("update hotelmessage set isDeleted = 1 where messageid = ? ");
         pstmt.setInt(1, messageid);
         pstmt.executeUpdate();
          

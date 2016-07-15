@@ -78,18 +78,25 @@
                         <% while(rs.next())
                         {
                         %>
-                        <tr>
+                        <tr><% String s2 = rs.getString("isDeleted");
+                                  int deleteddd = Integer.parseInt(s2);
+                                if(deleteddd!=1){ %>
                         <td style="font-size: 20px;"><% out.print(rs.getString("hotelid")); %>  </td>                       
-                         
+                         <% } %>
                             
                         <td style="font-size: 20px;">
                             <form method="get" action="readMessage.jsp">
+                                <% String s = rs.getString("isDeleted");
+                                  int deleted = Integer.parseInt(s);
+                                if(deleted!=1){ %>
                         <input id="messageLink" type = "submit" name = "Submit" value = "<%out.print(rs.getString("message"));%>"/>
                         <input type="hidden" name="messageid" value="<%out.print(rs.getString("messageid"));%>"></td>                        
-                            </form><td>
+                           <% } %> </form><% String s1 = rs.getString("isDeleted");
+                                  int deletedd = Integer.parseInt(s1);
+                                if(deleted!=1){ %><td>
                         <form method="get" action="deleteMessage.jsp">
                              <input type="submit" name="Delete" value="Delete" style="width: 100px; background-color: white; border-color: white; color: black;"/></td>
-                             <input type="hidden" name="messageidd" value="<%out.print(rs.getString("messageid"));%>"></td> 
+                             <input type="hidden" name="messageidd" value="<%out.print(rs.getString("messageid"));%>"></td> <% } %>
                         </form>
                         </td>
                         
