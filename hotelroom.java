@@ -3,7 +3,20 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package db;
+
+package Reservation;
+
+/**
+ *
+ * @author asus1
+ */
+
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -21,7 +34,7 @@ public class hotelroom{
    private Connection conn = null;
 
     private final String db_user = "root";
-    private final String db_pass = "";
+    private final String db_pass = "melis";
     private final String db_driver = "com.mysql.jdbc.Driver";
     private final String db_url = "jdbc:mysql://localhost:3306/hotelreservationdb"; 
     
@@ -196,5 +209,23 @@ public class hotelroom{
     }
    //--------------------------------------------------------------------------
     
-    
+         public int takeroomid(String roomtype)throws SQLException {
+   try {
+        
+        initializeJdbc();
+        pstmt = conn.prepareStatement("select roomid from hotelrooms where roomtype = ?");
+        pstmt.setString(1, roomtype);
+      
+        rs = pstmt.executeQuery();
+        rs.first();
+
+        return rs.getInt("roomid");
+    }
+        catch(Exception ex){
+          System.out.println(ex);
+            return 0;  
+        }
+        
+    }   
+     
 }
