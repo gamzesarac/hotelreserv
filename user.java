@@ -454,6 +454,29 @@ public class user {
 
         return rs;
     }
+    
+    //--------------------------------------------------------------------------
+    
+    public boolean deleteMessage(int messageid) throws SQLException {
+        try {
+        
+        initializeJdbc();
+
+        /* pstmt = conn.prepareStatement("delete from hotelmessage where messageid = ? )"); */
+        pstmt = conn.prepareStatement("update hotelmessage set isDeleted = 1 where messageid = ? )");
+        pstmt.setInt(1, messageid);
+        pstmt.executeUpdate();
+         
+        } catch (Exception ex) {
+            System.out.println("Exception: " + ex.getMessage());
+            return false;
+        }
+        return true;
+    }
+
+        
+    
+    
     //--------------------------------------------------------------------------
     
     public ResultSet messageNotify(int userid) throws SQLException {

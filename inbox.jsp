@@ -73,7 +73,7 @@
                         <tr>
                         <th style="font-size: 25px; color: black; font-style: italic">Hotel ID</th>
                         <th style="font-size: 25px; color: black; font-style: italic">Message</th>
-                        
+                        <th style="font-size: 25px; color: black; font-style: italic">Delete</th>
                         </tr>
                         <% while(rs.next())
                         {
@@ -85,9 +85,13 @@
                         <td style="font-size: 20px;">
                             <form method="get" action="readMessage.jsp">
                         <input id="messageLink" type = "submit" name = "Submit" value = "<%out.print(rs.getString("message"));%>"/>
-                        <input type="hidden" name="messageid" value="<%out.print(rs.getString("messageid"));%>"></td>
+                        <input type="hidden" name="messageid" value="<%out.print(rs.getString("messageid"));%>"></td>                        
+                            </form><td>
+                        <form method="get" action="deleteMessage.jsp">
+                             <input type="submit" name="Delete" value="Delete" style="width: 100px; background-color: white; border-color: white; color: black;"/></td>
+                             <input type="hidden" name="messageidd" value="<%out.print(rs.getString("messageid"));%>"></td> 
                         </form>
-
+                        </td>
                         
                         
                         <% } %>
