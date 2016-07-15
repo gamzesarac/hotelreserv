@@ -63,7 +63,7 @@
 								<a href="comment-waiting-approval.jsp" class="active"><i class="fa fa-comments nav_icon"></i>Comment Waiting Approval</a>
 							</li>
                                                      <li>
-								<a href="refreshInbox.jsp" class="active"><i class="fa fa-comments nav_icon"></i>Refresh Unread Messages</a>
+								<a href="refreshInbox.jsp" class="active"><i class="fa fa-comments nav_icon"></i>Refresh Messagebox</a>
 							</li>
                                                         
 						</ul>
