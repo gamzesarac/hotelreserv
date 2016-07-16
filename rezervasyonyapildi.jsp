@@ -29,6 +29,28 @@
             reservation res =new reservation();
          
         
+            
+            DateFormat s = new SimpleDateFormat("MM/dd/yyyy");
+            Date startDate1 = s.parse(cindate); 
+            Date endDate1 = s.parse(coutdate); 
+            
+            boolean succ=res.datetodate(startDate1, endDate1);
+            
+            
+            if(succ==false ){ 
+  
+            
+              
+   //String redirectURL = "oda.jsp";
+ //response.sendRedirect(redirectURL);}
+        %> <SCRIPT LANGUAGE='JavaScript'>
+    window.alert('Checkin Tarihiniz CheckOut Tarihinizden Önce Seçilmiş.Lütfen Değiştiriniz!')
+     window.location.href='reservationnocss.jsp'
+    </SCRIPT>   
+        
+   <%} 
+            
+            
             Date td = new Date();
             String btoday = new String("");
             SimpleDateFormat format = new SimpleDateFormat("YYYY-MM-dd");
