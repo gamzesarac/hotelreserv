@@ -2,16 +2,14 @@
 <%@page import="java.sql.Statement"%>
 <%@page import="java.sql.DriverManager"%>
 <%@page import="java.sql.Connection"%>
-<!DOCTYPE HTML>
 <%
 if(session.getAttribute("username") == null){
         response.sendRedirect("../login.html");
     }
 %>
-
 <html>
 <head>
-<title>Admin Panel | Home</title>
+<title>Admin Panel | Hotel Approval Page</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 
@@ -20,11 +18,15 @@ if(session.getAttribute("username") == null){
 <!-- Custom CSS -->
 <link href="css/style.css" rel='stylesheet' type='text/css' />
 <!-- font CSS -->
+<link rel="icon" href="favicon.ico" type="image/x-icon" >
 <!-- font-awesome icons -->
 <link href="css/font-awesome.css" rel="stylesheet"> 
 <!-- //font-awesome icons -->
-<link href="css/custom.css" rel="stylesheet">
 
+
+<!-- Metis Menu -->
+<link href="css/custom.css" rel="stylesheet">
+<!--//Metis Menu -->
 </head> 
 <body class="cbp-spmenu-push">
 	<div class="main-content">
@@ -32,7 +34,7 @@ if(session.getAttribute("username") == null){
 		<div class="sidebar" role="navigation">
             <div class="navbar-collapse">
 				<nav class="cbp-spmenu cbp-spmenu-vertical cbp-spmenu-right dev-page-sidebar mCustomScrollbar _mCS_1 mCS-autoHide mCS_no_scrollbar" id="cbp-spmenu-s1">
-					<div class="scrollbar scrollbar1">
+					<div>
 						<ul class="nav" id="side-menu">
 							<li>
 								<a href="index.jsp" class="active"><i class="fa fa-home nav_icon"></i>Dashboard</a>
@@ -55,9 +57,6 @@ if(session.getAttribute("username") == null){
                                                         <li>
 								<a href="comment-waiting-approval.jsp" class="active"><i class="fa fa-comments nav_icon"></i>Comment Waiting Approval</a>
 							</li>
-                                                     <li>
-								<a href="refreshInbox.jsp" class="active"><i class="fa fa-comments nav_icon"></i>Refresh Messagebox</a>
-							</li>
                                                         
 						</ul>
 					</div>
@@ -67,7 +66,6 @@ if(session.getAttribute("username") == null){
 		</div>
 		<!--left-fixed -navigation-->
 		<!-- header-starts -->
-
 		<div class="sticky-header header-section ">
 			<div class="header-left">
 				<!--logo -->
@@ -81,6 +79,10 @@ if(session.getAttribute("username") == null){
 					</a>
 				</div>
 				<!--//logo-->
+				
+				
+				
+				<div class="clearfix"> </div>
 			</div>
 
 			<div class="header-right">
@@ -104,149 +106,74 @@ if(session.getAttribute("username") == null){
 				<!--toggle button end-->
 				<div class="clearfix"> </div>				
 			</div>
-				
+			<div class="clearfix"> </div>	
 		</div>
-		
 		<!-- //header-ends -->
 		<!-- main content start-->
 		<div id="page-wrapper">
-			<div class="main-page">
 			
-				<!-- four-grids -->                                          <!-- üstteki 4 menü -->  
-				<div class="row four-grids">
-					<div class="col-md-3 ticket-grid">
-						<div class="tickets">
-							<div class="grid-left">
-								<div class="book-icon">
-									<i class="fa fa-book"></i>
-								</div>
-							</div>
-							<div class="grid-right">
-                                                            <h3><a href="all-bookings.jsp">Total <span>Booking</span></a></h3>
-								<p><%
+				
+		<div class="panel panel-widget">
+			<div class="tables">
+                            <h4></h4> <%
 
                 Class.forName("com.mysql.jdbc.Driver");
                 Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/hotelreservationdb", "root", "");
                 Statement st = con.createStatement();
-                ResultSet rs;
-                rs = st.executeQuery("select reservationid from reservation");
-                 
-                int bookingCount=0;
-                while(rs.next())
-                {
-                    bookingCount++;
-                }
-                out.print(bookingCount);
-                rs.close();
-
-                    %></p>
-							</div>
-							<div class="clearfix"> </div>
-						</div>
-					</div>
-					<div class="col-md-3 ticket-grid">
-						<div class="tickets">
-							<div class="grid-left">
-								<div class="book-icon">
-									<i class="fa fa-check"></i>
-								</div>
-							</div>
-							<div class="grid-right">
-                                                            <h3><a href="hotel-waiting-aproval.jsp">Hotel Waiting <span>Approval</span></a></h3>
-								<p><%
-
-                rs = st.executeQuery("select hotelid from hotel where status='0'");
-                int countOfWaitingApprovalHotel=0;                              
+                String hotelid= request.getParameter("hid");
+                
+                
                     
-                    while(rs.next())
-                    {
-                        countOfWaitingApprovalHotel++;
-                    }
-                rs.close();
-                out.print(countOfWaitingApprovalHotel);
+                                       
+                         
 
-                    %> </p>
-							</div>
-							<div class="clearfix"> </div>
-						</div>
-					</div>
-					<div class="col-md-3 ticket-grid">
-						<div class="tickets">
-							<div class="grid-left">
-								<div class="book-icon">
-									<i class="fa fa-comments"></i>
-								</div>
-							</div>
-							<div class="grid-right">
-                                                            <h3><a href="comment-waiting-approval.jsp">Comment Waiting <span>Approval</span></a></h3>
-								<p><%
-
-                rs = st.executeQuery("select commentid from usercomments where isApproved='0'");
-                int countOfCommentWaitingApproval=0;                              
-                    
-                    while(rs.next())
-                    {
-                        countOfCommentWaitingApproval++;
-                    }
-                rs.close();
-                out.print(countOfCommentWaitingApproval);
-
-                    %></p>
-							</div>
-							<div class="clearfix"> </div>
-						</div>
-					</div>
-					<div class="col-md-3 ticket-grid">
-						<div class="tickets">
-							<div class="grid-left">
-								<div class="book-icon">
-									<i class="fa fa-user"></i>
-								</div>
-							</div>
-							<div class="grid-right">
-                                                            <h3><a href="all-users.jsp"> Total <span>User</span></a></h3>
-								<p><%
-
-                rs = st.executeQuery("select id from user");
-                int countOfUser=0;                              
-                    
-                    while(rs.next())
-                    {
-                        countOfUser++;
-                    }
-                rs.close();
-                out.print(countOfUser);
-
-                    %></p>
-							</div>
-							<div class="clearfix"> </div>
-						</div>
-					</div>
-					<div class="clearfix"> </div>
-				</div>
-				<!-- //four-grids -->
-
-
+                                        %>
+                                <table class="table table-bordered"> <thead> <tr> <th>Hotel ID</th> <th>Text</th> <th>Action</th></tr> </thead> 
+                                    <form method="post" action="messageToHotel.jsp">
+                                    <tbody>
+                                        
+                                        <tr> 
+                                            <th> <% out.print(request.getParameter("hid")); %></th> 
+                                            
+                                            <td>
+                                                <TEXTAREA Name="message" ROWS=5 COLS=30></TEXTAREA>
+                                            </td> 
+                                            <td>
+                                            
+                                               <input type="hidden" name="hid" value="<%  out.print(request.getParameter("hid")); %>">  
+                                        <input type="submit" name="Send" value="Send" style="width: 125px; background-color: white; border-color: white; color: black;"/></td>
+                                             
+                                        </tr> 
+                                                
+                                    </tbody>
+                                     </form>
+                                </table>
 			</div>
+		</div>
+				
+				
+				
+			
 		</div>
 		<!--footer-->
 		 <div class="dev-page">
 	 
+			  
 			
             <div class="dev-page-footer dev-page-footer-fixed"> 
-				
+				<!-- container -->
 				<div class="container">
 					<div class="copyright">
 						<font size="3" face="Arial" color="white">Admin panel v1. Coded by Onur</font>
-					</div>	
-                </div>
-				
-                </div>
-            </div>
-	</div>
-	
+					</div>
 
-		
-		
+                </div>
+
+            </div>
+           
+		</div>
+        <!--//footer-->
+	</div>
+
 </body>
 </html>
