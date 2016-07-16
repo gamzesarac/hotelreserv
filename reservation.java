@@ -22,6 +22,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /*
@@ -218,10 +221,18 @@ rs.getString("usermessage");
             return 0;  
         }
         
-    }   
+    }
+     public boolean datetodate(Date date1,Date date2) throws ParseException{
+       
+        	if(date1.compareTo(date1)>0){
+        	 return false;
+        	}else if(date1.compareTo(date2)<=0){
+        	return true;
+        	}
      
- 
+      return false;
     
+}
 }
 
 
