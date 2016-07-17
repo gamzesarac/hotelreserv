@@ -74,8 +74,15 @@
                          
                             
                         <td style="font-size: 20px;">
-                        
-                            <h6 style="font-size: 30px; color: black;"><%= rs.getString("message") %></h6> </td>
+                            <%if(rs.getString("message").length()>42){ 
+                                int counter=0;
+                                String mm="";
+    for(int i=0; i<rs.getString("message").length()/42; i++){ for(int j=0; j<42; j++){ mm+=rs.getString("message").charAt(counter); counter++; }%>
+                            <h6 style="font-size: 30px; color: black;"><% out.print(mm); mm="";  %>
+                                  
+                                 <br> <%  } }else{ %></h6>
+                        <h6 style="font-size: 30px; color: black;"><%= rs.getString("message") %> <% } %>
+                        </td>
                         
  
                         

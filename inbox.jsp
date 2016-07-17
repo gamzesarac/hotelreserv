@@ -88,10 +88,12 @@
                             <form method="get" action="readMessage.jsp">
                                 <% String s = rs.getString("isDeleted");
                                   int deleted = Integer.parseInt(s);
-                                if(deleted!=1){ %>
+                                if(deleted!=1&&rs.getString("message").length()<20){ %>
                         <input id="messageLink" type = "submit" name = "Submit" value = "<%out.print(rs.getString("message"));%>"/>
                         <input type="hidden" name="messageid" value="<%out.print(rs.getString("messageid"));%>"></td>                        
-                           <% } %> </form><% String s1 = rs.getString("isDeleted");
+                        <% }else{ String m=""; for(int i=0; i<15; i++){ m+=rs.getString("message").charAt(i); } m+="...."; %>                         
+                        <input id="messageLink" type = "submit" name = "Submit" value = "<%out.print(m);%>"/>
+                        <input type="hidden" name="messageid" value="<%out.print(rs.getString("messageid"));%>"></td>     <% } %></form><% String s1 = rs.getString("isDeleted");
                                   int deletedd = Integer.parseInt(s1);
                                 if(deleted!=1){ %><td>
                         <form method="get" action="deleteMessage.jsp">
