@@ -24,8 +24,8 @@
         }        
         
         int userid = u.takeUserId(username);
-        ResultSet rs = u.messageNotify(userid);
-        boolean b=rs.first();
+        int count = u.messageNotify(userid);
+        
     %>
 <div id="containerr">
   <ul id="nav">
@@ -40,7 +40,7 @@
   <div id="sidebar">
     <h4 style="color: #014ccc; font-style: italic;">Welcome : <%= firstname + " " + lastname %> </h4>
     <fieldset>
-        <h3><a href="inbox.jsp">Messages(<% if(b){ %>!!<% } %><%else{%>0<%}%>)</a></h3>
+        <h3><a href="inbox.jsp">Messages(<%=count%>)</a></h3>
      
     </fieldset>
   </div>

@@ -1,23 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
-package Reservation;
-
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-
-/**
- *
- * @author asus1
- */
-
-    
+package db;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -28,7 +9,7 @@ public class hotel {
     private Connection conn = null;
 
     private final String db_user = "root";
-    private final String db_pass = "melis";
+    private final String db_pass = "";
     private final String db_driver = "com.mysql.jdbc.Driver";
     private final String db_url = "jdbc:mysql://localhost:3306/hotelreservationdb"; 
     
@@ -133,7 +114,25 @@ public class hotel {
         }
         
     }   
-    
+    //-------------------------------------------------------------------------- 
+     
+     public int takeHotelIdfromID(int userid) throws SQLException {
+        try {
+        
+        initializeJdbc();
+        pstmt = conn.prepareStatement("select hotelid from hotel where user_id = ?");
+        pstmt.setInt(1, userid);
+        rs = pstmt.executeQuery();
+        rs.first();
+
+        return rs.getInt("hotelid");
+    }
+        catch(Exception ex){
+          System.out.println("Exception: " + ex.getMessage());
+            return 0;  
+        }
+        
+    }   
      //--------------------------------------------------------------------------
      
      public String checkType(String hotelname, String password) throws SQLException {
@@ -435,29 +434,4 @@ public class hotel {
         
         return false;
     }
-        public ResultSet defineHotelList(String value) throws SQLException {
-        initializeJdbc();
-        
-
-        pstmt = conn.prepareStatement("SELECT hotelid,hotelname,STATE_NAME,CITY_NAME  FROM hotel AS h  JOIN state AS s ON h.STATE_ID = s.STATE_ID JOIN city AS c  ON s.CITY_ID = c.CITY_ID WHERE hotelname=? OR STATE_NAME=? OR CITY_NAME=?");       
-        pstmt.setString(1, value);
-        pstmt.setString(2, value);
-        pstmt.setString(3, value);
-        rs = pstmt.executeQuery();
-
-        return rs;
-    }
-        
-        public ResultSet showhotelınf(String user) throws SQLException {
-        initializeJdbc();
-        
-
-        pstmt = conn.prepareStatement("SELECT * FROM hotel WHERE hotelid=?");       
-        pstmt.setString(1, user);
-        rs = pstmt.executeQuery();
-
-        return rs;
-    }
 }
-
-
