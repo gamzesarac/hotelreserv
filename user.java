@@ -271,7 +271,26 @@ public class user {
         }
         
     }   
+      //--------------------------------------------------------------------------   
     
+    
+    public String takeLastname(String username) throws SQLException {
+        try {
+        
+        initializeJdbc();
+        pstmt = conn.prepareStatement("select lastname from user where username = ?");
+        pstmt.setString(1, username);
+        rs = pstmt.executeQuery();
+        rs.first();
+
+        return rs.getString("lastname");
+    }
+        catch(Exception ex){
+          System.out.println("Exception: " + ex.getMessage());
+            return "";  
+        }
+        
+    }   
      //--------------------------------------------------------------------------   
     
     

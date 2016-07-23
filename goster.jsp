@@ -55,7 +55,8 @@ reservation h = new reservation();
       <h1><a href="user.jsp">Hotel Reservation</a><span>Isik University</span></h1>
   </div>
        <div class="divider"></div>
-  <div id="sidebar">   
+  <div id="sidebar"> 
+      <a href="user.jsp"><h4 style="color: #014ccc; font-style: italic;">Welcome : <%= firstname %> </h4></a>
   </div>
        <div id="main">
 <tr>

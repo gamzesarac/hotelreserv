@@ -36,7 +36,8 @@
       <h1><a href="user.jsp">Hotel Reservation</a><span>Isik University</span></h1>
   </div>
        <div class="divider"></div>
-  <div id="sidebar">   
+  <div id="sidebar">
+      
   </div>
        <div id="main">
     <form action="reservationnocss.jsp" action="POST"> 
@@ -53,9 +54,11 @@
         }
 
         String firstname = u.takeFirstname(usernamee);
-    session.setAttribute("firstname", "melis"); // melis ekledi
-    session.setAttribute("lastname", "Melis"); //melis ekledi
-     session.setAttribute("username2", "Delipinar"); // melis ekledi
+        String lastname = u.takeLastname(usernamee);
+        session.setAttribute("firstname", firstname); 
+        session.setAttribute("lastname", lastname); 
+        session.setAttribute("username", usernamee); 
+
    boolean check=false;
    boolean check1=false;
    try{
@@ -72,8 +75,8 @@
 
         ResultSet inf=hl.showhotelınf(user);
    Connection connection=null;
-             Class.forName("sun.jdbc.odbc.JdbcOdbcDriver");
-             connection=DriverManager.getConnection("jdbc:mysql://localhost:3306/hotelreservationdb2","root","melis");
+             Class.forName("com.mysql.jdbc.Driver");
+             connection=DriverManager.getConnection("jdbc:mysql://localhost:3306/hotelreservationdb","root","");
              Statement statement=connection.createStatement();
              
              
