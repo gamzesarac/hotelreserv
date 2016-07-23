@@ -41,7 +41,7 @@
         String type = u.checkTypePages(username);
         int check = Integer.parseInt(type); %>
        <% if(check != 3 || check ==-1){ %>
-        <jsp:forward page="loginError_1.html"/>
+        <jsp:forward page="login.html"/>
         <% } 
         if(session.getAttribute("username") == null){
             response.sendRedirect("index.jsp");
@@ -51,7 +51,7 @@
         String rid2=request.getParameter("rid2");
         String roomid=request.getParameter("roomid");
     %>
-<div id="container">
+<div id="containerr">
   <ul id="nav">
     <li><a href="contact.jsp" title="contact">contact</a></li>
     <li><a href="logout.jsp" title="logout">logout</a></li>

@@ -1,13 +1,30 @@
 <%-- 
-    Document   : rezervasyonyapildi1
-    Created on : 15.Tem.2016, 12:30:42
+    Document   : rezervasyonyapildi.jsp
+    Created on : 02.Tem.2016, 20:08:57
     Author     : asus1
 --%>
-<%@page import="java.text.DateFormat"%>
+
+<%@page import="db.user"%>
+<%@page import="java.sql.Statement"%>
+<%@page import="java.sql.DriverManager"%>
+<%@page import="java.sql.Connection"%>
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="java.util.Date"%>
-<%@page import="Reservation.reservation"%>
+
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%
+          String usernamee = (String)session.getAttribute("username");
+        user u=new user(usernamee);
+        String type = u.checkTypePages(usernamee);
+        int checkk = Integer.parseInt(type); %>
+       <% if(checkk != 3 || checkk ==-1){ %>
+        <jsp:forward page="login.html"/>
+        <% } 
+        if(session.getAttribute("username") == null){
+            response.sendRedirect("index.jsp");
+        }
+
+        String firstname = u.takeFirstname(usernamee); %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -15,78 +32,46 @@
     <title>JSP Page</title>
 </head>
 <body>
-     <form action="goster.jsp" action="POST"> 
-   <%
-       try{
-            int reservationid=1;
-            int userid=1;
-            int roomid=1;
-            int isCancelled=1;
+    <h1>Rezervasyonunuz Yapildi!</h1>
+  
+    
+     <%  
+    try{
+            Connection connection = null;
+            
+            Class.forName("com.mysql.jdbc.Driver");
+            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/hotelreservationdb",
+            "root", "");
+            
+            Statement statement = connection.createStatement();
             String cindate=request.getParameter("datepicker");
             String message=request.getParameter("userMessage");
             String coutdate=request.getParameter("datepicker1");
-           String rooms=request.getParameter("oda");
-            reservation res =new reservation();
-         
-        
-            
-            DateFormat s = new SimpleDateFormat("MM/dd/yyyy");
-            Date startDate1 = s.parse(cindate); 
-            Date endDate1 = s.parse(coutdate); 
-            
-            boolean succ=res.datetodate(startDate1, endDate1);
-            
-            
-            if(succ==false ){ 
-  
-            
-              
-   //String redirectURL = "oda.jsp";
- //response.sendRedirect(redirectURL);}
-        %> <SCRIPT LANGUAGE='JavaScript'>
-    window.alert('Checkin Tarihiniz CheckOut Tarihinizden Önce Seçilmiş.Lütfen Değiştiriniz!')
-     window.location.href='reservationnocss.jsp'
-    </SCRIPT>   
-        
-   <%} 
+           
             
             
             Date td = new Date();
-            String btoday = new String("");
+            String bcheckin = new String(cindate);
             SimpleDateFormat format = new SimpleDateFormat("YYYY-MM-dd");
-            btoday = format.format(td);
+            bcheckin = format.format(td); 
             
-           
-           DateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
-           Date startDate = sdf.parse(cindate);      
-           DateFormat format1 = new SimpleDateFormat("YYYY-MM-dd");
-           String bcheckin = format1.format(startDate);
+            Date t = new Date();
+            String bcheckout = new String(coutdate);
+            SimpleDateFormat format1 = new SimpleDateFormat("YYYY-MM-dd");
+            bcheckout= format1.format(t);
+             
+            Date t1 = new Date();
+            String btoday = new String("");
+            SimpleDateFormat format2 = new SimpleDateFormat("YYYY-MM-dd");
+            btoday = format2.format(t1);
     
-       
-       
-           DateFormat sd = new SimpleDateFormat("MM/dd/yyyy");
-           Date endDate = sd.parse(coutdate);    
-          DateFormat format2 = new SimpleDateFormat("YYYY-MM-dd");
-          String bcheckout = format2.format(endDate);
-      
-         int roomaydi=res.takeroomid(rooms);
-         boolean success=res.addreservation(reservationid, userid, roomaydi,bcheckin,bcheckout,message, btoday, isCancelled);  
-         
-          if (success) {
-              
-   out.println("Rezervasyonunuz Başarılı Bir Şekilde Tamamlandı");
-           %>
-          
-              <input type="submit" name="submit" value="RezervasyonBilgileri için Tıklayın" />
-                
-            <% } 
-       }catch(Exception ex){
-           out.println(ex);
-       } 
-
-            %>
+            String command = "INSERT INTO reservation VALUES(NULL,'4','2','"+bcheckin+"','"+bcheckout+"','"+message+"','"+btoday+"','0');";
+            statement.executeUpdate(command);
+    }catch(Exception ex){
+            out.println(ex);
+        }   
            
-     </form>      
-  
+        %>
+        
 </body>
 </html>

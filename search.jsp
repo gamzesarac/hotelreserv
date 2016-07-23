@@ -4,23 +4,60 @@
     Author     : asus1
 --%>
 
+<%@page import="db.user"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
+<html lang="en">
+    <%
+        String usernamee = (String)session.getAttribute("username");
+        user u=new user(usernamee);
+        String type = u.checkTypePages(usernamee);
+        int check = Integer.parseInt(type); %>
+       <% if(check != 3 || check ==-1){ %>
+        <jsp:forward page="login.html"/>
+        <% } 
+        if(session.getAttribute("username") == null){
+            response.sendRedirect("index.jsp");
+        }
+
+        String firstname = u.takeFirstname(usernamee);
+
+
+   
+    %>
 <html>
     <head>
     <title>TODO supply a title</title>
     <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+    <link rel="stylesheet" href="style.css" type="text/css" />
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
+    <div id="containerr">
+  <ul id="nav">
+    <li><a href="contact.jsp" title="contact">contact</a></li>
+    <li><a href="logout.jsp" title="logout">logout</a></li>
+  </ul>
+      <div class="divider"></div>
+  <div id="header">
+      <h1><a href="user.jsp">Hotel Reservation</a><span>Isik University</span></h1>
+  </div>
+       <div class="divider"></div>
+  <div id="sidebar">
+      <a href="user.jsp"><h4 style="color: #014ccc; font-style: italic;">Welcome : <%= firstname %> </h4></a>
+      </div>
+        <div id="main">
+            <h2 style="font-family: monospace; font-weight: bold; font-size: 200%;">Search</h2>
    <form action="otellisteleme.jsp" action="post"> 
-<div>En İyi Fırsatları Yakalayın</div>
+<div>Catch Best Opportunities</div>
 <br/><br/>
-Kim olursan ol,ne ararsan ara,her şey burada başlıyor.
+Whoever you are , whatever you call or looking for, everything starts here.
 <br/><br/>
-Otel İsmi,Şehri ya da ilçesini giriniz
+Hotel Name,City,State
  <br/><br/>
-<input type="text" name="search" size="55" value="Gidebileceğinizden daha fazla yer!"><br>
+Location: <input type="text" name="search" size="55" value="" required><br>
  
  
    <br/><br/>  
@@ -30,10 +67,10 @@ Otel İsmi,Şehri ya da ilçesini giriniz
   <link rel="stylesheet" href="/resources/demos/style.css">
   <script>
   $(function() {
-    $( "#datepicker" ).datepicker();
+    $( "#datepicker" ).datepicker({minDate:0});
   });
   </script>
-      <p>Check-in Date: <input type="text" id="datepicker"></p>
+      <font color="blue">  <p>Check-in Date: <input type="text" id="datepicker" name="datepicker" required></font></p>
 <br/><br/> 
 
 <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
@@ -42,52 +79,23 @@ Otel İsmi,Şehri ya da ilçesini giriniz
   <link rel="stylesheet" href="/resources/demos/style.css">
   <script>
   $(function() {
-    $( "#datepicker1" ).datepicker();
+    $( "#datepicker1" ).datepicker({minDate:0});
   });
   </script>
-      <p>Check-out Date: <input type="text" id="datepicker1"></p>
+      <font color="blue">  <p>Check-out Date: <input type="text" id="datepicker1"  name="datepicker1" required></font></p>
 <br/><br/> 
 
 
-Seyahat Amacı 
-    <br/><br/>  
-    <input type="radio" name="purpose" value="Cift" >Çift
-    <input type="radio" name="purpose" value="Aile" >Aile
-    <input type="radio" name="purpose" value="Grup" >Grup
-    <input type="radio" name="purpose" value="Yalnız Gezgin" >Yalnız Gezgin 
-    <input type="radio" name="purpose" value="İş Amaçlı Gezgin" >İş Amaçlı Gezgin
-    <input type="radio" name="purpose" value="Diğer" >Diğer
-    <br/><br/>  
-     <br/><br/> 
-Oda
- <select name="oda">
-        <option>1</option>
-        <option>2</option>
-        <option>3</option>
-        <option>4</option>
-        <option>5</option>
-    </select>
- 
- Yetişkin
-  <select name="yetiskin">
-        <option>1</option>
-        <option>2</option>
-        <option>3</option>
-        <option>4</option>
-        <option>5</option>
-    </select>
- Çocuk
-  <select name="cocuk">
-        <option>1</option>
-        <option>2</option>
-        <option>3</option>
-        <option>4</option>
-        <option>5</option>
-    </select>
-   <br/><br/>  
    
  <input type="submit" name="submit" value="ARA" />
  </form>
+  </div>
+
+<div id="footer">
+    <p>&copy; 2016 Hotel Reservation </p>
+  </div>
+    </div>
+
 </body>
 </html>
 

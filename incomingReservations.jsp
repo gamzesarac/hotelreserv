@@ -1,3 +1,4 @@
+<%@page import="db.hotel"%>
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="java.text.DateFormat"%>
 <%@page import="db.hotelroom"%>
@@ -37,8 +38,8 @@
         user u=new user(username);
         String type = u.checkTypePages(username);
         int check = Integer.parseInt(type); %>
-       <% if(check != 3 || check ==-1){ %>
-        <jsp:forward page="login.html"/>
+       <% if(check != 2 || check ==-1){ %>
+        <jsp:forward page="loginError_1.html"/>
         <% } 
         if(session.getAttribute("username") == null){
             response.sendRedirect("index.jsp");
@@ -49,7 +50,9 @@
         //user uu= new user(table.getString("username"),table.getString("firstname"),table.getString("lastname"),table.getString("password"),table.getString("birthdate"),table.getString("email"),table.getString("gender"),table.getString("telephone"),table.getInt("usertype_id"),table.getString("address"),table.getString("ssn"));
         int userid=u.takeUserId(username);
         reservation r = new reservation();
-        ResultSet table2 = r.takeMyReservations(userid);
+        hotel hotel= new hotel();
+        int hotelid=hotel.takeHotelIdfromID(userid);
+        ResultSet table2 = r.takeHotelReservations(hotelid);
         String ridString;
         ResultSet table3;
         Date checkin;
@@ -61,17 +64,17 @@
   </ul>
       <div class="divider"></div>
   <div id="header">
-      <h1><a href="user.jsp">Hotel Reservation</a><span>Isik University</span></h1>
+      <h1><a href="hotel.jsp">Hotel Reservation</a><span>Isik University</span></h1>
   </div>
        <div class="divider"></div>
   <div id="sidebar">
-    <a href="user.jsp"><h4 style="color: #014ccc; font-style: italic;">Welcome : <%= firstname %> </h4></a>
+    <a href="hotel.jsp"><h4 style="color: #014ccc; font-style: italic;">Welcome : <%= firstname %> </h4></a>
   </div>
        <div id="main">
-        <h2 style="font-family: monospace; font-weight: bold; font-size: 200%;">See Your All Reservations</h2>
+        <h2 style="font-family: monospace; font-weight: bold; font-size: 200%;">See Your Incoming Reservations</h2>
         <table border="4">
                     <tr>
-                        <th style="font-size: 15px;">Your Reservations</th>
+                        <th style="font-size: 15px;">Incoming Reservations</th>
                       <!--  <th>Text</th> -->
                       <!--  <th></th> -->
 
@@ -86,10 +89,11 @@
                         <th>Check Out</th>
                         <th>Cost</th>
                         <th>Status</th>
+                        <th>Customer ID</th>
 
 
        <% while(table2.next()){%>   
-                    <form method="post" action="selectedReservation.jsp">
+                    <form method="post" action="selectedIncomingReservation.jsp">
                     <tr>       
                         <td>                             
                         <input id="messageLink" type = "submit" name = "Submit" value = "<%out.print(table2.getInt("reservationid"));%>"/>
@@ -99,6 +103,7 @@
                          table3 = u.takeSelectedReservation(rid);
                          checkin = table3.getDate("checkin"); %>
                         </td>
+                        
                         <td>
                             <%
                             String hotelname=r.takeHotelName(table2.getInt("roomid")); %>
@@ -116,20 +121,23 @@
                           <%out.print(table2.getString("checkout"));%>
                          </td>
                          <td>
-                                                      
-                            <%hotelroom h=new hotelroom();
-                            double cost=h.takeRoomCost(table2.getInt("roomid")); %>
-                            <%= cost %>
+                           <% hotelroom hh=new hotelroom(); double cost=hh.takeRoomCost(table2.getInt("roomid")); %> <%=cost %>                            
+                            
                          </td>
                          <td>
                          <% if(checkin.compareTo(date)>0&&table2.getInt("isCancelled")==0){ %> active <% } else{ %> inactive <% } %>
                          </td>                            
-                            
+                         </form> 
+                         <td>
+                        <li><a href="userInfo.jsp"><% out.print(table2.getString("userid")); %> </a></li>
+                        <% session.setAttribute("useridd", table2.getString("userid")); %>
+                        <input type="hidden" name="uid" value="<%out.print(table2.getString("userid"));%>">
+                        </td> 
                     </tr>
                             
                             <!-- <input type = "submit" name = "Submit" value = "Read"/> -->
                        
-                    </form>
+                    
                 
                     <%}%>
                 </table>

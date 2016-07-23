@@ -5,7 +5,7 @@
 <title>Connection with mysql database</title>
 </head> 
 <body>
-<h1>Connection status</h1>
+<h1></h1>
 <% 
 java.sql.Connection conn = null;
 String url = "jdbc:mysql://localhost:3306/hotelreservationdb";
@@ -16,10 +16,10 @@ try {
             Class.forName(Driver); 
             conn=DriverManager.getConnection(url,username,password);
             if(conn!=null){
-                out.println("Connected");
+                out.println("");
                 
             }else{
-                out.println("Not Connected");
+                out.println("");
                     }
         }catch(Exception ex){
             out.println("Unable to connect to database"+ex);

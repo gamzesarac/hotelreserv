@@ -40,8 +40,8 @@
         user u=new user(username);
         String type = u.checkTypePages(username);
         int check = Integer.parseInt(type); %>
-       <% if(check != 3 || check ==-1){ %>
-        <jsp:forward page="login.html"/>
+       <% if(check != 2 || check ==-1){ %>
+        <jsp:forward page="loginError_1.html"/>
         <% } 
         if(session.getAttribute("username") == null){
             response.sendRedirect("index.jsp");
@@ -54,7 +54,6 @@
         int rid=Integer.parseInt(ridString);
         ResultSet table = u.takeSelectedReservation(rid);
         Date checkin = table.getDate("checkin");
-        int userid = u.takeUserId(username);
     %>
 <div id="containerr">
   <ul id="nav">
@@ -63,11 +62,11 @@
   </ul>
       <div class="divider"></div>
   <div id="header">
-      <h1><a href="user.jsp">Hotel Reservation</a><span>Isik University</span></h1>
+      <h1><a href="hotel.jsp">Hotel Reservation</a><span>Isik University</span></h1>
   </div>
        <div class="divider"></div>
   <div id="sidebar">
-    <a href="user.jsp"><h4 style="color: #014ccc; font-style: italic;">Welcome : <%= firstname %> </h4></a>
+    <a href="hotel.jsp"><h4 style="color: #014ccc; font-style: italic;">Welcome : <%= firstname %> </h4></a>
   </div>
        <div id="main">
         <h2 style="font-family: monospace; font-weight: bold;">Reservation Details</h2>
@@ -106,12 +105,11 @@
                             
                             <h4 style="font-weight: bold; color:#014ccc;">RESERVATION CREATION DATE : <%out.print(table.getString("reservationdate"));%></h4>
                             
+                            <h4 style="font-weight: bold; color:#014ccc;">COST : <% hotelroom hh=new hotelroom(); double cost=hh.takeRoomCost(table.getInt("roomid")); %> <%=cost %> </h4>
+                            
                             <h4 style="font-weight: bold; color:#014ccc;">STATUS : <% if(checkin.compareTo(date)>0&&table.getInt("isCancelled")==0){ %> active <% }else{ %>  inactive <% } %>  </h4>
                             
-                            <%hotelroom h=new hotelroom();
-                            double cost=h.takeRoomCost(table.getInt("roomid")); %>
-                            <h4 style="font-weight: bold; color:#014ccc;">COST : <%= cost %> </h4>
-                    <%if(checkin.compareTo(date)>0&&table.getInt("isCancelled")==0){ %> <input type="submit" name="Cancel" value="Cancel" style="width: 125px; background-color: white; border-color: white; color: #014ccc;"/> <%} %>
+                            
                        
                         </td>
                         
@@ -123,12 +121,7 @@
                 
                     </form>
                 </table>
-                                         <form method="post" action="userRate.jsp">
-                                             <%reservation rr=new reservation(); int reservid = Integer.parseInt(table.getString("reservationid")); boolean b=rr.isCommented(reservid, userid); if(checkin.compareTo(date)<0 && !b){ %>
-                    <input type="submit" name="Rate" value="Rate" style="width: 125px; background-color: white; border-color: white; color: #014ccc;"/>
-                           <input type="hidden" name="rid2" value="<%out.print(table.getString("reservationid"));%>">
-                               <input type="hidden" name="roomid" value="<%out.print(table.getString("roomid"));%>"> <% } %>
-                                         </form>
+                                         
       </div>
 
 <div id="footer">

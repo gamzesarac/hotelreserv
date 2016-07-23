@@ -1,15 +1,21 @@
+<%@page import="db.user"%>
 <%@page import="Reservation.reservation"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@include file="connact.jsp"%>
 <!DOCTYPE html>
-<html>
+<html lang="en">
     <head>
+        
         <style>
         div.ex1 {
     direction: rtl;
 }
 </style>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+          <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+     <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+    <link rel="stylesheet" href="style.css" type="text/css" />
     <title>Rezervasyon Yapma Sayfası</title>
 </head>
 <body>
@@ -17,6 +23,19 @@
 
 
 <%
+        String usernamee = (String)session.getAttribute("username");
+        user u=new user(usernamee);
+        String type = u.checkTypePages(usernamee);
+        int check = Integer.parseInt(type); %>
+       <% if(check != 3 || check ==-1){ %>
+        <jsp:forward page="login.html"/>
+        <% } 
+        if(session.getAttribute("username") == null){
+            response.sendRedirect("index.jsp");
+        }
+
+        String firstname = u.takeFirstname(usernamee);
+ 
 reservation h = new reservation(); 
         ResultSet reservationTable=h.defineReservation();
           
@@ -25,26 +44,42 @@ reservation h = new reservation();
                         {
                        %>
 
-
+<body>
+        <div id="containerr">
+  <ul id="nav">
+    <li><a href="contact.jsp" title="contact">contact</a></li>
+    <li><a href="logout.jsp" title="logout">logout</a></li>
+  </ul>
+      <div class="divider"></div>
+  <div id="header">
+      <h1><a href="user.jsp">Hotel Reservation</a><span>Isik University</span></h1>
+  </div>
+       <div class="divider"></div>
+  <div id="sidebar">   
+  </div>
+       <div id="main">
 <tr>
+    <h2><i>Welcome To Hotel Reservation System</i></h2>
 <br></br>
-<font color="Red">Rezervasyonunuz Yapıldı.İşlem Bilgilerinizi Aşağıda görebilirsiniz...</font>
+<font color="Blue">Rezervasyonunuz Yapıldı.İşlem Bilgilerinizi Aşağıda görebilirsiniz...</font>
 <br></br>
-<font color="red">Rezervasyonunuz Numaranız</font>
+<font color="Blue">Reservation ID</font>
 <td><%=reservationTable.getString("reservationid")%></td>
 
 <br></br>
-<font color="red">Otelimize giriş yapacağınız zaman</font>
+<font color="Blue">Checkİn Date</font>
 <td><%=reservationTable.getString("checkin")%></td>
 <br></br>
-<font color="red">Otelimizden çıkış yapacağınız zaman</font>
+<font color="Blue">Checkout Date</font>
 <td><%=reservationTable.getString("checkout")%></td>
 <br></br>
-<font color="red">Otelimize Mesajınız</font>
+<font color="Blue">Your Message To Our Hotel</font>
 <td><%=reservationTable.getString("usermessage")%></td>
 <br></br>
-
-<font color="red">Mesajınız Tarafımıza iletilmiştir</font>
+<font color="Blue">Reservation Date</font>
+<td><%=reservationTable.getString("reservationdate")%></td>
+<br></br>
+<font color="Blue">Mesajınız Tarafımıza iletilmiştir</font>
 
 
 </tr>
@@ -57,5 +92,10 @@ reservation h = new reservation();
 <br></br>
 <div class="ex1"><strong><i>HOTEL RESERVATİON SYSTEM</i></strong></div><font color="black"></font>
 
-</body>
-</html>
+</div>
+ 
+<div id="footer">
+    <p>&copy; 2016 Hotel Reservation </p>
+  </div>
+     </div>                                                       </body>
+                                                            </html>

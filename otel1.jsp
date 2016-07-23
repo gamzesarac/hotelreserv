@@ -41,7 +41,7 @@
        <div id="main">
     <form action="reservationnocss.jsp" action="POST"> 
     <%
-        String usernamee = (String)session.getAttribute("username");
+          String usernamee = (String)session.getAttribute("username");
         user u=new user(usernamee);
         String type = u.checkTypePages(usernamee);
         int checkk = Integer.parseInt(type); %>
@@ -53,9 +53,7 @@
         }
 
         String firstname = u.takeFirstname(usernamee);
-    session.setAttribute("firstname", "melis"); // melis ekledi
-    session.setAttribute("lastname", "Melis"); //melis ekledi
-     session.setAttribute("username2", "Delipinar"); // melis ekledi
+  
    boolean check=false;
    boolean check1=false;
    try{
@@ -84,162 +82,37 @@
        ResultSet room=hl.takeRoom(m);
        ResultSet rS= hl.takeComments(m);
        
-    
-
-     Statement st2=connection.createStatement();
+      Statement st2=connection.createStatement();
       String c="select imageaddress from hotelimage where hotel_hotelid='"+m+"'";
       ResultSet image= st2.executeQuery(c);
           
        
      %> <input type="hidden" name="hotelidd" value="<%=m%>"> <%
        
-         while(resultSet.next()){
+       
   
-    while(inf.next()){
-
+  
   %>
   
-<br></br>
-<font color="blue">Hotel Name</font>
-<td><%=inf.getString("hotelname")%></td>
-<br></br>
-<font color="blue">Hotel Information</font>
-<td><%=inf.getString("hotelinfo")%></td>
-<br></br>
-<font color="blue">Hotel Adress</font>
-<td><%=inf.getString("address")%></td>
-<br></br>
-<font color="blue">Hotel Telephone</font>
-<td><%=inf.getString("hotelphone")%></td>
-<br></br>
-<font color="blue">Hotel Rate</font>
-<td><%=resultSet.getInt("AVG(rating)")%></td>
-<br></br>
+
 <font color="blue">Hotel images</font>
-
-<td><%
- while(image.next())
-          { %>
-              
-              <img src="<%out.print(image.getString("imageaddress"));  %>" height="100" weight ="100" >
-             
- <%  } %>
-   </td>
-  <br></br>
-
-    <table style="width:70%">
-<tr>
-    <th><font color="blue">Who said</font></th>
-    <th><font color="blue">Hotel Comments</font></th>
-  </tr>
-<%
+<td>
+    <%
+    if(image.next())
+          {
+              %>
+              <img src="<%out.print(image.getString("imageaddress"));  %>" height="200" weight ="200" >
+              <%
+          }
     
-    while(rS.next()){
-        
+    %>
+    
+
   
- %>   
-<tr>
-   <!-- <td> /*
-        ResultSet suserıdcomment=hl.userıdcomment(m);
- while(suserıdcomment.next()){
-  int  commentuserid= suserıdcomment.getInt("user_id");
- 
-
-ResultSet comentusername=hl.takeusername(commentuserid);
- while(comentusername.next()){
-     out.println(comentusername.getString("username")); 
-       
- }
- }
-                
-                
-        
- */ <td>  -->
- <td>  <%
-        String s=rS.getString("user_id");
-        int id=Integer.parseInt(s);
- String sa=hl.takeusernamee(id);
- out.println(sa);
- 
- 
- 
- 
- 
- %> </td>  
-              
-    <td><%=rS.getString("comment")%></td>
-
-</tr>
-
-  <tr>
-      
-<%
-check=true;
-
-}
-    if(!check){
-       %>
-      
-  <strong>  <font color="red">No Available Comment!</font></strong>
-       
-       <%}
-    
-    %>
-    </table>
-    
-    
-   
-    
-    <br></br>
-
- <table style="width:70%">
-      <tr>
-   <th><font color="blue">Hotel Room</font></th>
- <th><font color="blue">Room Cost</font></th>
-<th><font color="blue">Hotel Count</font></th>
-
-    
-  </tr>
-
-<%
-    
-    while(room.next()){
-  
- %>   
-<tr>
-
-<td><%=room.getString("roomname")%></td>
-<td><%int rooma=room.getInt("roomid");
-      Double para=hl.hotelroommoney(rooma);
-       out.println(para);
-%></td>
-<td><%=room.getString("roomCount")%></td
-
-
-</tr>
-
-
-
- 
-      
-<%
-check1=true;
-}
-    if(!check1){
-        
-    %>
-    <strong>   <font color="red">No Available Room!</font> </strong>
-  <%  }
-    %>
- </table>
-    
-   <% 
-
-   }
-         }
+         
     
 
-   
+   <%
    }catch  (Exception ex){
     ex.printStackTrace();
 }           
