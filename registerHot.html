@@ -1,0 +1,70 @@
+<html lang="en-GB" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>Register Page</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+<body>
+<div id="containerr">
+  <ul id="nav">
+    <li><a href="#" title="let">contact</a></li>
+    <li><a href="login.html" title="contact">login</a></li>
+  </ul>
+      <div class="divider"></div>
+  <div id="header">
+      <h1><a href="index.html">Hotel Reservation</a><span>Isik University</span></h1>
+  </div>
+      <div class="divider"></div>
+
+      <div id="main">
+                  <h2>Registration Form</h2>
+                <p>Please fill the form.</p>
+     <form method="post" action="registerHot.jsp">                                
+                    <table>
+                        <tr><td>First name<sup></sup> (*):</td>
+                        <td><input type="text" name="firstname" size="50" /></td></tr>
+                        
+                        <tr><td>Last name (*):</td>
+                        <td><input type="text" name="lastname" size="50"/></td></tr>
+                        
+                        <tr><td>Username (*):</td>
+                        <td><input type="text" name="username" size="50" /></td></tr>
+                        
+                        <tr><td>Password (*):</td>
+                        <td><input type="password" name="password" size="50"/></td></tr>
+                        
+                        <tr><td>Gender (*):</td>
+                            <td> <select name="gender" style="width: 100px">
+                                    <option value="male">Male</option> 
+                                    <option value="female">Female</option>
+                                </select></td></tr>
+                        
+                        <tr><td>Birthdate (*):</td>
+                        <td><input type="date" name="bdate"/></td></tr>
+                        
+                        <tr><td>Telephone (*):</td>
+                        <td><input type="text" name="telephone" size="50"/></td></tr>
+                        
+                        <tr><td>SSN (*):</td>
+                        <td><input type="text" name="ssn" size="50"/></td></tr>
+                        
+                        <tr><td>Email (*):</td>
+                        <td><input type="text" name="email" size="50"/></td></tr>
+                        
+                        <tr><td>Address Information (*):</td>                        
+                        <td><input type="text" name="address" size="50"/></td></tr>
+
+
+                        <tr><td></td><td><input type="submit" name="Register" value="Register" style="width: 125px; background-color: white; border-color: white; color: #014ccc;"/></td></tr>
+                        
+                    </table>
+                </form>
+
+               </div>
+  <div id="footer">
+    <p>&copy; 2016 Hotel Reservation </p>
+  </div>
+</div>
+
+</body>
+</html>
