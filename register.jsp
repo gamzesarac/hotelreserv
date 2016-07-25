@@ -27,13 +27,14 @@
             String email=request.getParameter("email");
             String address=request.getParameter("address");
             String ssn=request.getParameter("ssn");
-            int type=2;
+            int type=3;
             user u=new user(username,firstname,lastname,password,birthdate,email,gender,telephone,type,address,ssn);
 
             boolean isSuccess = u.addUser(); 
             
-            if (isSuccess) {%>
-                <jsp:forward page="userRegistered.html"/>
+        if (isSuccess) { session.setAttribute("username", request.getParameter("username"));
+             %>                
+                <jsp:forward page="user.jsp"/>
             <% } else {%>
                 
                 <jsp:forward page="registerError.html"/>
