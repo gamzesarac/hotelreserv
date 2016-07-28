@@ -71,13 +71,13 @@
             
                     <tr>
                         <th style="font-size: 15px;">Your Comment: </th>
-                      <td> <TEXTAREA name="text" ROWS=5 COLS=30></TEXTAREA>   </td>           
+                      <td> <TEXTAREA name="text" ROWS=5 COLS=30 required="yes"></TEXTAREA>   </td>           
                       
                     </tr>
                         <th style="font-size: 15px;">Your Rating: 
                     <td> 
                         <% for (int i=1; i<6; i++){ %>
-                         <input type="checkbox" name="rate" value="<%=i %>"/><%=i %>
+                         <input type="radio" name="rate" value="<%=i%>" required="yes"/><%=i %>
                          <% } %>
                        </th>
                         </td>

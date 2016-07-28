@@ -3,6 +3,12 @@
 <title>Register Page</title>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 <link rel="stylesheet" href="style.css" type="text/css" />
+
+  <script>
+$(document).ready(function(){
+    $('[data-toggle="tooltip"]').tooltip();
+});
+</script>
 </head>
 <body>
 <div id="containerr">
@@ -12,9 +18,12 @@
   </ul>
       <div class="divider"></div>
   <div id="header">
-      <h1><a href="index.html">Hotel Reservation</a><span>Isik University</span></h1>
+      <h1><a href="index.html"> Hotel Reservation</a><span>Isik University</span> </h1>
   </div>
       <div class="divider"></div>
+  <div id="sidebar">
+  
+  </div>
 
       <div id="main">
                   <h2>Registration Form</h2>
@@ -22,16 +31,20 @@
      <form method="post" action="register.jsp">                                
                     <table>
                         <tr><td>First name<sup></sup> (*):</td>
-                        <td><input type="text" name="firstname" size="50" /></td></tr>
+                            <td><input type="text" name="firstname" size="50" required="yes" /></td></tr>
                         
                         <tr><td>Last name (*):</td>
-                        <td><input type="text" name="lastname" size="50"/></td></tr>
+                        <td><input type="text" name="lastname" size="50" required="yes" /></td></tr>
                         
                         <tr><td>Username (*):</td>
-                        <td><input type="text" name="username" size="50" /></td></tr>
+                        <td><input type="text" name="username" size="50" required="yes" /></td></tr>
                         
                         <tr><td>Password (*):</td>
-                        <td><input type="password" name="password" size="50"/></td></tr>
+                        <td><input type="password" name="password" size="50" required="yes" /></td> 
+                        <td><div class="container">
+                        <a href="#" data-toggle="tooltip" title="8-16 arasi sayi ve rakamlardan olusan sifre girin. Example pass : abc123abc123">?</a>
+                            </div></td>
+                        </tr>
                         
                         <tr><td>Gender (*):</td>
                             <td> <select name="gender" style="width: 100px">

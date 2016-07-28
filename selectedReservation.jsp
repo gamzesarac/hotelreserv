@@ -86,11 +86,11 @@
                     <tr>       
                         <td> 
                             
-                            <h4 style="font-weight: bold; color:#014ccc;">RESERVATION ID : <%out.print(table.getString("reservationid"));%>
+                            <h4 style="font-weight: bold; color:#014ccc;">RESERVATION # : <%out.print(table.getString("reservationid"));%>
                             <input type="hidden" name="rid" value="<%out.print(table.getString("reservationid"));%>">
                             </h4>
                             
-                            <h4 style="font-weight: bold; color:#014ccc;">ROOM ID : <%out.print(table.getString("roomid"));%></h4>
+                            
                             
                             <%hotelroom h2=new hotelroom();
                             String roomtype=h2.takeRoomType(table.getInt("roomid")); %>
@@ -105,6 +105,8 @@
                             <h4 style="font-weight: bold; color:#014ccc;">CHECK OUT : <%out.print(table.getString("checkout"));%></h4>
                             
                             <h4 style="font-weight: bold; color:#014ccc;">RESERVATION CREATION DATE : <%out.print(table.getString("reservationdate"));%></h4>
+                            
+                            <h4 style="font-weight: bold; color:#014ccc;">PAYMENT : <%reservation re=new reservation(); boolean isPaid=re.isPaid(Integer.parseInt(table.getString("reservationid"))); if(isPaid){ %> PAID ONLINE <% }else{ %>  NO PAYMENT <% } %>  </h4>
                             
                             <h4 style="font-weight: bold; color:#014ccc;">STATUS : <% if(checkin.compareTo(date)>0&&table.getInt("isCancelled")==0){ %> active <% }else{ %>  inactive <% } %>  </h4>
                             
@@ -124,7 +126,7 @@
                     </form>
                 </table>
                                          <form method="post" action="userRate.jsp">
-                                             <%reservation rr=new reservation(); int reservid = Integer.parseInt(table.getString("reservationid")); boolean b=rr.isCommented(reservid, userid); if(checkin.compareTo(date)<0 && !b){ %>
+                                             <% reservation rr=new reservation(); int reservid = Integer.parseInt(table.getString("reservationid")); boolean b=rr.isCommented(reservid, userid); boolean isCancelled = r.isCancelled(reservid); if(checkin.compareTo(date)<0 && !b && !isCancelled){ %>
                     <input type="submit" name="Rate" value="Rate" style="width: 125px; background-color: white; border-color: white; color: #014ccc;"/>
                            <input type="hidden" name="rid2" value="<%out.print(table.getString("reservationid"));%>">
                                <input type="hidden" name="roomid" value="<%out.print(table.getString("roomid"));%>"> <% } %>

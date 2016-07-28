@@ -77,7 +77,7 @@
             hotelroom h=new hotelroom();
             int roomaydi=h.takeroomaydi(rooms);
             reservation res =new reservation();
-         out.println(rooms);
+         //out.println(rooms);
          
        
                                    
@@ -139,7 +139,7 @@
           int cc = c.roomcountdecrease(hotelidds, rooms);
          
           
-   out.println("Rezervasyonunuz Başarılı Bir Şekilde Tamamlandı");
+   out.println("Reservation has done successfully");
           
            %>
           

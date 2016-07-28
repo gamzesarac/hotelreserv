@@ -133,14 +133,14 @@ public class hotelroom{
 
         return true;
     }
-      //--------------------------------------------------------------------------   
+       //--------------------------------------------------------------------------   
     
     
     public double takeRoomCost(int roomid) throws SQLException {
         try {
         
         initializeJdbc();
-        pstmt = conn.prepareStatement("select cost from hotelextras where id = ?");
+        pstmt = conn.prepareStatement("select distinct cost from hotelextras where roomid = ?");
         pstmt.setInt(1, roomid);
         rs = pstmt.executeQuery();
         rs.first();

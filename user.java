@@ -10,9 +10,11 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Date;
  
 import java.util.Properties;
+import java.util.UUID;
  
 
 /**
@@ -43,6 +45,7 @@ public class user {
    private String address;
    
    private PreparedStatement pstmt;
+   private Statement st;
    ResultSet rs;
    
    public user(){
@@ -179,6 +182,7 @@ public class user {
         try {
             Class.forName(db_driver);
             conn = DriverManager.getConnection(db_url, db_user, db_pass);
+            st = conn.createStatement();
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -196,20 +200,20 @@ public class user {
             initializeJdbc();
 
             pstmt = conn.prepareStatement("insert into hotelreservationdb.user "
-                    + "(username, password, firstname, lastname, gender, email, birthdate, "
-                    + "telephone, ssn, address, usertype_id) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+                    + "(username, password, firstname, lastname,birthdate,email, gender, "
+                    + "telephone, ssn, usertype_id, address ) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
             
             pstmt.setString(1, username);
             pstmt.setString(2, password);
             pstmt.setString(3, firstname);
             pstmt.setString(4, lastname);
-            pstmt.setString(5, gender);
+            pstmt.setString(5, birthdate);
             pstmt.setString(6, email);
-            pstmt.setString(7, birthdate);
+            pstmt.setString(7, gender);
             pstmt.setString(8, telephone);             
             pstmt.setString(9, ssn);
-            pstmt.setString(10, address);
-            pstmt.setInt(11, type);
+            pstmt.setInt(10, type);
+            pstmt.setString(11, address);
 
             pstmt.executeUpdate();
            }
@@ -271,26 +275,7 @@ public class user {
         }
         
     }   
-      //--------------------------------------------------------------------------   
     
-    
-    public String takeLastname(String username) throws SQLException {
-        try {
-        
-        initializeJdbc();
-        pstmt = conn.prepareStatement("select lastname from user where username = ?");
-        pstmt.setString(1, username);
-        rs = pstmt.executeQuery();
-        rs.first();
-
-        return rs.getString("lastname");
-    }
-        catch(Exception ex){
-          System.out.println("Exception: " + ex.getMessage());
-            return "";  
-        }
-        
-    }   
      //--------------------------------------------------------------------------   
     
     
@@ -308,30 +293,6 @@ public class user {
         catch(Exception ex){
           System.out.println("Exception: " + ex.getMessage());
             return 0;  
-        }
-        
-    }   
-         //--------------------------------------------------------------------------   
-    
-    
-    public ResultSet takeUserInfo(int userid) throws SQLException {
-        try {
-        
-        initializeJdbc();
-        pstmt = conn.prepareStatement("select * from user where id = ?");
-        pstmt.setInt(1, userid);
-        rs = pstmt.executeQuery();
-
-
-                if(rs.next())
-        {
-            return rs;
-        }
-        else return null;
-    }
-        catch(Exception ex){
-          System.out.println("Exception: " + ex.getMessage());
-            return null;  
         }
         
     }   
@@ -444,6 +405,25 @@ public class user {
     
     //--------------------------------------------------------------------------
     
+    public boolean checkAdminPanel(String username) throws SQLException {
+        initializeJdbc();
+
+        pstmt = conn.prepareStatement("select * from user where username = ? AND usertype_id = ?");
+        pstmt.setString(1, username);
+        pstmt.setString(2, "1");
+        
+        rs = pstmt.executeQuery();
+        rs.first();
+
+        if (rs.first()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    
+    //--------------------------------------------------------------------------
+    
     
     
     public ResultSet userDetails(String username, String password) throws SQLException {
@@ -496,6 +476,13 @@ public class user {
         rs.beforeFirst();
 
         return rs;
+    }
+    
+    //--------------------------------------------------------------------------
+    
+    public String randomName() {
+        final String uuid = UUID.randomUUID().toString();
+        return uuid;
     }
     
     //--------------------------------------------------------------------------
@@ -593,6 +580,25 @@ public class user {
 //--------------------------------------------------------------------------    
     
     
+    public ResultSet takeUserInfo(int uid) throws SQLException {
+        try{
+        initializeJdbc();
+
+
+        pstmt = conn.prepareStatement("select * from user where id = ?");
+        pstmt.setInt(1, uid);
+        rs = pstmt.executeQuery();
+        rs.first();
+        return rs;
+    }
+         catch(Exception ex){
+          System.out.println("Exception: " + ex.getMessage());
+            return null;  
+        }
+    }
+    //--------------------------------------------------------------------------    
+    
+    
     public ResultSet takeUserInfo(String username) throws SQLException {
         try{
         initializeJdbc();
@@ -609,7 +615,29 @@ public class user {
             return null;  
         }
     }
- //--------------------------------------------------------------------------    
+    
+             //--------------------------------------------------------------------------   
+    
+    
+    public String takeUserNamefromID(int id) throws SQLException {
+        try {
+        
+        initializeJdbc();
+        pstmt = conn.prepareStatement("select username from user where id = ?");
+        pstmt.setInt(1, id);
+        rs = pstmt.executeQuery();
+        rs.first();
+
+        return rs.getString("username");
+    }
+        catch(Exception ex){
+          System.out.println("Exception: " + ex.getMessage());
+            return "";  
+        }
+        
+    }  
+    
+ //--------------------------------------------------------------------------
     
   /*  
     public ResultSet takeMyReservations(int id) throws SQLException {
@@ -648,96 +676,60 @@ public class user {
             return null;  
         }
     }
+    
+    //--------------------------------------------------------------------------//
+
+    public ResultSet commentWaitingAprovalHotel(int userid) throws SQLException {
+         try{
+        initializeJdbc();
+
+        pstmt = conn.prepareStatement("select * from usercomments where isApproved = ? and hotel_hotelid = ANY (select hotelid from hotel where user_id = ? ) ");
+        pstmt.setInt(1, 0);
+        pstmt.setInt(2, userid);
+        
+        rs = pstmt.executeQuery(); 
+        rs.beforeFirst();
+        return rs;
+        }
+         catch(Exception ex){
+          System.out.println("Exception: " + ex.getMessage());
+            return null;  
+        }
+    }
+   //--------------------------------------------------------------------------//
+
+public boolean commentAcceptHotel(int commentid) throws SQLException {
+         try{
+        initializeJdbc();
+
+        st.executeUpdate("update usercomments set isApproved='1' where commentid="+commentid);
+        return true;
+          }
+         catch(Exception ex){
+          System.out.println("Exception: " + ex.getMessage());
+            return false;  
+        } 
+    }
+
+//--------------------------------------------------------------------------//
+
+public boolean commentRejectHotel(int commentid) throws SQLException {
+        try{
+         initializeJdbc();
+
+        st.executeUpdate("DELETE FROM usercomments where commentid="+commentid);
+               return true;
+          }
+         catch(Exception ex){
+          System.out.println("Exception: " + ex.getMessage());
+            return false;  
+        }
+ }   
+    
+    
     //--------------------------------------------------------------------------
   
-     //---------------------ADMIN METHODS------------------------------------//
-
-public ResultSet allBookings() throws SQLException {
-        initializeJdbc();
-
-        rs = pstmt.executeQuery("select id,reservationid, firstname, lastname, hotelname, te,hotel.hotelid, hotelrooms.hotelid from user, hotel, reservation, hotelrooms where reservation.userid = user.id AND reservation.roomid = hotelrooms.roomid AND hotelrooms.hotelid = hotel.hotelid");
-                                          
-        
-        if(rs.next())
-        {
-            return rs;
-        }
-        else return null;
-    }
-
-
-//--------------------------------------------------------------------------//
-
-public ResultSet allUsers() throws SQLException {
-        initializeJdbc();
-
-        rs = pstmt.executeQuery("select id,firstname,lastname,email,telephone from user");
-                                            
-        
-        if(rs.next())
-        {
-            return rs;
-        }
-        else return null;
-    }
-
-//--------------------------------------------------------------------------//
-
-public ResultSet approvedHotels() throws SQLException {
-        initializeJdbc();
-
-        rs = pstmt.executeQuery("select hotelid,hotelname,user_id,id,firstname,lastname,status,hotelphone from user,hotel where hotel.user_id = user.id AND hotel.status='1'");
-                                            
-        
-        if(rs.next())
-        {
-            return rs;
-        }
-        else return null;
-    }
-
-//--------------------------------------------------------------------------//
-
-public ResultSet commentWaitingApproval() throws SQLException {
-        initializeJdbc();
-
-        rs = pstmt.executeQuery("select commentid, comment, rating,hotelid,id, hotel_hotelid,usercomments.user_id,isApproved,firstname,lastname,hotelname from user,hotel,usercomments where usercomments.user_id = user.id AND usercomments.hotel_hotelid = hotel.hotelid AND isApproved=0 ORDER BY commentid ASC");
-                                            
-        
-        if(rs.next())
-        {
-            rs.beforeFirst();
-            return rs;
-        }
-        else return null;
-    }
-
-//--------------------------------------------------------------------------//
-
-public void hotelApprove(String hotelid) throws SQLException {
-        initializeJdbc();
-
-        int status = pstmt.executeUpdate("update hotel set status='1' where hotelid="+hotelid);
-           
-    }
-
-//--------------------------------------------------------------------------//
-
-public void commentAccept(String hotelid) throws SQLException {
-        initializeJdbc();
-
-        pstmt.executeUpdate("update usercomments set isApproved='1' where commentid="+hotelid);
-           
-    }
-
-//--------------------------------------------------------------------------//
-
-public void commentReject(String hotelid) throws SQLException {
-        initializeJdbc();
-
-        pstmt.executeUpdate("DELETE FROM usercomments where commentid="+hotelid);
-       
- } 
+      
     
    
     //--------------------------------------------------------------------------
@@ -777,6 +769,48 @@ public void commentReject(String hotelid) throws SQLException {
            char c=num.charAt(i);
            if(c>=48&&c<=57)
                intt=true;
+           else
+               return false;
+      }       
+        }
+        return intt;
+        
+    }
+      //--------------------------------------------------------------------------
+    
+  public boolean checkUsername(String num){            
+ 
+        boolean intt=false;
+        
+        for(int i=0; i<num.length(); i++){
+           char c=num.charAt(i);
+           if(c>=48&&c<=57)
+               intt=true;
+           else
+               return false;
+      }       
+        
+        return intt;
+        
+    }
+      //--------------------------------------------------------------------------
+    
+  public boolean checkDouble(String num){            
+ 
+        boolean intt=false;
+        int point=0;
+        if(num.length()<10){
+        for(int i=0; i<num.length(); i++){
+           char c=num.charAt(i);
+           if((c>=48&&c<=57)||c==46){
+               if(c==46){
+                   point++;
+                   if(point>1){
+                       return false;
+                   }
+               }
+               intt=true;
+           }
            else
                return false;
       }       
@@ -835,4 +869,117 @@ public void commentReject(String hotelid) throws SQLException {
         
         return false;
     }
+
+
+//---------------------ADMIN METHODS------------------------------------//
+
+ public ResultSet allBookings() throws SQLException {
+        initializeJdbc();
+
+        rs = st.executeQuery("select id,reservationid, firstname, lastname, hotelname, reservationdate,hotel.hotelid, hotelrooms.hotelid from user, hotel, reservation, hotelrooms where reservation.userid = user.id AND reservation.roomid = hotelrooms.roomid AND hotelrooms.hotelid = hotel.hotelid");
+                                            
+        
+        if(rs.next())
+        {
+            return rs;
+        }
+        else return null;
+    }
+
+
+//--------------------------------------------------------------------------//
+
+public int messageCount(int userid) throws SQLException {
+        initializeJdbc();
+
+        rs = st.executeQuery("select * from hotelmessage where isRead='0' AND isDeleted='0' AND hotelid IN(select hotelid from hotel where user_id='"+userid+"')");
+         
+        int count=0;
+        rs.beforeFirst();
+        while(rs.next())
+        {
+            count++;
+        }
+        return count;
+       
+    }
+
+//--------------------------------------------------------------------------//
+
+public ResultSet approvedHotels() throws SQLException {
+        initializeJdbc();
+
+        rs = st.executeQuery("select hotelid,hotelname,user_id,id,firstname,lastname,status,hotelphone from user,hotel where hotel.user_id = user.id AND hotel.status='1'");
+                                            
+        
+        if(rs.next())
+        {
+            return rs;
+        }
+        else return null;
+    }
+
+//--------------------------------------------------------------------------//
+
+public ResultSet commentWaitingApproval() throws SQLException {
+        initializeJdbc();
+
+        rs = st.executeQuery("select commentid, comment, rating,hotelid,id, hotel_hotelid,usercomments.user_id,isApproved,firstname,lastname,hotelname from user,hotel,usercomments where usercomments.user_id = user.id AND usercomments.hotel_hotelid = hotel.hotelid AND isApproved=0 ORDER BY commentid ASC");
+                                            
+        
+        if(rs.next())
+        {
+            rs.beforeFirst();
+            return rs;
+        }
+        else return null;
+    }
+
+//--------------------------------------------------------------------------//
+
+public void hotelReject(String hotelid) throws SQLException {
+        initializeJdbc();
+
+        st.executeUpdate("DELETE FROM hotel where hotelid="+hotelid);
+           
+    }
+
+//--------------------------------------------------------------------------//
+
+public void hotelApprove(String hotelid) throws SQLException {
+        initializeJdbc();
+
+         st.executeUpdate("update hotel set status='1' where hotelid="+hotelid);
+           
+    }
+
+//--------------------------------------------------------------------------//
+
+public void commentAccept(String hotelid) throws SQLException {
+        initializeJdbc();
+
+        st.executeUpdate("update usercomments set isApproved='1' where commentid="+hotelid);
+           
+    }
+
+//--------------------------------------------------------------------------//
+
+public void commentReject(String hotelid) throws SQLException {
+        initializeJdbc();
+
+        st.executeUpdate("DELETE FROM usercomments where commentid="+hotelid);
+       
+ }
+
+public ResultSet allUsers() throws SQLException {
+        initializeJdbc();
+
+        rs = st.executeQuery("select * from user");
+        
+        if(rs.next())
+        {
+            return rs;
+        }
+       return null;
+ }
 }

@@ -14,9 +14,9 @@
         user u=new user(username);
         String type = u.checkTypePages(username);
         int check = Integer.parseInt(type); %>
-       <% if(check != 3 || check ==-1){ %>
-        <jsp:forward page="login.html"/>
-        <% } 
+       <% if(check != 3 || check ==-1){ 
+           response.sendRedirect("login.html");
+        } 
         if(session.getAttribute("username") == null){
             response.sendRedirect("index.jsp");
         }

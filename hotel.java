@@ -13,7 +13,6 @@ public class hotel {
     private final String db_driver = "com.mysql.jdbc.Driver";
     private final String db_url = "jdbc:mysql://localhost:3306/hotelreservationdb"; 
     
-    
     //private String hotelname;
     //private String hotelinfo;
     //private String hoteladdress;
@@ -42,6 +41,8 @@ public class hotel {
             ex.printStackTrace();
         }
     }
+    
+
     
     //--------------------------------------------------------------------------
     
@@ -72,8 +73,7 @@ public class hotel {
         return true;
     }
     
-     //--------------------------------------------------------------------------
-    
+     
     
     //---------------------------------------------------------------------------
     
@@ -83,6 +83,26 @@ public class hotel {
         initializeJdbc();
         pstmt = conn.prepareStatement("select hotelname from hotel where hotelname = ?");
         pstmt.setString(1, hotelname);
+        rs = pstmt.executeQuery();
+        rs.first();
+
+        return rs.getString("hotelname");
+    }
+        catch(Exception ex){
+          System.out.println("Exception: " + ex.getMessage());
+            return "";  
+        }
+        
+    }   
+     
+        //---------------------------------------------------------------------------
+    
+     public String takeHotelnameFromHotelID(int hotelid) throws SQLException {
+        try {
+        
+        initializeJdbc();
+        pstmt = conn.prepareStatement("select hotelname from hotel where hotelid = ?");
+        pstmt.setInt(1, hotelid);
         rs = pstmt.executeQuery();
         rs.first();
 
@@ -113,8 +133,9 @@ public class hotel {
             return 0;  
         }
         
-    }   
-    //-------------------------------------------------------------------------- 
+    } 
+     
+         //-------------------------------------------------------------------------- 
      
      public int takeHotelIdfromID(int userid) throws SQLException {
         try {
@@ -132,7 +153,8 @@ public class hotel {
             return 0;  
         }
         
-    }   
+    }  
+    
      //--------------------------------------------------------------------------
      
      public String checkType(String hotelname, String password) throws SQLException {

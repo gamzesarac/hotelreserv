@@ -3,17 +3,18 @@
 <%@page import="Reservation.hotel"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@include file="connact.jsp" %>
- 
+
 <!DOCTYPE html>
- <html lang="en"> 
+ <html> 
+     <title>Hotel List Page</title> 
     <head>
           <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     
      <meta charset="UTF-8">
-    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+    
     <link rel="stylesheet" href="style.css" type="text/css" />
-    <h1><i>Welcome To Hotel Reservation System</i></h1>
-</head>
+    
+    </head>
 
  <style>
   
@@ -28,8 +29,9 @@
     <body>
         <div id="containerr">
   <ul id="nav">
-    <li><a href="contact.jsp" title="contact">contact</a></li>
-    <li><a href="logout.jsp" title="logout">logout</a></li>
+    <li><a href="contact.html" title="contact">contact</a></li>
+    <li><a href="register.html" title="let">register</a></li>
+    <li><a href="login.html" title="contact">login</a></li>
   </ul>
       <div class="divider"></div>
   <div id="header">
@@ -42,23 +44,8 @@
        <div id="main">
     <form action="reservationnocss.jsp" action="POST"> 
     <%
-        String usernamee = (String)session.getAttribute("username");
-        user u=new user(usernamee);
-        String type = u.checkTypePages(usernamee);
-        int checkk = Integer.parseInt(type); %>
-       <% if(checkk != 3 || checkk ==-1){ %>
-        <jsp:forward page="login.html"/>
-        <% } 
-        if(session.getAttribute("username") == null){
-            response.sendRedirect("index.jsp");
-        }
-
-        String firstname = u.takeFirstname(usernamee);
-        String lastname = u.takeLastname(usernamee);
-        session.setAttribute("firstname", firstname); 
-        session.setAttribute("lastname", lastname); 
-        session.setAttribute("username", usernamee); 
-
+    
+         session.setAttribute("currentpage", "full"); // e?er kullan?c? login e bir sayfadan yönlendiyse tekrar o sayfaya yönlenmek için bunu ekledim.
    boolean check=false;
    boolean check1=false;
    try{
@@ -253,7 +240,7 @@ check1=true;
 <input type="submit" name="submit" value="MakeReservation" />
  <% } %>
 <br></br>
-<div class="ex1"><strong><i>iyi tatiller dileriz</i></strong></div><font color="black"></font>
+<div class="ex1"><strong><i>Have a nice vacation</i></strong></div><font color="black"></font>
 <br></br>
 <div class="ex1"><strong><i>HOTEL RESERVATİON SYSTEM</i></strong></div><font color="black"></font>
 

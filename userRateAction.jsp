@@ -27,6 +27,9 @@
        
         String submit = request.getParameter("Send");
         String comment = request.getParameter("text");
+
+
+        
         int rating = Integer.parseInt(request.getParameter("rate"));
         hotelroom h=new hotelroom();
         int reservid = Integer.parseInt(request.getParameter("rid2"));

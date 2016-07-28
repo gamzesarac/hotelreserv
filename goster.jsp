@@ -2,6 +2,7 @@
 <%@page import="Reservation.reservation"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@include file="connact.jsp"%>
+
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -89,7 +90,7 @@ reservation h = new reservation();
          
 %>   
 <br></br>
-<div class="ex1"><strong><i>iyi tatiller dileriz</i></strong></div><font color="black"></font>
+<div class="ex1"><strong><i>Have a nice vacation</i></strong></div><font color="black"></font>
 <br></br>
 <div class="ex1"><strong><i>HOTEL RESERVATİON SYSTEM</i></strong></div><font color="black"></font>
 

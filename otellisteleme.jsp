@@ -9,6 +9,8 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@include file="connact.jsp" %>
     <%@page import="java.text.SimpleDateFormat" %>  
+    
+
   <html lang="en">  
     
     
@@ -63,12 +65,13 @@ th, td {
 <body>
     <div id="containerr">
   <ul id="nav">
-    <li><a href="contact.jsp" title="contact">contact</a></li>
-    <li><a href="logout.jsp" title="logout">logout</a></li>
+    <li><a href="contact.html" title="contact">contact</a></li>
+    <li><a href="register.html" title="let">register</a></li>
+    <li><a href="login.html" title="contact">login</a></li>
   </ul>
       <div class="divider"></div>
   <div id="header">
-      <h1><a href="user.jsp">Hotel Reservation</a><span>Isik University</span></h1>
+      <h1><a href="index.html">Hotel Reservation</a><span>Isik University</span></h1>
   </div>
        <div class="divider"></div>
   <div id="sidebar">   
@@ -79,19 +82,7 @@ th, td {
 
  
     <%
-            String usernamee = (String)session.getAttribute("username");
-        user u=new user(usernamee);
-        String type = u.checkTypePages(usernamee);
-        int check = Integer.parseInt(type); %>
-       <% if(check != 3 || check ==-1){ %>
-        <jsp:forward page="login.html"/>
-        <% } 
-        if(session.getAttribute("username") == null){
-            response.sendRedirect("index.jsp");
-        }
-
-        String firstname = u.takeFirstname(usernamee);
-
+        
     try{
          
  boolean mel=true;
@@ -151,14 +142,13 @@ th, td {
        <tr>
         <td>  <% String m=otellist.getString("hotelid");
         int otelid=Integer.parseInt(m);
-        out.println(otelid);
         Statement st2=connection.createStatement();
       String c="select imageaddress from hotelimage where hotel_hotelid='"+otelid+"'";
       ResultSet image= st2.executeQuery(c);
                 
           while(image.next()) { %>
               
-              <img src="<%out.print(image.getString("imageaddress"));  %>" height="75" weight ="75" >
+              <img src="<% out.print(image.getString("imageaddress"));  %>" height="75" weight ="75" >
              
  <%  break;} %>
         
@@ -173,16 +163,7 @@ th, td {
         <td> <%=otellist.getString("address")%></td>
         <td> <%=otellist.getString("CITY_NAME")%></td>
         <td> <%=otellist.getString("STATE_NAME")%></td>
-        
-        <td><%int sa=otellist.getInt("hotelid");
-        
-              ResultSet resultSet= h.AverageRate(sa);
- while(resultSet.next()){
-     out.println(resultSet.getDouble("AVG(rating)"));
- }
- 
-        
-        %></td>
+        <td> <%=otellist.getDouble("rating")%></td>
       
        
        </tr>
@@ -196,7 +177,7 @@ mel=false;
         %>
         <SCRIPT LANGUAGE='JavaScript'>
     window.alert('SYSTEM HAVENT GOT A HOTEL LIKE THAT!')
-     window.location.href='search.jsp'
+     window.location.href='index.html'
     </SCRIPT>   
       
    <% }

@@ -34,11 +34,11 @@
         int rid=Integer.parseInt(ridString);
         reservation r=new reservation(rid);
         boolean success=r.cancelReservation(rid);
-        if(success){%>
-                <jsp:forward page="cancelReservationSuccess.html"/>
-            <% } else {%>
-                <jsp:forward page="cancelReservationError.html"/>
-            <% }
+        if(success){
+                response.sendRedirect("MyReservations.jsp"); 
+             } else {
+                response.sendRedirect("cancelReservationError.jsp");
+             }
         
     %>
 

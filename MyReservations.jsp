@@ -69,60 +69,70 @@
   </div>
        <div id="main">
         <h2 style="font-family: monospace; font-weight: bold; font-size: 200%;">See Your All Reservations</h2>
-        <table border="4">
+               <table border="2">
                     <tr>
                         <th style="font-size: 15px;">Your Reservations</th>
                       <!--  <th>Text</th> -->
                       <!--  <th></th> -->
 
-                    </tr>
+                    </tr> 
+             
                     
-                    <table border="2" >
-         
-                        <th>Reservation ID</th>
+                    <table border="0" >
+                
+                    </tr>
+                        
                         <th>Hotel Name</th>
                         <th>Room Type</th>
                         <th>Check In</th>
                         <th>Check Out</th>
                         <th>Cost</th>
+                        <th>Paid</th>
                         <th>Status</th>
+                        
 
 
        <% while(table2.next()){%>   
                     <form method="post" action="selectedReservation.jsp">
                     <tr>       
-                        <td>                             
-                        <input id="messageLink" type = "submit" name = "Submit" value = "<%out.print(table2.getInt("reservationid"));%>"/>
+                                                     
+                        
                         <input type="hidden" name="rid" value="<%out.print(table2.getString("reservationid"));%>">
                             <% ridString = table2.getString("reservationid");
                                 int rid=Integer.parseInt(ridString);
                          table3 = u.takeSelectedReservation(rid);
                          checkin = table3.getDate("checkin"); %>
-                        </td>
+                        
                         <td>
                             <%
                             String hotelname=r.takeHotelName(table2.getInt("roomid")); %>
-                            <%= hotelname %>
+                            <input id="messageLink" type = "submit" name = "Submit" value = "<%= hotelname %>"/>
                         </td>                        
                         <td>                            
                             <%hotelroom h2=new hotelroom();
                             String roomtype=h2.takeRoomType(table2.getInt("roomid")); %>
-                          <%= roomtype %>
+                          <input id="messageLink" type = "submit" name = "Submit" value = "<%= roomtype %>"/>
                         </td>
                          <td>
-                         <%out.print(table2.getString("checkin"));%>
+                         <input id="messageLink" type = "submit" name = "Submit" value = "<%out.print(table2.getString("checkin"));%>"/>
                          </td>
                          <td>
-                          <%out.print(table2.getString("checkout"));%>
+                         <input id="messageLink" type = "submit" name = "Submit" value = "<%out.print(table2.getString("checkout"));%>"/>
                          </td>
                          <td>
                                                       
                             <%hotelroom h=new hotelroom();
                             double cost=h.takeRoomCost(table2.getInt("roomid")); %>
-                            <%= cost %>
+                            <input id="messageLink" type = "submit" name = "Submit" value = "<%= cost %>"/>
                          </td>
                          <td>
-                         <% if(checkin.compareTo(date)>0&&table2.getInt("isCancelled")==0){ %> active <% } else{ %> inactive <% } %>
+                                                      
+                            <%reservation rr=new reservation();
+                            boolean isPaid=rr.isPaid(Integer.parseInt(table2.getString("reservationid"))); %>
+                            <% if(isPaid){ %><input id="messageLink" type = "submit" name = "Submit" value = "YES"/> <% }else{ %> <input id="messageLink" type = "submit" name = "Submit" value = "NO"/> <% } %>
+                         </td>
+                         <td>
+                         <% if(checkin.compareTo(date)>0&&table2.getInt("isCancelled")==0){ %> <input id="messageLink" type = "submit" name = "Submit" value = "active"/> <% } else{ %> <input id="messageLink" type = "submit" name = "Submit" value = "inactive"/> <% } %>
                          </td>                            
                             
                     </tr>

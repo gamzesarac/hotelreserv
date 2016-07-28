@@ -143,75 +143,9 @@ public class reservation{
         }
         
     } 
-    //--------------------------------------------------------------------------    
+    //-------------------------------------------------------------------------- 
     
-    
-    public boolean cancelReservation(int rid) throws SQLException {
-        try{
-        initializeJdbc();
-
-
-        pstmt = conn.prepareStatement("update reservation set isCancelled=1 where reservationid= ?");
-        pstmt.setInt(1, rid);
-        pstmt.executeUpdate();
-
-        pstmt = conn.prepareStatement("select roomid from reservation where reservationid = ?");
-        pstmt.setInt(1, rid);
-        rs = pstmt.executeQuery();
-        rs.first();
-        String room=rs.getString("roomid");
-        int roomid = Integer.parseInt(room);
-        
-        pstmt = conn.prepareStatement("update hotelrooms set roomCount=roomCount+'1' where roomid= ?");
-        pstmt.setInt(1, roomid);
-        pstmt.executeUpdate();
-    }
-         catch(Exception ex){
-          System.out.println("Exception: " + ex.getMessage());
-            return false;  
-        }
-        return true;
-    }
-   //--------------------------------------------------------------------------    
-    
-    
-    public ResultSet takeMyReservations(int id) throws SQLException {
-        try{
-        initializeJdbc();
-
-
-        pstmt = conn.prepareStatement("select * from reservation where userid = ?");
-        pstmt.setInt(1, id);
-        rs = pstmt.executeQuery();
-        rs.beforeFirst();
-        return rs;
-    }
-         catch(Exception ex){
-          System.out.println("Exception: " + ex.getMessage());
-            return null;  
-        }
-    }
-    
-      //--------------------------------------------------------------------------    
-    
-    
-    public ResultSet takeHotelReservations(int hotelid) throws SQLException {
-        try{
-        initializeJdbc();
-
-
-        pstmt = conn.prepareStatement("select * from reservation where roomid = ANY (select roomid from hotelrooms where hotelid = ?)");
-        pstmt.setInt(1, hotelid);
-        rs = pstmt.executeQuery();
-        rs.beforeFirst();
-        return rs;
-    }
-         catch(Exception ex){
-          System.out.println("Exception: " + ex.getMessage());
-            return null;  
-        }
-    }
-     //--------------------------------------------------------------------------    
+      
     
      
      
@@ -241,7 +175,95 @@ public class reservation{
         return true;
     }
     
-       //--------------------------------------------------------------------------    
+    //--------------------------------------------------------------------------  
+    
+    public boolean cancelReservation(int rid) throws SQLException {
+        try{
+        initializeJdbc();
+
+
+        pstmt = conn.prepareStatement("update reservation set isCancelled=1 where reservationid= ?");
+        pstmt.setInt(1, rid);
+        pstmt.executeUpdate();
+
+    }
+         catch(Exception ex){
+          System.out.println("Exception: " + ex.getMessage());
+            return false;  
+        }
+        return true;
+    }
+   //--------------------------------------------------------------------------    
+    
+    
+    public ResultSet takeMyReservations(int id) throws SQLException {
+        try{
+        initializeJdbc();
+
+
+        pstmt = conn.prepareStatement("select * from reservation where userid = ?");
+        pstmt.setInt(1, id);
+        rs = pstmt.executeQuery();
+        rs.beforeFirst();
+        return rs;
+    }
+         catch(Exception ex){
+          System.out.println("Exception: " + ex.getMessage());
+            return null;  
+        }
+    }
+
+    
+    //--------------------------------------------------------------------------    
+    
+    
+    public ResultSet takeHotelReservations(int hotelid) throws SQLException {
+        try{
+        initializeJdbc();
+
+
+        pstmt = conn.prepareStatement("select * from reservation where roomid = ANY (select roomid from hotelrooms where hotelid = ?)");
+        pstmt.setInt(1, hotelid);
+        rs = pstmt.executeQuery();
+        rs.beforeFirst();
+        return rs;
+    }
+         catch(Exception ex){
+          System.out.println("Exception: " + ex.getMessage());
+            return null;  
+        }
+    }
+     //--------------------------------------------------------------------------    
+    
+     
+     
+    public boolean addComment(int hotelid, int userid, String comment, int rating) throws SQLException {
+        try {
+          if(comment==""){
+            return false;
+           }
+          else{
+            
+            initializeJdbc();
+
+            pstmt = conn.prepareStatement("insert into usercomments "
+                    + "(hotel_hotelid, user_id, comment, rating) values (?, ?, ?, ?)");
+            
+            pstmt.setInt(1, hotelid);
+            pstmt.setInt(2, userid);
+            pstmt.setString(3, comment);
+            pstmt.setInt(4, rating);
+            pstmt.executeUpdate();
+          }
+        } catch (Exception ex) {
+            System.out.println("Exception: " + ex.getMessage());
+            return false;
+        }
+        return true;
+    }
+    
+    
+          //--------------------------------------------------------------------------    
     
      
      
@@ -266,6 +288,61 @@ public class reservation{
         }
         return false;
     } 
+    
+              //--------------------------------------------------------------------------    
+    
+     
+     
+    public boolean isPaid(int reservationid) throws SQLException {
+        try {
+
+            
+            initializeJdbc();
+
+            pstmt = conn.prepareStatement("select isPaid from reservation where reservationid = ?");
+            
+            pstmt.setInt(1, reservationid);;
+            rs = pstmt.executeQuery();
+            rs.first();
+            String paidd=rs.getString("isPaid");
+            int paid=Integer.parseInt(paidd);
+            if(paid==1)
+                return true;
+            
+        } catch (Exception ex) {
+            System.out.println("Exception: " + ex.getMessage());
+            return false;
+        }
+        return false;
+    } 
+    
+    
+              //--------------------------------------------------------------------------    
+    
+     
+     
+    public boolean isCancelled(int reservationid) throws SQLException {
+        try {
+
+            
+            initializeJdbc();
+
+            pstmt = conn.prepareStatement("select * from reservation where reservationid = ?");
+            
+            pstmt.setInt(1, reservationid);;
+            rs = pstmt.executeQuery();
+            rs.first();
+            int cancelled = Integer.parseInt(rs.getString("isCancelled"));
+            if(cancelled==1)
+                return true;
+        } catch (Exception ex) {
+            System.out.println("Exception: " + ex.getMessage());
+            return true;
+        }
+        return false;
+    } 
+    
+    
    //--------------------------------------------------------------------------
     
     

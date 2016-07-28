@@ -20,8 +20,8 @@
     
        try{
              Connection connection=null;
-             Class.forName("sun.jdbc.odbc.JdbcOdbcDriver");
-             connection=DriverManager.getConnection("jdbc:mysql://localhost:3306/hotelreservationdb2","root","");
+             Class.forName("com.mysql.jdbc.Driver");
+             connection=DriverManager.getConnection("jdbc:mysql://localhost:3306/hotelreservationdb","root","");
              Statement statement=connection.createStatement();
              String command="select imageaddress from hotelimage where hotel_hotelid=1";
           ResultSet resultSet= statement.executeQuery(command);

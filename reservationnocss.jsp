@@ -6,15 +6,14 @@
 <%@page import="java.util.Date"%>
 
 <%
+   
         String usernamee = (String)session.getAttribute("username");
         user u=new user(usernamee);
         String type = u.checkTypePages(usernamee);
-        int checkk = Integer.parseInt(type); %>
-       <% if(checkk != 3 || checkk ==-1){ %>
-        <jsp:forward page="login.html"/>
-        <% } 
+        int checkk = Integer.parseInt(type); 
+        
         if(session.getAttribute("username") == null){
-            response.sendRedirect("index.jsp");
+            response.sendRedirect("login.html");
         }
 
         String firstname = u.takeFirstname(usernamee); %>
@@ -47,7 +46,7 @@
 </head>
 
     </head>
-    <h1><i>Enter Your Reservation Entries</i></h1>
+    
 
           <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     
