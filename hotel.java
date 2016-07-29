@@ -95,6 +95,59 @@ public class hotel {
         
     }   
      
+     //---------------------------------------------------------------------------
+    
+     public boolean deleteHotel(int hotelid) throws SQLException {
+        try {
+   
+        initializeJdbc();
+        pstmt = conn.prepareStatement("select roomid from hotelrooms where hotelid = ? ");
+        pstmt.setInt(1, hotelid);
+        rs = pstmt.executeQuery();
+        rs.first();
+        ResultSet rs2;
+        ResultSet rs3;
+        while(rs.next()){ 
+         int roomid = Integer.parseInt(rs.getString("roomid"));
+          pstmt = conn.prepareStatement("delete from reservation where roomid = ANY (select roomid from hotelrooms where hotelid="+roomid+")"); 
+          pstmt.executeUpdate();
+          
+          pstmt = conn.prepareStatement("select * from hotelextras where roomid ="+roomid+""); 
+          rs2 = pstmt.executeQuery();
+          while(rs2.next()){
+          pstmt = conn.prepareStatement("delete from hotelextras where roomid ="+roomid+" and id="+rs2.getString("id")+""); 
+          pstmt.executeUpdate();
+          }
+          
+        }
+        
+
+        
+          pstmt = conn.prepareStatement("delete from usercomments where hotel_hotelid ="+hotelid+""); 
+          pstmt.executeUpdate();
+          
+          pstmt = conn.prepareStatement("delete from hotelrooms where hotelid ="+hotelid+""); 
+          pstmt.executeUpdate();
+        
+        pstmt = conn.prepareStatement("delete from hotelimage where hotel_hotelid ="+hotelid+""); 
+          pstmt.executeUpdate();
+        
+        pstmt = conn.prepareStatement("delete from hotel where hotelid = ?");
+        pstmt.setInt(1, hotelid);
+        pstmt.executeUpdate();
+        
+        return true;
+
+        
+    }
+        catch(Exception ex){
+          System.out.println("Exception: " + ex.getMessage());
+            return false;  
+        }
+        
+    }   
+     
+     
          //---------------------------------------------------------------------------
     
      public boolean hasAlreadyRooms(int hotelid) throws SQLException {

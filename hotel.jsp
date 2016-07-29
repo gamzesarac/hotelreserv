@@ -53,7 +53,7 @@
         <h3><a href="registerhotel.jsp" style="color:#014ccc">Add Hotel</a></h3>
         <h3><a href="myHotels.jsp" style="color:#014ccc">My Hotels</a>&nbsp; &nbsp; <a href="#" data-toggle="tooltip" title="Otelinize henüz oda eklemediyseniz lütfen buradan ekleyin.">?</a></h3>
         <h3><a href="myHotels2.jsp" style="color:#014ccc">Add New Rooms</a> &nbsp; &nbsp; <a href="#" data-toggle="tooltip" title="Mevcut otelinizine yeni odalar ekleyin. Fiyatlar ve özellikleri de bu seçenek ile güncelleyebilirsiniz.">?</a></h3>
-        
+        <h3><a href="myHotels3.jsp" style="color:#014ccc">Delete Hotel</a></h3>
         <h3><a href="incomingReservations.jsp" style="color:#014ccc">Incoming Reservations</a></h3>
         <h3><a href="commentsForHotel.jsp" style="color:#014ccc">Approve/Reject Comments</a></h3>
     </div>
