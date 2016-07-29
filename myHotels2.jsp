@@ -53,8 +53,10 @@
                         <th>Hotel Address</th>
                         <th>Choose Hotel</th>
                         </tr>
-                        <% while(hotelTable.next())
-                        { 
+                        <% while(hotelTable.next()){
+                            int hid=h.takeHotelId(hotelTable.getString("hotelname")); 
+                            boolean b=h.hasAlreadyRooms(hid); if(b){ 
+                        
                         %>
                         <tr>
                             <td>                             
@@ -67,7 +69,7 @@
                         <td><input type="radio" name="hotelID" value="<% out.print(hotelTable.getString("hotelid")); %>" required="yes" ></td>
                         
                         
-                        <% } %>
+                        <% }} %>
                         </tr>
                         </table>
                         

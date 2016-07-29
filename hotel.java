@@ -104,8 +104,8 @@ public class hotel {
         pstmt = conn.prepareStatement("select hotelid from hotelrooms where hotelid = ?");
         pstmt.setInt(1, hotelid);
         rs = pstmt.executeQuery();
-        rs.first();
-        if(rs!=null)
+        
+        if(rs.first())
             return true;
         
     }
