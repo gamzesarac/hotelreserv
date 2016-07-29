@@ -1,5 +1,10 @@
 <!DOCTYPE html>
 <%
+if(session.getAttribute("username") == null){
+        response.sendRedirect("../login.html");
+    }
+%>
+<%
     String username = (String)session.getAttribute("username");
     String hotelname = request.getParameter("hotelname");
     String hotelinfo = request.getParameter("hotelInfo");
@@ -28,10 +33,10 @@
         <link rel="stylesheet" href="../style.css" type="text/css" />
     </head>
     <body>
-        <div id ="containerr">
+        <div id ="container">
             <ul id="nav">
                 <li><a href="#" title="let">contact</a></li>
-                <li><a href="logout.jsp" title="logout">logout</a></li>
+                <li><a href="../logout.jsp" title="logout">logout</a></li>
             </ul>
 
             <div class="divider"></div>

@@ -95,6 +95,28 @@ public class hotel {
         
     }   
      
+         //---------------------------------------------------------------------------
+    
+     public boolean hasAlreadyRooms(int hotelid) throws SQLException {
+        try {
+        
+        initializeJdbc();
+        pstmt = conn.prepareStatement("select hotelid from hotelrooms where hotelid = ?");
+        pstmt.setInt(1, hotelid);
+        rs = pstmt.executeQuery();
+        rs.first();
+        if(rs!=null)
+            return true;
+        
+    }
+        catch(Exception ex){
+          System.out.println("Exception: " + ex.getMessage());
+            return true;  
+        }
+        return false;
+        
+    }   
+     
         //---------------------------------------------------------------------------
     
      public String takeHotelnameFromHotelID(int hotelid) throws SQLException {

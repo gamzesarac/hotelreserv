@@ -45,7 +45,7 @@
                 <table border="4">
                     <th style="font-size: 15px;">Select Hotel</th>
                         <tr><td>
-                    <form method="get" action="hotelRoomAddPage.jsp">
+                    <form method="get" action="hotelRoomEditPage.jsp">
                        
                         <table border="1">
                         <tr>
@@ -54,8 +54,7 @@
                         <th>Choose Hotel</th>
                         </tr>
                         <% while(hotelTable.next())
-                        { int hid=h.takeHotelId(hotelTable.getString("hotelname"));
-                            boolean b=h.hasAlreadyRooms(hid); if(!b){
+                        { 
                         %>
                         <tr>
                             <td>                             
@@ -68,7 +67,7 @@
                         <td><input type="radio" name="hotelID" value="<% out.print(hotelTable.getString("hotelid")); %>" required="yes" ></td>
                         
                         
-                        <% }} %>
+                        <% } %>
                         </tr>
                         </table>
                         

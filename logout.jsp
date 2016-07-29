@@ -8,7 +8,7 @@
 <body>
     <%
     if(session.getAttribute("username") == null){
-        response.sendRedirect("index.html");
+        response.sendRedirect("../login.html");
     }
     session.invalidate();        
     %>

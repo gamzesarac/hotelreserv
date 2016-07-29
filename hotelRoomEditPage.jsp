@@ -48,7 +48,7 @@
                 
                 <div class="divider"></div>
                 
-                <form name="hotelreservationform" method="get" action="checkRoomDetails.jsp">                                
+                <form name="hotelreservationform" method="get" action="checkRoomDetails2.jsp">                                
                     <table>
                         <tr>
                             <td>

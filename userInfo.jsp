@@ -1,9 +1,9 @@
 <%@page import="db.user"%>
 <!DOCTYPE html>
-<%@page import="java.sql.*"%>
+<%@page import="java.sql.*"%> 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
-<jsp:setProperty name = "dbbean" property = "*" />
+
 <html lang="en">
 <head>
 <title>User Page</title>
@@ -38,6 +38,8 @@
         String idd = (String)session.getAttribute("useridd");
         int uid = Integer.parseInt(idd);
         
+
+        
         String firstname = u.takeFirstname(username);
         ResultSet table=u.takeUserInfo(uid);
 
@@ -46,7 +48,7 @@
 <div id="containerr">
   <ul id="nav">
     <li><a href="contact.jsp" title="contact">contact</a></li>
-    <li><a href="logout.jsp" title="logout">logout</a></li>
+    <li><a href="../logout.jsp" title="logout">logout</a></li>
   </ul>
       <div class="divider"></div>
   <div id="header">
@@ -63,7 +65,7 @@
             <p>
             <form method="post" action="editInfoAction.jsp">
                 <table>
-                    
+                   
                     <tr> 
                      
                         <tr><td>First name<sup></sup> (*):</td>

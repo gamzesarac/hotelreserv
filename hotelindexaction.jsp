@@ -4,7 +4,11 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
 
-
+<%
+if(session.getAttribute("username") == null){
+        response.sendRedirect("../login.html");
+    }
+%>
 
 <!DOCTYPE html>
 <html>

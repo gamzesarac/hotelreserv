@@ -45,25 +45,45 @@ if(session.getAttribute("username") == null){
             Statement st = con.createStatement(); 
             
             ResultSet rs;
+            ResultSet rs2;
             
-            st.executeUpdate("INSERT INTO hotelrooms(hotelid,roomname,roomCount) VALUES("+hotelid+",'Standart Room','"+standardroomsize+"')");
-            st.executeUpdate("INSERT INTO hotelrooms(hotelid,roomname, roomCount) VALUES("+hotelid+",'Luxury Room','"+luxuryroomsize+"')");
-            st.executeUpdate("INSERT INTO hotelrooms(hotelid,roomname, roomCount) VALUES("+hotelid+",'Premium Room','"+premiumroomsize+"')");
+            st.executeUpdate("UPDATE hotelrooms SET roomCount=roomCount+'"+standardroomsize+"' where hotelid='"+hotelid+"' and roomname='Standart Room'");
+            st.executeUpdate("UPDATE hotelrooms SET roomCount=roomCount+'"+luxuryroomsize+"' where hotelid='"+hotelid+"' and roomname='Luxury Room'");
+            st.executeUpdate("UPDATE hotelrooms SET roomCount=roomCount+'"+premiumroomsize+"' where hotelid='"+hotelid+"' and roomname='Premium Room'");
             
             rs = st.executeQuery("select * from hotelrooms where roomname='Standart Room' AND hotelid="+hotelid);
+            rs.first();
             Statement st2 = con.createStatement(); 
+            rs2 = st.executeQuery("select * from hotelextras where roomid='"+rs.getInt("roomid")+"'");
+            rs2.first();           
             
+            
+            while(rs2.next()){
+            st2.executeUpdate("DELETE from hotelextras where roomid="+rs2.getInt("roomid")+" and id="+rs2.getInt("id")+"");
+            }
+            rs = st.executeQuery("select * from hotelrooms where roomname='Standart Room' AND hotelid="+hotelid);
             while(rs.next())
             {
                 for(int i=0; i<standardroomscheckvalue.length; i++)
                 {
+                    
                     st2.executeUpdate("INSERT INTO hotelextras(roomid,cost,extras) VALUES("+rs.getInt("roomid")+","+standartcost+",'"+standardroomscheckvalue[i]+"')");
                 }
             }
             
             rs = st.executeQuery("select * from hotelrooms where roomname='Luxury Room' AND hotelid="+hotelid);
+            rs.first();
             Statement st3 = con.createStatement(); 
+            st3.executeUpdate("DELETE from hotelextras where roomid="+rs.getInt("roomid")+"");
+                        rs2 = st.executeQuery("select * from hotelextras where roomid='"+rs.getInt("roomid")+"'");
+            rs2.first();           
             
+            
+            while(rs2.next()){
+            st2.executeUpdate("DELETE from hotelextras where roomid="+rs2.getInt("roomid")+" and id="+rs2.getInt("id")+"");
+            }
+            
+            rs = st.executeQuery("select * from hotelrooms where roomname='Luxury Room' AND hotelid="+hotelid);
             while(rs.next())
             {
                 for(int i=0; i<luxuryroompropertycheckvalue.length; i++)
@@ -73,8 +93,18 @@ if(session.getAttribute("username") == null){
             }
             
             rs = st.executeQuery("select * from hotelrooms where roomname='Premium Room' AND hotelid="+hotelid);
+            rs.first();
             Statement st4 = con.createStatement(); 
+            st4.executeUpdate("DELETE from hotelextras where roomid="+rs.getInt("roomid")+"");
+            rs2 = st.executeQuery("select * from hotelextras where roomid='"+rs.getInt("roomid")+"'");
+            rs2.first();           
             
+            
+            while(rs2.next()){
+            st2.executeUpdate("DELETE from hotelextras where roomid="+rs2.getInt("roomid")+" and id="+rs2.getInt("id")+"");
+            }
+            
+            rs = st.executeQuery("select * from hotelrooms where roomname='Premium Room' AND hotelid="+hotelid);
             while(rs.next())
             {
                 for(int i=0; i<premiumroompropertycheckvalue.length; i++)

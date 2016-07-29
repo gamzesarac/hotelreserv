@@ -4,6 +4,11 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
 <jsp:setProperty name = "dbbean" property = "*" />
+<%
+if(session.getAttribute("username") == null){
+        response.sendRedirect("../login.html");
+    }
+%>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -17,12 +22,11 @@
 
         hotel h = new hotel(); 
         ResultSet hotelTable=h.takeHotelList(username);
-        
 
    
     %>
     <body>
-        <div id ="containerr">
+        <div id ="container">
             <ul id="nav">
                 <li><a href="#" title="let">contact</a></li>
                 <li><a href="../logout.jsp" title="logout">logout</a></li>
@@ -54,21 +58,17 @@
                         <th>Choose Hotel</th>
                         </tr>
                         <% while(hotelTable.next())
-                        { int hid=h.takeHotelId(hotelTable.getString("hotelname"));
-                            boolean b=h.hasAlreadyRooms(hid); if(!b){
+                        {
                         %>
                         <tr>
-                            <td>                             
+                        <td><% out.print(hotelTable.getString("hotelname")); %></td>
                             
-                            <% out.print(hotelTable.getString("hotelname")); %></td>
-                            
-                        <td>
-                            <%out.print(hotelTable.getString("hotelname"));   out.print(hotelTable.getString("address")); %></td>
+                        <td><% out.print(hotelTable.getString("address")); %></td>
                         
-                        <td><input type="radio" name="hotelID" value="<% out.print(hotelTable.getString("hotelid")); %>" required="yes" ></td>
+                        <td><input type="radio" name="hotelID" value="<% out.print(hotelTable.getString("hotelid")); %>" ></td>
                         
                         
-                        <% }} %>
+                        <% } %>
                         </tr>
                         </table>
                         

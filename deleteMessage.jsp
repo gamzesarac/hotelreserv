@@ -3,6 +3,11 @@
 <%@page import="java.sql.Statement"%>
 <%@page import="java.sql.DriverManager"%>
 <%@page import="java.sql.Connection"%>
+<%
+if(session.getAttribute("username") == null){
+        response.sendRedirect("../login.html");
+    }
+%>
 <html>
     
 <head>

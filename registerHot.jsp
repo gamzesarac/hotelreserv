@@ -32,13 +32,15 @@
 
             boolean isSuccess = u.addUser(); 
             
-        if (isSuccess) { session.setAttribute("username", request.getParameter("username"));
-             %>                
-                <jsp:forward page="Hotel/hotel.jsp"/>
-            <% } else {%>
+        if (isSuccess) { 
+            session.setAttribute("username", request.getParameter("username"));
+            session.setAttribute("firstname", firstname);
+            session.setAttribute("lastname", lastname);
+                response.sendRedirect("hotel.jsp");
+             } else {
+                response.sendRedirect("registerError.html");
                 
-                <jsp:forward page="registerError.html"/>
-            <% }
+             }
         }
     %>
 </body>

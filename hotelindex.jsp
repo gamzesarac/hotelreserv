@@ -1,4 +1,9 @@
 <%@page import="db.hotel"%>
+<%
+if(session.getAttribute("username") == null){
+        response.sendRedirect("../login.html");
+    }
+%>
 <!DOCTYPE html>
 <html lang="en">
     <%
@@ -28,7 +33,7 @@
         <div id ="containerr">
             <ul id="nav">
                 <li><a href="#" title="let">contact</a></li>
-                <li><a href="logout.jsp" title="logout">logout</a></li>
+                <li><a href="../logout.jsp" title="logout">logout</a></li>
             </ul>
 
             <div class="divider"></div>

@@ -1,3 +1,4 @@
+<%@page import="db.hotel"%>
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="java.text.DateFormat"%>
 <%@page import="db.hotelroom"%>
@@ -30,12 +31,7 @@
 </head>
 <body>
  <%
-     
-         DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
-         Date date = new Date();
-         //String current = dateFormat.format(date);
-         
-         
+  
         String username = (String)session.getAttribute("username");
         user u=new user(username);
         String type = u.checkTypePages(username); 
@@ -49,11 +45,11 @@
 
         String firstname = u.takeFirstname(username);
         
-        //user uu= new user(table.getString("username"),table.getString("firstname"),table.getString("lastname"),table.getString("password"),table.getString("birthdate"),table.getString("email"),table.getString("gender"),table.getString("telephone"),table.getInt("usertype_id"),table.getString("address"),table.getString("ssn"));
-        String ridString= request.getParameter("rid");
-        int rid=Integer.parseInt(ridString);
-        ResultSet table = u.takeSelectedReservation(rid);
-        Date checkin = table.getDate("checkin");
+
+
+        int userid=u.takeUserId(username);
+        ResultSet table = u.commentWaitingAprovalHotel(userid);
+
     %>
 <div id="containerr">
   <ul id="nav">
@@ -69,10 +65,10 @@
     <a href="hotel.jsp"><h4 style="color: #014ccc; font-style: italic;">Welcome : <%= firstname %> </h4></a>
   </div>
        <div id="main">
-        <h2 style="font-family: monospace; font-weight: bold;">Reservation Details</h2>
+        <h2 style="font-family: monospace; font-weight: bold;">Comments</h2>
         <table border="2">
                     <tr>
-                        <th style="font-size: 15px;">Reservation Info</th>
+                        <th style="font-size: 15px;">Approve/Reject</th>
                       <!--  <th>Text</th> -->
                       <!--  <th></th> -->
 
@@ -81,36 +77,24 @@
                     
                       
                     <table>
-                    <form method="post" action="cancelReservation.jsp">
+                        <% while(table.next()){ %> 
+                    <form method="post" action="commentApprove.jsp">
                     <tr>       
                         <td> 
-                            
-                            <h4 style="font-weight: bold; color:#014ccc;">RESERVATION ID : <%out.print(table.getString("reservationid"));%>
-                            <input type="hidden" name="rid" value="<%out.print(table.getString("reservationid"));%>">
-                            </h4>
-                            
-                            <h4 style="font-weight: bold; color:#014ccc;">ROOM ID : <%out.print(table.getString("roomid"));%></h4>
-                            
-                            <%hotelroom h2=new hotelroom();
-                            String roomtype=h2.takeRoomType(table.getInt("roomid")); %>
-                            <h4 style="font-weight: bold; color:#014cccd;">ROOM TYPE : <%= roomtype %></h4>
-                            
-                            <%reservation r=new reservation();
-                            String hotelname=r.takeHotelName(table.getInt("roomid")); %>
+
+                            <% hotel h=new hotel(); String hotelname=h.takeHotelnameFromHotelID(Integer.parseInt(table.getString("hotel_hotelid"))); %>
                             <h4 style="font-weight: bold; color:#014ccc;">HOTEL NAME : <%= hotelname %></h4>
-                           
-                            <h4 style="font-weight: bold; color:#014ccc;">CHECK IN : <%out.print(table.getString("checkin"));%></h4>
                             
-                            <h4 style="font-weight: bold; color:#014ccc;">CHECK OUT : <%out.print(table.getString("checkout"));%></h4>
+                            <h4 style="font-weight: bold; color:#014ccc;">USERNAME : <% String usern=u.takeUserNamefromID(Integer.parseInt(table.getString("user_id"))); %> <%=usern %> </h4>
                             
-                            <h4 style="font-weight: bold; color:#014ccc;">RESERVATION CREATION DATE : <%out.print(table.getString("reservationdate"));%></h4>
+                            <h4 style="font-weight: bold; color:#014ccc;">RATING : <% String rt=table.getString("rating"); out.print(rt); %>  </h4>
                             
-                            <h4 style="font-weight: bold; color:#014ccc;">COST : <% hotelroom hh=new hotelroom(); double cost=hh.takeRoomCost(table.getInt("roomid")); %> <%=cost %> </h4>
+                            <h4 style="font-weight: bold; color:#014ccc;">COMMENT : <% String cm=table.getString("comment"); out.print(cm); %>  </h4>
                             
-                            <h4 style="font-weight: bold; color:#014ccc;">STATUS : <% if(checkin.compareTo(date)>0&&table.getInt("isCancelled")==0){ %> active <% }else{ %>  inactive <% } %>  </h4>
-                            
-                            
-                       
+                           <input type = "submit" name="approval" value = "Approve" style="width: 95px; background-color: white; border-color: white; color: #014ccc;"/> <input type = "submit" name="approval" value = "Reject" style="width: 95px; background-color: white; border-color: white; color: #014ccc;"/>
+                       <div class="divider"></div>
+                       <% String cid=table.getString("commentid"); %> 
+                           <input type = "hidden" name = "cid" value="<%=cid %>"/> 
                         </td>
                         
                     </tr>
@@ -120,6 +104,7 @@
                    
                 
                     </form>
+                            <% } %> 
                 </table>
                                          
       </div>

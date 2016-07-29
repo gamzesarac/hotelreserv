@@ -42,7 +42,7 @@ if(session.getAttribute("username") == null){
         if(standardroomsize.equals("")||luxuryroomsize.equals("")||premiumroomsize.equals("")){
         %> <SCRIPT LANGUAGE='JavaScript'>
     window.alert('Please enter an INTEGER value to your room count settings')
-     window.location.href='myHotels.jsp'
+     window.location.href='myHotels2.jsp'
     </SCRIPT>     <%
     }
     if(!standardroomsize.equals("")){
@@ -51,13 +51,13 @@ if(session.getAttribute("username") == null){
         if(standardroom<0){
             %> <SCRIPT LANGUAGE='JavaScript'>
     window.alert('Please enter a POSITIVE value to your room count field (STANDART ROOM)')
-     window.location.href='myHotels.jsp'
+     window.location.href='myHotels2.jsp'
     </SCRIPT>     <% } 
         }
         else{
              %> <SCRIPT LANGUAGE='JavaScript'>
     window.alert('Please enter an INTEGER value to your room count field (STANDART ROOM)')
-     window.location.href='myHotels.jsp'
+     window.location.href='myHotels2.jsp'
     </SCRIPT>     <%
         }
     }
@@ -67,13 +67,13 @@ if(session.getAttribute("username") == null){
         if(luxuryroom<0){
              %> <SCRIPT LANGUAGE='JavaScript'>
     window.alert('Please enter a POSITIVE value to your room count field (LUXURY ROOM)')
-     window.location.href='myHotels.jsp'
+     window.location.href='myHotels2.jsp'
     </SCRIPT>     <% }
             }
             else{
                 %> <SCRIPT LANGUAGE='JavaScript'>
     window.alert('Please enter an INTEGER value to your room count field (LUXURY ROOM)')
-     window.location.href='myHotels.jsp'
+     window.location.href='myHotels2.jsp'
     </SCRIPT>     <%
             }
     }
@@ -83,13 +83,13 @@ if(session.getAttribute("username") == null){
         if(premiumroom<0){
              %> <SCRIPT LANGUAGE='JavaScript'>
     window.alert('Please enter a POSITIVE value to your room count field (PREMIUM ROOM)')
-     window.location.href='myHotels.jsp'
+     window.location.href='myHotels2.jsp'
     </SCRIPT>     <% }
              }
              else{
                 %> <SCRIPT LANGUAGE='JavaScript'>
     window.alert('Please enter an INTEGER value to your room count field (PREMIUM ROOM)')
-     window.location.href='myHotels.jsp'
+     window.location.href='myHotels2.jsp'
     </SCRIPT>     <% 
             }
     }
@@ -97,7 +97,7 @@ if(session.getAttribute("username") == null){
          if(standartcost.equals("")||luxurycost.equals("")||premiumcost.equals("")){
          %> <SCRIPT LANGUAGE='JavaScript'>
     window.alert('Please enter an INTEGER value to cost fields')
-     window.location.href='myHotels.jsp'
+     window.location.href='myHotels2.jsp'
     </SCRIPT>     <%
     }
     
@@ -107,13 +107,13 @@ if(session.getAttribute("username") == null){
         if(standardcst<0){
              %> <SCRIPT LANGUAGE='JavaScript'>
     window.alert('Please enter a POSITIVE value to your room cost field (STANDART COST)')
-     window.location.href='myHotels.jsp'
+     window.location.href='myHotels2.jsp'
     </SCRIPT>     <% }
         }
         else{
              %> <SCRIPT LANGUAGE='JavaScript'>
     window.alert('Please enter an DOUBLE value to your room cost field (STANDART COST)')
-     window.location.href='myHotels.jsp'
+     window.location.href='myHotels2.jsp'
     </SCRIPT>     <%
         }
     }
@@ -123,13 +123,13 @@ if(session.getAttribute("username") == null){
         if(luxurycst<0){
              %> <SCRIPT LANGUAGE='JavaScript'>
     window.alert('Please enter a POSITIVE value to your room cost field (LUXURY COST)')
-     window.location.href='myHotels.jsp'
+     window.location.href='myHotels2.jsp'
     </SCRIPT>     <% }
         }
         else{
              %> <SCRIPT LANGUAGE='JavaScript'>
     window.alert('Please enter an DOUBLE value to your room cost field (LUXURY COST)')
-     window.location.href='myHotels.jsp'
+     window.location.href='myHotels2.jsp'
     </SCRIPT>     <%
         }
     }
@@ -139,13 +139,13 @@ if(session.getAttribute("username") == null){
         if(premiumcst<0){
              %> <SCRIPT LANGUAGE='JavaScript'>
     window.alert('Please enter a POSITIVE value to your room cost field (PREMIUM COST)')
-     window.location.href='myHotels.jsp'
+     window.location.href='myHotels2.jsp'
     </SCRIPT>     <% }
         }
         else{
              %> <SCRIPT LANGUAGE='JavaScript'>
     window.alert('Please enter an DOUBLE value to your room cost field (PREMIUM COST)')
-     window.location.href='myHotels.jsp'
+     window.location.href='myHotels2.jsp'
     </SCRIPT>     <%
         }
     }         
@@ -153,7 +153,7 @@ if(session.getAttribute("username") == null){
        if(standardroomscheckvalue==null||luxuryroompropertycheckvalue==null||premiumroompropertycheckvalue==null){
             %> <SCRIPT LANGUAGE='JavaScript'>
     window.alert('Please check AT LEAST 1 checkbox in the room specifications from all room types!!')
-     window.location.href='myHotels.jsp'
+     window.location.href='myHotels2.jsp'
     </SCRIPT>     <% }
            
     session.setAttribute("standardroomsize", standardroomsize);
@@ -199,7 +199,7 @@ if(session.getAttribute("username") == null){
 
                 <div class="divider"></div>
 
-                <form name="hotelreservationform" method="get" action="addHotelRoom.jsp">                                
+                <form name="hotelreservationform" method="get" action="addHotelRoom2.jsp">                                
 
                     <div class="divider"></div>
                     
