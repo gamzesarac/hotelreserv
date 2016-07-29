@@ -109,11 +109,12 @@ public class hotel {
         ResultSet rs3;
         while(rs.next()){ 
          int roomid = Integer.parseInt(rs.getString("roomid"));
-          pstmt = conn.prepareStatement("delete from reservation where roomid = ANY (select roomid from hotelrooms where hotelid="+roomid+")"); 
+          pstmt = conn.prepareStatement("delete from reservation where roomid = ANY (select roomid from hotelrooms where hotelid="+hotelid+")"); 
           pstmt.executeUpdate();
           
           pstmt = conn.prepareStatement("select * from hotelextras where roomid ="+roomid+""); 
           rs2 = pstmt.executeQuery();
+          rs2.first();
           while(rs2.next()){
           pstmt = conn.prepareStatement("delete from hotelextras where roomid ="+roomid+" and id="+rs2.getString("id")+""); 
           pstmt.executeUpdate();
