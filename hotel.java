@@ -46,21 +46,22 @@ public class hotel {
     
     //--------------------------------------------------------------------------
     
-    public boolean addHotel(String hotelname, String hotelinfo, String address, String hotelphone, int user_id, int STATE_ID) throws SQLException {
+    public boolean addHotel(String hotelname, String hotelinfo, String address, String hotelphone, int user_id, int STATE_ID, String distinct_id, int distinct_idd) throws SQLException {
          try {
-
+            String distinct=takeDistinctnameFromID(distinct_id);
+            String addresss = distinct+" Mahallesi "+address;
             initializeJdbc();
 
             pstmt = conn.prepareStatement("insert into hotelreservationdb.hotel "
-                    + "(hotelname, hotelinfo, address, hotelphone, user_id, STATE_ID) values (?, ?, ?, ?, ?, ?)");
+                    + "(hotelname, hotelinfo, address, hotelphone, user_id, STATE_ID, DISTINCT_ID) values (?, ?, ?, ?, ?, ?, ?)");
             
             pstmt.setString(1, hotelname);
             pstmt.setString(2, hotelinfo);
-            pstmt.setString(3, address);
+            pstmt.setString(3, addresss);
             pstmt.setString(4, hotelphone);
             pstmt.setInt(5, user_id);
             pstmt.setInt(6, STATE_ID);
-
+            pstmt.setInt(7, distinct_idd);
 
             pstmt.executeUpdate();
           
@@ -405,7 +406,8 @@ public class hotel {
          
      public String takeStatenameFromID(String id) throws SQLException {
         initializeJdbc();
-
+        if(id.equals(""))
+            return "-1";
 
         pstmt = conn.prepareStatement("select STATE_NAME from state where STATE_ID = ? ");       
         pstmt.setString(1, id);
@@ -421,7 +423,8 @@ public class hotel {
      
         public String takeCitynameFromS(String id) throws SQLException {
         initializeJdbc();
-
+            if(id.equals(""))
+            return "-1";
 
         pstmt = conn.prepareStatement("select CTYI_ID from state where STATE_ID = ? ");       
         pstmt.setString(1, id);
@@ -438,7 +441,42 @@ public class hotel {
         return rs.getString("CITY_NAME");
     }
 
+      //--------------------------------------------------------------------------
+     
     
+    public ResultSet takeDistincts(int state_id) throws SQLException {
+        initializeJdbc();
+
+
+        pstmt = conn.prepareStatement("select * from distincts where STATE_ID = ? ");       
+        pstmt.setInt(1, state_id);
+        rs = pstmt.executeQuery();
+
+        return rs;
+    }   
+        
+        
+        
+      //--------------------------------------------------------------------------
+     
+     
+   
+     
+     public String takeDistinctnameFromID(String id) throws SQLException {
+           if(id.equals(""))
+            return "-1";
+        initializeJdbc();
+        
+        pstmt = conn.prepareStatement("select DISTINCT_NAME from distincts where DISTINCT_ID = ? ");       
+        pstmt.setString(1, id);
+        rs = pstmt.executeQuery();
+        rs.first();
+        if(rs.first()==false)
+            return "-1";
+        String s = rs.getString("DISTINCT_NAME");
+        return s;
+    }
+     
        //--------------------------------------------------------------------------
      
         public String roomPropertyToString(String[] property) throws SQLException {

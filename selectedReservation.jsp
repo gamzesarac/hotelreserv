@@ -108,12 +108,12 @@
                             
                             <h4 style="font-weight: bold; color:#014ccc;">PAYMENT : <%reservation re=new reservation(); boolean isPaid=re.isPaid(Integer.parseInt(table.getString("reservationid"))); if(isPaid){ %> PAID ONLINE <% }else{ %>  NO PAYMENT <% } %>  </h4>
                             
-                            <h4 style="font-weight: bold; color:#014ccc;">STATUS : <% if(checkin.compareTo(date)>0&&table.getInt("isCancelled")==0){ %> active <% }else{ %>  inactive <% } %>  </h4>
+                            <h4 style="font-weight: bold; color:#014ccc;">STATUS : <% if(0<=checkin.compareTo(date)&&table.getInt("isCancelled")==0){ %> active <% }else{ %>  inactive <% } %>  </h4>
                             
                             <%hotelroom h=new hotelroom();
                             double cost=h.takeRoomCost(table.getInt("roomid")); %>
                             <h4 style="font-weight: bold; color:#014ccc;">COST : <%= cost %> </h4>
-                    <%if(checkin.compareTo(date)>0&&table.getInt("isCancelled")==0){ %> <input type="submit" name="Cancel" value="Cancel" style="width: 125px; background-color: white; border-color: white; color: #014ccc;"/> <%} %>
+                    <%if(0<=checkin.compareTo(date)&&table.getInt("isCancelled")==0){ %> <input type="submit" name="Cancel" value="Cancel" style="width: 125px; background-color: white; border-color: white; color: #014ccc;"/> <%} %>
                        
                         </td>
                         

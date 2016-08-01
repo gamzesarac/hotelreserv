@@ -16,13 +16,14 @@
          
          String username = (String)session.getAttribute("username");
         hotel h = new hotel();
-        String city_idd = request.getParameter("city");
+        String city_idd = request.getParameter("city_id");
         String city = h.takeCitynameFromID(city_idd);
-         if(city.equals("-1"))
+        String state_idd = request.getParameter("state");
+        String state = h.takeStatenameFromID(state_idd);        
+         if(state.equals("-1"))
             response.sendRedirect("registerhotel.jsp");
-         
-         int city_id = Integer.parseInt(city_idd);
-        ResultSet table=h.takeStates(city_id);
+         int state_id = Integer.parseInt(state_idd);
+        ResultSet table=h.takeDistincts(state_id);
 
    
     %>
@@ -48,25 +49,31 @@
                 <div class="divider"></div>
                 
                 <table border="0">
-                    <th style="font-size: 15px;">Select State</th></table>
+                    <th style="font-size: 15px;">Select Distinct</th> </table>
                         <tr><td>
-                    <form method="get" action="registerhotel3.jsp">
+                    <form method="get" action="hotelindex.jsp">
      <div class="styled-select">
                 <select name="city"> 
     <option value="<%=city%>"><%=city%></option>
                 </select></div> <br> <br>
+                <div class="styled-select">
+                 <select name="state"> 
+    <option value="<%=state%>"><%=state%></option>
+                </select></div> <br> <br>
                 <table border="0">
                         <div class="styled-select">
-                             <select name="state">  
-                                
+                             <select name="distinct">  
+                                <option value="none">Select</option>
          
                                 <% while(table.next()){ %>
-                        <option value="<%=table.getString("STATE_ID")%>"><%=table.getString("STATE_NAME")%></option>  
+                        <option value="<%=table.getString("DISTINCT_ID")%>"><%=table.getString("DISTINCT_NAME")%></option>  
                                 <% } %>                 
                             </select> </div>
                             <p> <input type = "submit" name = "Next" value = "Next" style="width: 75px; background-color: white; border-color: white; color: #014ccc; "/></p>
                          <td><input type="hidden" name="city" value="<% out.print(city); %>" > </td>
                          <td><input type="hidden" name="city_id" value="<% out.print(city_idd); %>" > </td>
+                         <td><input type="hidden" name="state" value="<% out.print(state); %>" > </td>
+                         <td><input type="hidden" name="state_id" value="<% out.print(state_idd); %>" > </td>
                     </form>
             </td></tr>
                     </table> 

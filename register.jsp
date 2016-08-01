@@ -164,6 +164,13 @@
     </SCRIPT> 
             <% }
         }
+        else{
+
+                %> <SCRIPT LANGUAGE='JavaScript'>
+    window.alert('Unknown ERROR !!')
+     window.location.href='register.html'
+    </SCRIPT>   <% }
+        
     %>
 </body>
 </html>

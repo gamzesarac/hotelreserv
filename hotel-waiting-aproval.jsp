@@ -2,6 +2,19 @@
 <%@page import="java.sql.Statement"%>
 <%@page import="java.sql.DriverManager"%>
 <%@page import="java.sql.Connection"%>
+<%@page import="db.user"%>
+<%
+if(session.getAttribute("username") == null){
+        response.sendRedirect("../login.html");
+    }
+else {
+    String username = (String)session.getAttribute("username");
+    user u = new user();
+    boolean isAdmin = u.checkAdminPanel(username);
+    if(!isAdmin)
+      response.sendRedirect("../login.html");  
+}
+%>
 <html>
 <head>
 <title>Admin Panel | Hotel Approval Page</title>
@@ -48,9 +61,8 @@
                                                         <li>
 								<a href="all-users.jsp" class="active"><i class="fa fa-user nav_icon"></i>All Users</a>
 							</li>
-                                                        
                                                         <li>
-								<a href="comment-waiting-approval.jsp" class="active"><i class="fa fa-comments nav_icon"></i>Comment Waiting Approval</a>
+								<a href="logout.jsp" class="active"><i class="fa fa-comments nav_icon"></i>Logout</a>
 							</li>
                                                         
 						</ul>
@@ -67,7 +79,7 @@
 				<div class="logo">
 					<a href="index.jsp">
 						<ul>	
-							<li><img src="images/logo1.png" alt="" /></li>
+							
 							<li><h1>Hotel Booking</h1></li>
 							<div class="clearfix"> </div>
 						</ul>
@@ -79,6 +91,15 @@
 				
 				<div class="clearfix"> </div>
 			</div>
+                    
+                    <!--search-box-->
+				<div class="search-box">
+                                    <form class="input" action="search.jsp">
+                                        <input class="sb-search-input input__field--madoka" name="input" placeholder="Search..." type="search" id="input-31" />
+                                        <input type="hidden" name="page" value="hotel" />
+					</form>
+				</div>
+				<!--//end-search-box-->
 
 			<div class="header-right">
 				
@@ -129,13 +150,11 @@
                     
                                         <% 
                          
-                                            rs = st.executeQuery("select hotelid,hotelname,user_id,id,firstname,lastname,status,hotelphone from user,hotel where hotel.user_id = user.id AND hotel.status='0'");
+                                            rs = st.executeQuery("select hotelid,hotelname,user_id,id,firstname,lastname,status,hotelphone from user,hotel where hotel.user_id = user.id AND hotel.status='0' ORDER BY hotelid ASC");
                                             if(!rs.next())
                                             {
                                                 out.print("All Hotels Approved");
                                             }
-                                            
-                                         
                                             rs.beforeFirst();
                                             int tableCount=0;
                                             while(rs.next())
@@ -197,7 +216,7 @@
 				<!-- container -->
 				<div class="container">
 					<div class="copyright">
-						Footer
+						<font size="3" face="Arial" color="white">Admin panel v1. </font>
 					</div>
 
                 </div>

@@ -63,7 +63,7 @@ else {
 							</li>
                                                         
                                                         <li>
-								<a href="comment-waiting-approval.jsp" class="active"><i class="fa fa-comments nav_icon"></i>Comment Waiting Approval</a>
+								<a href="logout.jsp" class="active"><i class="fa fa-comments nav_icon"></i>Logout</a>
 							</li>
                                                         
 						</ul>
@@ -92,6 +92,14 @@ else {
 				
 				<div class="clearfix"> </div>
 			</div>
+                    <!--search-box-->
+				<div class="search-box">
+                                    <form class="input" action="search.jsp">
+                                        <input class="sb-search-input input__field--madoka" name="input" placeholder="Search..." type="search" id="input-31" />
+                                        <input type="hidden" name="page" value="hotel" />
+					</form>
+				</div>
+				<!--//end-search-box-->
 
 			<div class="header-right">
 				
@@ -123,38 +131,69 @@ else {
 				
 		<div class="panel panel-widget">
 			<div class="tables">
-                            <h4></h4> <%
+				<h4> <%
 
-                Class.forName("com.mysql.jdbc.Driver");
-                Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/hotelreservationdb", "root", "");
-                Statement st = con.createStatement();
-                String hotelid= request.getParameter("hid");
+                user u = new user();
+                ResultSet rs;
+                rs = u.approvedHotels();
                 
+                int hotelCount=0;
+                rs.beforeFirst();
+                while(rs.next())
+                {
+                    hotelCount++;
+                }
                 
+                    out.print(hotelCount + " Hotel Waiting Approve");
+                    %> </h4>
                     
-                                       
+                                        <% 
                          
-
+                                            rs.beforeFirst();
+                                            if(!rs.next())
+                                            {
+                                                out.print("All Hotels Approved");
+                                            }
+                                            
+                                         
+                                            rs.beforeFirst();
+                                            int tableCount=0;
+                                            while(rs.next())
+                                                {
+                                                    if(tableCount==0)         // bu if i koymazsam approve bekleyen otel kadar tablo olu?turuyor.
+                                                    {
+                                                        tableCount++;
                                         %>
-                                <table class="table table-bordered"> <thead> <tr> <th>Hotel ID</th> <th>Text</th> <th>Action</th></tr> </thead> 
-                                    <form method="post" action="messageToHotel.jsp">
+                                <table class="table table-bordered"> <thead> <tr> <th>Hotel ID</th> <th>Hotel Name</th> <th>Hotel Owner</th> <th>Telephone</th> </tr> </thead> 
                                     <tbody>
-                                        
+                                        <% }%>
                                         <tr> 
-                                            <th> <% out.print(request.getParameter("hid")); %></th> 
+                                            <th scope="row"><a href="hotel-profile.jsp?hotelid=<% out.print(rs.getString("hotelid")); %>"><% out.print(rs.getString("hotelid")); %></a></th> 
                                             
                                             <td>
-                                                <TEXTAREA Name="message" ROWS=5 COLS=30></TEXTAREA>
+                                                <a href="hotel-profile.jsp?hotelid=<% out.print(rs.getString("hotelid"));%>">
+                                                    <%
+                                                         out.print(rs.getString("hotelname")); 
+                                                    %>
+                                                </a>
                                             </td> 
-                                            <td>
                                             
-                                               <input type="hidden" name="hid" value="<%  out.print(request.getParameter("hid")); %>">  
-                                        <input type="submit" name="Send" value="Send" style="width: 125px; background-color: white; border-color: white; color: black;"/></td>
-                                             
+                                            <td> 
+                                                <a href="user-profile.jsp?userid=<% out.print(rs.getString("id"));%>">
+                                                    <% 
+                                                        out.print(rs.getString("firstname") + " " + rs.getString("lastname")); 
+                                                    %> 
+                                                 </a>
+                                            </td> 
+                                            
+                                            <td>
+                                                <%
+                                                     out.print(rs.getString("hotelphone"));
+                                                %>
+                                            </td> 
                                         </tr> 
-                                                
-                                    </tbody>
-                                     </form>
+                                                <% } %>
+                                    </tbody> 
                                 </table>
 			</div>
 		</div>

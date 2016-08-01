@@ -1,4 +1,3 @@
-<%@page import="db.user"%>
 <%@page import="Reservation.reservation"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@include file="connact.jsp"%>
@@ -23,19 +22,6 @@
 
 
 <%
- 
-        String usernamee = (String)session.getAttribute("username");
-        user u=new user(usernamee);
-        String type = u.checkTypePages(usernamee);
-        int check = Integer.parseInt(type); %>
-       <% if(check != 3 || check ==-1){ %>
-        <jsp:forward page="login.html"/>
-        <% } 
-        if(session.getAttribute("username") == null){
-            response.sendRedirect("index.jsp");
-        }
-
-        String firstname = u.takeFirstname(usernamee);
  
 reservation h = new reservation(); 
         ResultSet reservationTable=h.defineReservation();
@@ -66,6 +52,7 @@ reservation h = new reservation();
 <br></br>
 <font color="Blue">Pnr Code</font>
 <td><%=reservationTable.getString("pnr")%></td>
+
 <br></br>
 <font color="Blue">Checkİn Date</font>
 <td><%=reservationTable.getString("checkin")%></td>

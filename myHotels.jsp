@@ -63,7 +63,7 @@
                             <% out.print(hotelTable.getString("hotelname")); %></td>
                             
                         <td>
-                            <%out.print(hotelTable.getString("hotelname"));   out.print(hotelTable.getString("address")); %></td>
+                            <%out.print(hotelTable.getString("address")); %></td>
                         
                         <td><input type="radio" name="hotelID" value="<% out.print(hotelTable.getString("hotelid")); %>" required="yes" ></td>
                         

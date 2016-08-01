@@ -11,16 +11,19 @@ if(session.getAttribute("username") == null){
         hotel h = new hotel();
     String city = request.getParameter("city");
     String city_id = request.getParameter("city_id");
-    String state = request.getParameter("state");
+    String state = request.getParameter("state_id");
     String statename = h.takeStatenameFromID(state);
-     
-
+    String distinct = request.getParameter("distinct"); 
+    String distinctname = h.takeDistinctnameFromID(distinct);
+             if(distinctname.equals("-1"))
+            response.sendRedirect("registerhotel.jsp");
 
     session.setAttribute("city", city);
     session.setAttribute("city_id", city_id);
     session.setAttribute("state", state);
     session.setAttribute("statename", statename);
-
+    session.setAttribute("distinct", distinct);
+    session.setAttribute("distinctname", distinctname);
 
 %>
     <head>
@@ -54,15 +57,11 @@ if(session.getAttribute("username") == null){
                     <table>
                         <tr>
                             <td>Hotel Name(*):</td>
-                            <td><input type="text" name="hotelname" size="50" maxlength=50/></td>
+                            <td><input type="text" name="hotelname" size="50" maxlength=50 required="yes" /></td>
                         </tr>
                         <tr>
                             <td>Hotel Info(*):</td>
-                            <td> <textarea name="hotelInfo" style="width: 360px; height: 150px;"></textarea>  </td>
-                        </tr>
-                        <tr>
-                            <td>Address(*):</td>
-                            <td><input type="text" name="hoteladdress" size="50" maxlength=100/></td>
+                            <td> <textarea name="hotelInfo" style="width: 360px; height: 150px;"  required="yes" ></textarea>  </td>
                         </tr>
                         <tr>
                             <td>City(*):</td>
@@ -76,9 +75,22 @@ if(session.getAttribute("username") == null){
                              <td><input type="hidden" name="state_id" value="<% out.print(state); %>" > </td>
                              <td><input type="hidden" name="hotelstate" size="50" maxlength=5 value="<%out.print(statename);%>"/></td>
                         </tr>
+                                                <tr>
+                            <td>Distinct(*):</td>
+                            <td><input type="text" name="hdistinct" size="50" maxlength=5 value=<%out.print(distinctname);%> DISABLED/></td>
+                             <td><input type="hidden" name="distinct_id" value="<% out.print(distinct); %>" > </td>
+                             <td><input type="hidden" name="hoteldistinct" size="50" maxlength=5 value="<%out.print(distinctname);%>"/></td>
+                        </tr>
+                         <tr>
+                            <td>Address(*):</td>
+                            <td><input type="text" name="hoteladdress" size="50" maxlength=100  required="yes" /></td>
+                         <td><div class="container">
+                        <a href="#" data-toggle="tooltip" title="please enter your only steet details and door no.">?</a>
+                            </div></td>
+                        </tr>
                         <tr>
                             <td>Telephone (*):</td> 
-                            <td><input type="text" name="hoteltelephone" size="50" maxlength=11/></td>
+                            <td><input type="text" name="hoteltelephone" size="50" maxlength=11  required="yes" /></td>
                         </tr>
                         <tr>
                             <td></td>

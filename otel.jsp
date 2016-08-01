@@ -35,7 +35,7 @@
   </ul>
       <div class="divider"></div>
   <div id="header">
-      <h1><a href="user.jsp">Hotel Reservation</a><span>Isik University</span></h1>
+      <h1><a href="index.html">Hotel Reservation</a><span>Isik University</span></h1>
   </div>
        <div class="divider"></div>
   <div id="sidebar">
@@ -50,17 +50,14 @@
    boolean check1=false;
    try{
        
- String user = request.getParameter("hotelname");
- String hotelnamee= request.getParameter("hotelnamee");
+ String user = request.getParameter("hotelid");
+ //String hotelnamee= request.getParameter("hotelnamee");
   hotel hl = new hotel();
 
-  int m=hl.takeHotelId(user);
+  int m=Integer.parseInt(user);
 
 
-
-  
-
-        ResultSet inf=hl.showhotelınf(user);
+        ResultSet inf=hl.showhotelınf(m);
    Connection connection=null;
              Class.forName("com.mysql.jdbc.Driver");
              connection=DriverManager.getConnection("jdbc:mysql://localhost:3306/hotelreservationdb","root","");

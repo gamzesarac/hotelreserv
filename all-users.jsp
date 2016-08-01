@@ -3,6 +3,7 @@
 <%@page import="java.sql.DriverManager"%>
 <%@page import="java.sql.Connection"%>
 <%@page import="db.user"%>
+
 <%
 if(session.getAttribute("username") == null){
         response.sendRedirect("../login.html");
@@ -17,7 +18,7 @@ else {
 %>
 <html>
 <head>
-<title>Admin Panel | Hotel Approval Page</title>
+<title>Admin Panel | All Booking</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 
@@ -37,7 +38,7 @@ else {
 <!--//Metis Menu -->
 </head> 
 <body class="cbp-spmenu-push">
-	<div class="main-content">
+    <div class="main-content">
 		<!--left-fixed -navigation-->
 		<div class="sidebar" role="navigation">
             <div class="navbar-collapse">
@@ -63,7 +64,7 @@ else {
 							</li>
                                                         
                                                         <li>
-								<a href="comment-waiting-approval.jsp" class="active"><i class="fa fa-comments nav_icon"></i>Comment Waiting Approval</a>
+								<a href="logout.jsp" class="active"><i class="fa fa-comments nav_icon"></i>Logout</a>
 							</li>
                                                         
 						</ul>
@@ -123,38 +124,57 @@ else {
 				
 		<div class="panel panel-widget">
 			<div class="tables">
-                            <h4></h4> <%
+				<h4> <%
 
-                Class.forName("com.mysql.jdbc.Driver");
-                Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/hotelreservationdb", "root", "");
-                Statement st = con.createStatement();
-                String hotelid= request.getParameter("hid");
+                user u = new user();
+                ResultSet rs = u.allUsers();
                 
-                
-                    
-                                       
-                         
-
-                                        %>
-                                <table class="table table-bordered"> <thead> <tr> <th>Hotel ID</th> <th>Text</th> <th>Action</th></tr> </thead> 
-                                    <form method="post" action="messageToHotel.jsp">
-                                    <tbody>
+                int userCount=0;
+                rs.beforeFirst();
+                while(rs.next())
+                {
+                    userCount++;
+                }
+                    out.print(userCount + " total users");
+                    %> </h4>
+				<table class="table table-bordered"> <thead> <tr><th>Name</th> <th>Email</th> <th>Address</th> <th>Telephone</th> </tr> </thead> 
+                                    <tbody> 
                                         
+                                        <% 
+                                            rs.beforeFirst();
+                                            while(rs.next())
+                                                    {
+                                        %>
+                             
                                         <tr> 
-                                            <th> <% out.print(request.getParameter("hid")); %></th> 
-                                            
                                             <td>
-                                                <TEXTAREA Name="message" ROWS=5 COLS=30></TEXTAREA>
+                                                <a href="user-profile.jsp?userid=<% out.print(rs.getString("id"));%>"> 
+                                                    <%
+                                                        out.print(rs.getString("firstname") + " " + rs.getString("lastname")); 
+                                                    %>
+                                                </a>
                                             </td> 
-                                            <td>
                                             
-                                               <input type="hidden" name="hid" value="<%  out.print(request.getParameter("hid")); %>">  
-                                        <input type="submit" name="Send" value="Send" style="width: 125px; background-color: white; border-color: white; color: black;"/></td>
-                                             
+                                            <td>
+                                                <% 
+                                                    out.print(rs.getString("email")); 
+                                                %> 
+                                            </td>
+                                            
+                                            <td>
+                                                <% 
+                                                    out.print(rs.getString("address")); 
+                                                %> 
+                                            </td>
+                                            
+                                            <td>
+                                                <%
+                                                    out.print(rs.getString("telephone"));
+                                                %>
+                                            </td> 
                                         </tr> 
-                                                
-                                    </tbody>
-                                     </form>
+                                                <% } %>
+                                    </tbody> 
                                 </table>
 			</div>
 		</div>
@@ -164,24 +184,24 @@ else {
 			
 		</div>
 		<!--footer-->
-		 <div class="dev-page">
+	<div class="dev-page">
 	 
 			  
 			
             <div class="dev-page-footer dev-page-footer-fixed"> 
-				<!-- container -->
-				<div class="container">
-					<div class="copyright">
-						<font size="3" face="Arial" color="white">Admin panel v1. </font>
-					</div>
+				
+		<div class="container">
+			<div class="copyright">
+						<font size="3" face="Arial" color="white">Admin panel v1.</font>
+			</div>
 
                 </div>
 
             </div>
            
-		</div>
-        <!--//footer-->
 	</div>
+        <!--//footer-->
+    </div>
 
 </body>
 </html>

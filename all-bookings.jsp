@@ -1,15 +1,17 @@
+<%@page import="java.text.ParseException"%>
+<%@page import="java.text.SimpleDateFormat"%>
 <%@page import="java.sql.ResultSet"%>
 <%@page import="java.sql.Statement"%>
 <%@page import="java.sql.DriverManager"%>
 <%@page import="java.sql.Connection"%>
 <%@page import="db.user"%>
 <%
+    user u = new user();
 if(session.getAttribute("username") == null){
         response.sendRedirect("../login.html");
     }
 else {
     String username = (String)session.getAttribute("username");
-    user u = new user();
     boolean isAdmin = u.checkAdminPanel(username);
     if(!isAdmin)
       response.sendRedirect("../login.html");  
@@ -17,7 +19,7 @@ else {
 %>
 <html>
 <head>
-<title>Admin Panel | Hotel Approval Page</title>
+<title>Admin Panel | All Booking</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 
@@ -63,7 +65,7 @@ else {
 							</li>
                                                         
                                                         <li>
-								<a href="comment-waiting-approval.jsp" class="active"><i class="fa fa-comments nav_icon"></i>Comment Waiting Approval</a>
+								<a href="logout.jsp" class="active"><i class="fa fa-comments nav_icon"></i>Logout</a>
 							</li>
                                                         
 						</ul>
@@ -82,8 +84,9 @@ else {
 						<ul>	
 							
 							<li><h1>Hotel Booking</h1></li>
-							<div class="clearfix"> </div>
+							
 						</ul>
+                                            <div class="clearfix"> </div>
 					</a>
 				</div>
 				<!--//logo-->
@@ -92,6 +95,15 @@ else {
 				
 				<div class="clearfix"> </div>
 			</div>
+                    
+                    	<!--search-box-->
+				<div class="search-box">
+                                    <form class="input" action="search.jsp">
+                                        <input class="sb-search-input input__field--madoka" name="input" placeholder="Search..." type="search" id="input-31" />
+                                        <input type="hidden" name="page" value="reservation" />
+					</form>
+				</div>
+				<!--//end-search-box-->
 
 			<div class="header-right">
 				
@@ -123,39 +135,73 @@ else {
 				
 		<div class="panel panel-widget">
 			<div class="tables">
-                            <h4></h4> <%
+				<h4> <%
 
-                Class.forName("com.mysql.jdbc.Driver");
-                Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/hotelreservationdb", "root", "");
-                Statement st = con.createStatement();
-                String hotelid= request.getParameter("hid");
+                ResultSet rs = u.allBookings();
                 
                 
-                    
-                                       
-                         
-
-                                        %>
-                                <table class="table table-bordered"> <thead> <tr> <th>Hotel ID</th> <th>Text</th> <th>Action</th></tr> </thead> 
-                                    <form method="post" action="messageToHotel.jsp">
-                                    <tbody>
-                                        
+                if(rs == null)
+                {
+                    out.print("no reservation yet");
+                } 
+                else {
+                
+                int reservationCount=0;
+                rs.beforeFirst();
+                while(rs.next())
+                {
+                   reservationCount++;
+                }
+                
+                    out.print(reservationCount + " Total Reservation");
+                    %> </h4>
+				<table class="table table-bordered"> 
+                                    <thead> 
                                         <tr> 
-                                            <th> <% out.print(request.getParameter("hid")); %></th> 
-                                            
-                                            <td>
-                                                <TEXTAREA Name="message" ROWS=5 COLS=30></TEXTAREA>
-                                            </td> 
-                                            <td>
-                                            
-                                               <input type="hidden" name="hid" value="<%  out.print(request.getParameter("hid")); %>">  
-                                        <input type="submit" name="Send" value="Send" style="width: 125px; background-color: white; border-color: white; color: black;"/></td>
-                                             
+                                            <th>PNR</th> <th>User Name</th> <th>Hotel Name</th> <th>Reservation Date</th> 
                                         </tr> 
-                                                
-                                    </tbody>
-                                     </form>
+                                    </thead> 
+                                    
+                                    <tbody> 
+                                        
+                                        <% 
+                                        rs.beforeFirst();
+                                        while(rs.next())
+                                            {
+                                         %>
+                             
+                                        <tr> 
+                                            <th scope="row"><a href="book-details.jsp?pnr=<% out.print(rs.getString("pnr")); %>"><% out.print(rs.getString("pnr")); %></a></th> 
+                                            
+                                            <td>
+                                                <a href="user-profile.jsp?userid=<% out.print(rs.getString("id"));%>">
+                                                    <%
+                                                        out.print(rs.getString("firstname") + " " + rs.getString("lastname")); 
+                                                     %>
+                                                </a>
+                                            </td> 
+                                            
+                                            <td>
+                                                <a href="hotel-profile.jsp?hotelid=<% out.print(rs.getString("hotelid"));%>">
+                                                    <% 
+                                                       out.print(rs.getString("hotelname")); 
+                                                    %> 
+                                                </a>
+                                            </td> 
+                                            
+                                            <td>
+                                                    <%
+                                                        SimpleDateFormat myFormat = new SimpleDateFormat("dd/MM/yyyy");
+                                                        SimpleDateFormat fromDB = new SimpleDateFormat("yyyy-MM-dd");
+                                                        String reformattedStr = myFormat.format(fromDB.parse(rs.getString("reservationdate")));
+                                                        out.print(reformattedStr);
+                                                    %>
+                                            </td> 
+                                        </tr> 
+                                        <% } %>
+                                    </tbody> 
                                 </table>
+                                 <% } %>   
 			</div>
 		</div>
 				
@@ -172,7 +218,7 @@ else {
 				<!-- container -->
 				<div class="container">
 					<div class="copyright">
-						<font size="3" face="Arial" color="white">Admin panel v1. </font>
+						<font size="3" face="Arial" color="white">Admin panel v1.</font>
 					</div>
 
                 </div>

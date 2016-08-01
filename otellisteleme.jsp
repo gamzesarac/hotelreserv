@@ -158,7 +158,7 @@ th, td {
         
         
         </td>
-        <td><a href="otel.jsp?hotelname=<%=otellist.getString("hotelname")%>"><%=otellist.getString("hotelname")%></a></td>
+        <td><a href="otel.jsp?hotelid=<%=otellist.getString("hotelid")%>"><%=otellist.getString("hotelname")%></a></td>
         
         <td> <%=otellist.getString("address")%></td>
         <td> <%=otellist.getString("CITY_NAME")%></td>

@@ -876,7 +876,7 @@ public boolean commentRejectHotel(int commentid) throws SQLException {
  public ResultSet allBookings() throws SQLException {
         initializeJdbc();
 
-        rs = st.executeQuery("select id,reservationid, firstname, lastname, hotelname, reservationdate,hotel.hotelid, hotelrooms.hotelid from user, hotel, reservation, hotelrooms where reservation.userid = user.id AND reservation.roomid = hotelrooms.roomid AND hotelrooms.hotelid = hotel.hotelid");
+        rs = st.executeQuery("select id,pnr, firstname, lastname, hotelname, reservationdate,hotel.hotelid, hotelrooms.hotelid from user, hotel, reservation, hotelrooms where reservation.userid = user.id AND reservation.roomid = hotelrooms.roomid AND hotelrooms.hotelid = hotel.hotelid");
                                             
         
         if(rs.next())
@@ -982,4 +982,33 @@ public ResultSet allUsers() throws SQLException {
         }
        return null;
  }
+
+public String searchResult(String input) throws SQLException {
+    initializeJdbc();
+    
+    rs = st.executeQuery("select * from reservation where pnr='"+input+"'");
+    
+    if(rs.next())
+    {
+            return rs.getString("pnr");
+    } 
+    else
+    {
+        return "notFound";
+    }
+}
+public String searchHotel(String input) throws SQLException {
+    initializeJdbc();
+    
+    rs = st.executeQuery("select * from hotel where hotelname='"+input+"'");
+    
+    if(rs.next())
+    {
+            return rs.getString("hotelid");
+    } else
+    {
+        return "notFound";
+    }
+    
+}
 }

@@ -27,6 +27,7 @@ function goBack() {
             String username = request.getParameter("username");
             String password = request.getParameter("password");
             
+            
             String currentPage = (String)session.getAttribute("currentpage")+"as";
             
             user u = new user();

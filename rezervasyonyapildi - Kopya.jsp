@@ -1,5 +1,4 @@
 
-
 <%@page import="db.user"%>
 <%@page import="Reservation.hotel"%>
 <%@page import="java.sql.Statement"%>
@@ -12,6 +11,7 @@
 <%@page import="Reservation.reservation"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@include file="connact.jsp" %>
+
 <%
           String usernamee = (String)session.getAttribute("username");
         user u=new user(usernamee);
@@ -27,6 +27,7 @@
         String firstname = u.takeFirstname(usernamee);
         int userid= u.takeUserId(usernamee);
         %>
+
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -60,11 +61,11 @@
  int is=Integer.parseInt(iskontrol);
 
   if(is==1){
-      a=0;
+      a=1;
    }
       
 if(is==2){
-    a=1;
+    a=0;
 }
 
             String hoteli=request.getParameter("hoteliddi");
@@ -78,7 +79,6 @@ if(is==2){
              connection=DriverManager.getConnection("jdbc:mysql://localhost:3306/hotelreservationdb","root","");
              Statement statement=connection.createStatement();
              hotel c=new hotel();
-          
            
            
             String cindate=request.getParameter("datepicker");
@@ -86,7 +86,7 @@ if(is==2){
             String coutdate=request.getParameter("datepicker1");
              String rooms=request.getParameter("ddlViewBy");
             hotelroom h=new hotelroom();
-          int roomaydi=c.roomaydi(rooms, hotelidds);
+            int roomaydi=h.takeroomaydi(rooms);
             reservation res =new reservation();
         
          

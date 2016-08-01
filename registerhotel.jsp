@@ -41,13 +41,14 @@
                 
                 <div class="divider"></div>
                 
-                <table border="4">
-                    <th style="font-size: 15px;">Select City</th>
+                <table border="0">
+                    <th style="font-size: 15px;">Select City</th></table>
                         <tr><td>
+                                 <table border="0">
                     <form method="get" action="registerhotel2.jsp">
                         <div class="styled-select">
                              <select name="city">  
-                                <option value="none">Select</option>
+                                
          
                                 <% while(table.next()){ %>
                         <option value="<%=table.getString("CITY_ID")%>"><%=table.getString("CITY_NAME")%></option>  

@@ -3,6 +3,18 @@
 <%@page import="java.sql.Statement"%>
 <%@page import="java.sql.DriverManager"%>
 <%@page import="java.sql.Connection"%>
+<%
+if(session.getAttribute("username") == null){
+        response.sendRedirect("../login.html");
+    }
+else {
+    String username = (String)session.getAttribute("username");
+    user u = new user();
+    boolean isAdmin = u.checkAdminPanel(username);
+    if(!isAdmin)
+      response.sendRedirect("../login.html");  
+}
+%>
 <html>
 <head>
 <title>Admin Panel | Hotel Profile Page</title>

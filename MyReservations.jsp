@@ -128,11 +128,11 @@
                          <td>
                                                       
                             <%reservation rr=new reservation();
-                            boolean isPaid=rr.isPaid(Integer.parseInt(table2.getString("reservationid"))); %>
+                            boolean isPaid=rr.isPaid(Integer.parseInt(table2.getString("reservationid"))); %> 
                             <% if(isPaid){ %><input id="messageLink" type = "submit" name = "Submit" value = "YES"/> <% }else{ %> <input id="messageLink" type = "submit" name = "Submit" value = "NO"/> <% } %>
                          </td>
                          <td>
-                         <% if(checkin.compareTo(date)>0&&table2.getInt("isCancelled")==0){ %> <input id="messageLink" type = "submit" name = "Submit" value = "active"/> <% } else{ %> <input id="messageLink" type = "submit" name = "Submit" value = "inactive"/> <% } %>
+                         <% if(0<=checkin.compareTo(date)&&table2.getInt("isCancelled")==0){ %> <input id="messageLink" type = "submit" name = "Submit" value = "active"/> <% } else{ %> <input id="messageLink" type = "submit" name = "Submit" value = "inactive"/> <% } %>
                          </td>                            
                             
                     </tr>

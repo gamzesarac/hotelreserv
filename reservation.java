@@ -293,7 +293,7 @@ public class reservation{
     
      
      
-    public boolean isPaid(int reservationid) throws SQLException {
+    public boolean isPaid(int reservationid) throws SQLException { 
         try {
 
             

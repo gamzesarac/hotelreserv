@@ -5,7 +5,6 @@
 <%@page import="java.text.DateFormat"%>
 <%@page import="java.util.Date"%>
 
-
 <%
    
         String usernamee = (String)session.getAttribute("username");
@@ -18,11 +17,6 @@
         }
 
         String firstname = u.takeFirstname(usernamee); %>
-
-
-
-
-
 <html lang="en"> 
     <head>
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -103,9 +97,7 @@
        <div id="main">
         <form action="rezervasyonyapildi.jsp" action="GET"> 
             <%
-            
                 hotel c=new hotel();
- 
                 
    String hoteli=request.getParameter("hotelidd");
    int hotelidds=Integer.parseInt(hoteli);
