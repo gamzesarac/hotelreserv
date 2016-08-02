@@ -57,9 +57,10 @@ if(session.getAttribute("username") == null){
     </SCRIPT>   <%   }       
           
           String hoteltelephone = request.getParameter("hoteltelephone");
-           if(hoteltelephone.equals("")){ b=false;
+            hotel hh= new hotel(); boolean c=hh.checkTel(hoteltelephone);
+           if(hoteltelephone.equals("")||!c){  b=false;
                 %> <SCRIPT LANGUAGE='JavaScript'>
-    window.alert('Please enter your HOTELS TELEPHONE !!')
+    window.alert('Please enter a valid HOTEL PHONE NUMBER !!')
      window.location.href='hotelindex.jsp'
     </SCRIPT>   <%     }     
           String city_id = request.getParameter("city_id");
